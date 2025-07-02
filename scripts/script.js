@@ -237,7 +237,9 @@ else {
                     const name = row.getAttribute('data-name');
                     if (name) {
                         const url = new URL(window.location);
-                        url.pathname = "index.html";
+                        const basePath = window.location.pathname.substring(0, window.location.pathname.lastIndexOf('/') + 1);
+url.pathname = basePath + "index.html";
+                        url.pathname = basePath + "index.html";
                         url.searchParams.set("reaction", name);
                         window.location.href = url;
                     }
