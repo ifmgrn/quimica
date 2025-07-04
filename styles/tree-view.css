@@ -1,22 +1,16 @@
 :root {
     --list-spacing: 0.075em;
     --indent-unit: 0.5625em;
-    --indent-size: 4;
     --list-indent: calc(var(--indent-unit) * var(--indent-size));
     --radius-m: 8px;
-
-    --line-height-normal: 1.5;
-}
-
-body {
-    line-height: var(--line-height-normal);
-    tab-size: var(--indent-size);
 }
 
 ul, ol {
     --indentation-guide-width: 2px;
     --indentation-guide-color: color-mix(in lab, var(--workleaves-background, #070918), var(--text-normal, #e2dec5) 15%);
     --list-bullet-size: 0.8em;
+    --top-offset: -0.5em;
+    --li-after-height: 1.07em;
 
     padding-inline-start: 0;
     margin-block-start: var(--p-spacing, 1rem);
@@ -43,7 +37,7 @@ ul::before, ol::before {
     inset-inline-start: var(--indentation-guide-reading-indent);
     border-inline-end: var(--indentation-guide-width) solid var(--indentation-guide-color);
     bottom: calc(0.5em * var(--line-height-normal) + 2px + var(--radius-m));
-    top: calc(-0.5em * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
+    top: calc(var(--top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
     z-index: 1;
 }
 
@@ -57,10 +51,10 @@ li::after {
     content: "";
     display: block;
     position: absolute;
-    top: calc(-0.5em * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
+    top: calc(var(--top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
     left: calc(-1 * var(--list-indent) + var(--indentation-guide-reading-indent));
     width: calc(var(--list-indent) + 2px);
-    height: calc(1.07em * var(--line-height-normal));
+    height: calc(var(--li-after-height) * var(--line-height-normal));
     border: solid var(--indentation-guide-color);
     border-width: 0 0 var(--indentation-guide-width) var(--indentation-guide-width);
     border-bottom-left-radius: var(--radius-m);

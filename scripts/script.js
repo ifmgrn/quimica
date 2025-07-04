@@ -123,10 +123,8 @@ function convertText(input) {
 
 function generatePageForReaction(reaction) {
     return `
-            <div class="view-header"></div>
-            <div class="center-container">
             <h1>${reaction.nome}</h1>
-            <div class="reaction-details">
+            <div id="reaction-details-container">
                 <ul>
                     <li>Tipo: ${reaction.tipo}</li>
                     <li>Reagente(s): ${reaction.reagentes.map(text => `${text} (${molecules[text]})`).join(", ")}</li>
@@ -144,14 +142,15 @@ function generatePageForReaction(reaction) {
             </div>
 
             <p class="hyperlink-wrapper"><a href="index.html">Voltar para a página principal</a></p>
-            </div>
     `;
 }
 
 function openReaction(reaction) {
-    document.body.innerHTML = generatePageForReaction(reactions.find(r => r.nome === reaction));
-    document.body.classList.add("reaction-page");
     document.title = reaction;
+    document.head.insertAdjacentHTML("beforeend",
+        '<link rel="stylesheet" href="styles/reaction-page.css">'
+    );
+    document.getElementById("container").innerHTML = generatePageForReaction(reactions.find(r => r.nome === reaction));
 }
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -161,6 +160,9 @@ if (reaction) {
     openReaction(reaction);
 }
 else {
+    document.head.insertAdjacentHTML("beforeend",
+        '<link rel="stylesheet" href="styles/index-page.css">'
+    );
 
     const container = document.getElementById("container");
     container.insertAdjacentHTML('beforeend', `

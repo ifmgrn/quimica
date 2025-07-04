@@ -1,0 +1,64 @@
+@import url("tree-view.css");
+
+:root {
+    --h2-font: "Limelight", "Notable", "Noto", "Inter";
+    --h2-color: var(--accent-color);
+    --h2-weight: 200;
+    --h2-line-height: 1.2em;
+    --h2-size: 1.8em;
+}
+
+h2 {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+
+    letter-spacing: -0.015em;
+    line-height: var(--h2-line-height);
+    font-size: var(--h2-size);
+    color: var(--h2-color);
+    font-weight: var(--h2-weight);
+    font-family: var(--h2-font);
+}
+h2::before, h2::after {
+    content: "";
+    display: block;
+    flex-grow: 1;
+    background-color: currentColor;
+    height: 1px;
+}
+
+iframe {
+    display: block;
+    margin: 0 auto;
+}
+
+.hyperlink-wrapper {
+    text-align: center;
+}
+
+#reaction-details-container {
+    text-align: center;
+}
+#reaction-details-container > :first-child {
+    display: inline-block;
+    text-align: left;
+    margin: 0;
+}
+
+#instructions-container {
+    width: 94%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#reaction-details-container > ul {
+    --top-offset: -0.6em;
+    --li-after-height: 1.17em;
+}
+
+#instructions-container > ol::before,
+#instructions-container > ol > :first-child::after {
+    --top-offset: -1.3em;
+    --li-after-height: 1.9em;
+}
