@@ -11,7 +11,7 @@ ul, ol {
     --list-bullet-size: 0.8em;
     --top-offset: -0.5em;
     --li-after-height: 1.07em;
-
+    
     padding-inline-start: 0;
     margin-block-start: var(--p-spacing, 1rem);
     margin-block-end: var(--p-spacing, 1rem);
@@ -20,10 +20,12 @@ ul, ol {
 }
 ul {
     --indentation-guide-reading-indent: -0.8em;
+    --li-after-width-offset: 2px;
     list-style-type: '\200B';
 }
 ol {
     --indentation-guide-reading-indent: -1.3em;
+    --li-after-width-offset: -5px;
 }
 
 ol > li::marker {
@@ -31,7 +33,7 @@ ol > li::marker {
 }
 
 ul::before, ol::before {
-    content: "​";
+    content: "";
     position: absolute;
     display: block;
     inset-inline-start: var(--indentation-guide-reading-indent);
@@ -53,7 +55,7 @@ li::after {
     position: absolute;
     top: calc(var(--top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
     left: calc(-1 * var(--list-indent) + var(--indentation-guide-reading-indent));
-    width: calc(var(--list-indent) + 2px);
+    width: calc(var(--list-indent) + var(--li-after-width-offset));
     height: calc(var(--li-after-height) * var(--line-height-normal));
     border: solid var(--indentation-guide-color);
     border-width: 0 0 var(--indentation-guide-width) var(--indentation-guide-width);

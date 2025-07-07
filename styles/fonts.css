@@ -5,6 +5,7 @@
     src: url("../resources/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2-variations"),
          url("../resources/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2");
     font-weight: 200 900;
+    font-display: fallback;
 }
 @font-face {
     font-family: "Noto Serif";
@@ -12,6 +13,7 @@
     src: url("../resources/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2-variations"),
          url("../resources/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2");
     font-weight: 200 900;
+    font-display: fallback;
 }
 
 /* https://www.1001fonts.com/parklane-font.html
@@ -20,6 +22,7 @@
 @font-face {
     font-family: "ParkLaneNF";
     src: url("../resources/fonts/ParkLaneNF.woff2") format("woff2");
+    font-display: fallback;
 }
 
 /* https://fonts.google.com/specimen/Limelight
@@ -28,4 +31,5 @@
 @font-face {
     font-family: "Limelight";
     src: url("../resources/fonts/Limelight-Regular.woff2") format("woff2");
+    font-display: fallback;
 }

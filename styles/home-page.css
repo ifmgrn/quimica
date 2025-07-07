@@ -29,18 +29,37 @@
     --table-cell-vertical-alignment: top;
 }
 
+#search-container {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
 #subscripts-container {
     display: flex;
     width: 100%;
     align-items: center;
     justify-content: center;
-    padding-inline-start: 18px;
+
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    bottom: 100%;
+    left: 0;
+    white-space: nowrap;
+    z-index: 10;
+}
+#subscripts-container.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 #subscripts-container > :first-child {
-    border-radius: 4px 0 0 0;
+    border-radius: 8px 0 0 8px;
 }
 #subscripts-container > :last-child {
-    border-radius: 0 4px 0 0;
+    border-radius: 0 8px 8px 0;
 }
 
 .subscript-button {
@@ -76,10 +95,10 @@ input[type="search"]:focus {
     box-shadow: 0 0 0 2px var(--background-modifier-border-focus);
 }
 
-.search-input-container {
+.search-input-wrapper {
     position: relative;
 }
-.search-input-container::before {
+.search-input-wrapper::before {
     top: calc((var(--input-height) - var(--search-icon-size)) / 2);
     inset-inline-start: var(--size-4-2);
     position: absolute;
@@ -94,9 +113,14 @@ input[type="search"]:focus {
     mask-repeat: no-repeat;
 }
 
-.search-input-container input {
+.search-input-wrapper input {
     display: block;
     padding-inline-start: 36px;
+}
+
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
 }
 
 table {
@@ -107,6 +131,7 @@ table {
     margin-block-end: var(--p-spacing);
 
     width: 100%;
+    word-wrap: break-word;
 }
 
 th, td {
@@ -122,4 +147,8 @@ th {
     border-bottom-width: calc(var(--table-border-width) + 2px);
     line-height: var(--table-header-line-height);
     font-weight: var(--table-header-weight);
+}
+
+.clickable-row {
+    cursor: pointer;
 }
