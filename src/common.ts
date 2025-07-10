@@ -8,7 +8,7 @@ export type Reaction = {
     instrucoes: string
 };
 
-export const REACTION_URL_PARAMETER = 'reacao';
+export const REACTION_URL_PARAMETER = 'reação';
 
 export function isDigit(str: string) {
     return str.length === 1 && str >= '0' && str <= '9';
@@ -17,6 +17,16 @@ export function isDigit(str: string) {
 export function removeAccents(str: string) {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
+
+export function removeParentheses(str: string) {
+    str = str.replace(/\s*\([^)]*\)\s*/g, ' ');
+
+    str = str.replace(/\s+/g, ' ');
+
+    str = str.trim();
+
+    return str;
+};
 
 export function interpolate(template: string, data: { [key: string]: string }) {
     return template.replace(/{{\s*(.*?)\s*}}/g, (_, key) => {

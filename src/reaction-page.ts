@@ -1,13 +1,19 @@
-import { convertText, interpolate } from './common';
+import { convertText, interpolate, removeAccents, removeParentheses } from './common';
 import molecules from './molecules';
 import reactions from './reactions';
 //@ts-ignore
 import template from '../templates/reaction-page.html';
 
 export default function openReaction(container: HTMLDivElement, name: string) {
-    document.title = name;
+    name = removeAccents(removeParentheses(name)).replaceAll('-', ' ').toLowerCase();
+    
+    const reaction = reactions.find(r => removeAccents(removeParentheses(r.nome)).toLowerCase() === name);
 
-    const reaction = reactions.find(r => r.nome === name)!;
+    if (!reaction)
+        return window.location.assign('.');
+    
+    document.title = reaction.nome;
+
     const template_data = {
         ...reaction,
         'reagentes': reaction.reagentes.map(text => `${text} (${molecules[text]})`).join(", "),

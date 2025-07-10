@@ -98,6 +98,7 @@ h1 {
     color: var(--h1-color);
     font-weight: var(--h1-weight);
     font-family: var(--h1-font);
+    clip-path: none;
 
     text-align: center;
     position: relative;

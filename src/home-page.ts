@@ -1,6 +1,6 @@
 import molecules from './molecules';
 import reactions from './reactions';
-import { insertTextAtCursor, interpolate, isDigit, Reaction, REACTION_URL_PARAMETER, removeAccents } from './common';
+import { insertTextAtCursor, interpolate, isDigit, Reaction, REACTION_URL_PARAMETER, removeAccents, removeParentheses } from './common';
 //@ts-ignore
 import template from '../templates/home-page.html';
 
@@ -164,7 +164,7 @@ function addReactionsTable() {
            Tome cuidado com o gerenciamento de memória quando for implementar isso
         */
         const url = new URL(window.location.href);
-        url.searchParams.set(REACTION_URL_PARAMETER, name);
+        url.searchParams.set(REACTION_URL_PARAMETER, removeParentheses(name).replaceAll(' ', '-').toLowerCase());
         window.location.assign(url);
     });
 

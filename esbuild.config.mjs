@@ -11,7 +11,7 @@ const context = await esbuild.context({
     entryPoints: ['src/index.ts', 'styles/index.css'],
     bundle: true,
     minify: prod,
-    sourcemap: prod ? false : "inline",
+    sourcemap: prod ? false : 'inline',
     outdir: outdir,
     loader: {
         '.ts': 'ts',
@@ -25,11 +25,11 @@ const context = await esbuild.context({
     target: ['chrome58', 'firefox57', 'safari11', 'edge16']
 });
 
-const dataToCopy = ['index.html', 'reactions'];
+const dataToCopy = ['index.html', 'reação'];
 for (const data of dataToCopy) {
     const target = path.join(outdir, data);
     try {
-        await fs.promises.cp(data, target, { recursive: true });
+        await fs.promises.cp(data, target, { recursive: true, force: true });
     } catch (err) {
         console.error(`Error copying ${data}:`, err);
     }
@@ -37,19 +37,20 @@ for (const data of dataToCopy) {
     if (prod)
         continue;
 
-    let fsWait = false;
+    let fsWait = undefined;
     fs.watch(data, { persistent: true, recursive: true }, async (eventType) => {
         if (eventType === 'change' || eventType === 'rename') {
-            if (fsWait) return;
-            fsWait = setTimeout(() => {
-                fsWait = false;
-            }, 300);
+            clearTimeout(fsWait);
+            
+            fsWait = setTimeout(async () => {
+                fsWait = undefined;
 
-            try {
-                await fs.promises.cp(data, target, { recursive: true });
-            } catch (err) {
-                console.error(`Error copying ${data}:`, err);
-            }
+                try {
+                    await fs.promises.cp(data, target, { recursive: true, force: true });
+                } catch (err) {
+                    console.error(`Error copying ${data}:`, err);
+                }
+            }, 300);
         }
     });
 }
