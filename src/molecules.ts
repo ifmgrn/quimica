@@ -9,4 +9,4 @@ export default {
     "CO₂": "dióxido de carbono",
     "MgO": "óxido de magnésio",
     "Fe₂O₃": "óxido de ferro / ferrugem"
-};
+} as { [key: string]: string };

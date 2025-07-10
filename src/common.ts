@@ -1,16 +1,40 @@
-import molecules from './molecules.js';
-import reactions from './reactions.js';
+export type Reaction = {
+    nome: string,
+    tipo: string,
+    reagentes: string[],
+    produtos: string[],
+    equacao: string,
+    embedded_link: string,
+    instrucoes: string
+};
 
-function convertText(input) {
+export const REACTION_URL_PARAMETER = 'reacao';
+
+export function isDigit(str: string) {
+    return str.length === 1 && str >= '0' && str <= '9';
+}
+
+export function removeAccents(str: string) {
+    return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+export function interpolate(template: string, data: { [key: string]: string }) {
+    return template.replace(/{{\s*(.*?)\s*}}/g, (_, key) => {
+        key = removeAccents(key.trim()).toLowerCase();
+        return data[key] !== undefined ? data[key] : '';
+    });
+}
+
+export function convertText(input: string) {
     const lines = input.split('\n');
 
     let html = '';
-    const listStack = []; // Stack of {type: 'ul'|'ol', indent: number, openLi: boolean}
+    const listStack: {type: 'ul'|'ol', indent: number, openLi: boolean}[] = [];
 
     // Close lists with indentation strictly greater than targetIndent
-    function closeLists(targetIndent) {
+    function closeLists(targetIndent: number) {
         while (listStack.length > 0 && listStack[listStack.length - 1].indent > targetIndent) {
-            const list = listStack.pop();
+            const list = listStack.pop()!;
             // Close the last <li> if still open
             if (list.openLi) {
                 html += '</li>';
@@ -121,32 +145,16 @@ function convertText(input) {
     return html;
 }
 
-function generatePageForReaction(reaction) {
-    return `<h1>${reaction.nome}</h1>
-        <div id="reaction-details-container">
-            <ul>
-                <li>Tipo: ${reaction.tipo}</li>
-                <li>Reagente(s): ${reaction.reagentes.map(text => `${text} (${molecules[text]})`).join(", ")}</li>
-                <li>Produto(s): ${reaction.produtos.map(text => `${text} (${molecules[text]})`).join(", ")}</li>
-                <li>Equação balanceada: ${reaction.equacao}</li>
-            </ul>
-        </div>
+export function insertTextAtCursor(input: HTMLInputElement, text: string) {
+    const start = input.selectionStart ?? 0;
+    const end = input.selectionEnd ?? 0;
+    const value = input.value;
 
-        <h2>Demonstração</h2>
-        <div class="iframe-wrapper">
-            <iframe src="${reaction.youtube_embed}" title="YouTube video player" frameborder="0" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-        </div>
+    input.value = value.substring(0, start) + text + value.substring(end);
 
-        <h2>Instruções</h2>
-        <div id="instructions-container">
-            ${convertText(reaction.instrucoes)}
-        </div>
-        
-        <p class="hyperlink-wrapper"><a href="${window.location.pathname}">Voltar para a página principal</a></p>`;
-}
+    const newCursorPos = start + text.length;
+    input.selectionStart = input.selectionEnd = newCursorPos;
 
-export default function openReaction(reaction) {
-    document.title = reaction;
-
-    document.getElementById('container').innerHTML = generatePageForReaction(reactions.find(r => r.nome === reaction));
+    input.focus();
+    input.dispatchEvent(new Event('input', { bubbles: true }));
 }

@@ -1,0 +1,24 @@
+<h1>{{ nome }}</h1>
+
+<div id="reaction-details-container">
+    <ul>
+        <li>Tipo: {{ tipo }}</li>
+        <li>Reagente(s): {{ reagentes }}</li>
+        <li>Produto(s): {{ produtos }}</li>
+        <li>Equação balanceada: {{ equacao }}</li>
+    </ul>
+</div>
+
+<h2>Demonstração</h2>
+<div class="iframe-wrapper">
+    <iframe src="{{ embedded_link }}" title="YouTube video player" frameborder="0" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+</div>
+
+<h2>Instruções</h2>
+<div id="instructions-container">
+    {{ instrucoes }}
+</div>
+
+<p class="hyperlink-wrapper">
+    <a href=".">Voltar para a página principal</a>
+</p>

@@ -1,3 +1,5 @@
+import { Reaction } from "./common";
+
 export default [
     {
         "nome": "Formação da água",
@@ -5,7 +7,7 @@ export default [
         "reagentes": ["H₂", "O₂"],
         "produtos": ["H₂O"],
         "equacao": "2H₂ (g) + O₂ (g) → 2H₂O (l)",
-        "youtube_embed": "https://www.youtube-nocookie.com/embed/SLEWHmhDdhU",
+        "embedded_link": "https://www.youtube-nocookie.com/embed/SLEWHmhDdhU",
         "instrucoes": 
             "1) Preparação dos reagentes"
                 + "\n\t- O hidrogênio (H₂) e o oxigênio (O₂) devem estar em estado gasoso e puros."
@@ -26,7 +28,7 @@ export default [
         "reagentes": ["CH₄", "O₂"],
         "produtos": ["CO₂", "H₂O"],
         "equacao": "CH₄ (g) + 2O₂ (g) → CO₂ (g) + 2H₂O (l)",
-        "youtube_embed": "https://www.youtube-nocookie.com/embed/LIksHpDPOA4",
+        "embedded_link": "https://www.youtube-nocookie.com/embed/LIksHpDPOA4",
         "instrucoes":
             "1) Preparação do combustível e comburente"
                 + "\n\t- O combustível é o gás metano (CH₄)."
@@ -48,7 +50,7 @@ export default [
         "reagentes": ["Mg", "O₂"],
         "produtos": ["MgO"],
         "equacao": "2Mg (s) + O₂ (g) → 2MgO (s)",
-        "youtube_embed": "https://www.youtube-nocookie.com/embed/OuFqtxZJRvM",
+        "embedded_link": "https://www.youtube-nocookie.com/embed/OuFqtxZJRvM",
         "instrucoes":
             "1) Preparação dos reagentes"
                 + "\n\t- Utilize uma fita ou pedaço de magnésio metálico puro."
@@ -67,7 +69,7 @@ export default [
         "reagentes": ["H₂O₂"],
         "produtos": ["H₂O", "O₂"],
         "equacao": "2 H₂O₂ (aq) → 2 H₂O (l) + O₂ (g)",
-        "youtube_embed": "https://www.youtube-nocookie.com/embed/23FSofg12gk",
+        "embedded_link": "https://www.youtube-nocookie.com/embed/23FSofg12gk",
         "instrucoes":
             "1) Preparação da solução"
                 + "\n\t- Utilize uma solução aquosa de água oxigenada (H₂O₂) comercial, geralmente 3% a 20% em volume."
@@ -86,7 +88,7 @@ export default [
         "reagentes": ["Fe", "O₂"],
         "produtos": ["Fe₂O₃"],
         "equacao": "4 Fe (s) + 3 O₂ (g) → 2 Fe₂O₃ (s)",
-        "youtube_embed": "https://www.youtube-nocookie.com/embed/_Lq4qheXDqE",
+        "embedded_link": "https://www.youtube-nocookie.com/embed/_Lq4qheXDqE",
         "instrucoes":
             "1) Materiais necessários"
                 + "\n\t- Palha de aço (esponja de aço)"
@@ -120,4 +122,4 @@ export default [
                 + "\n\t- Realize o experimento em local ventilado."
                 + "\n\t- Não ingira os líquidos utilizados e mantenha-os fora do alcance de crianças."
     }
-];
+] as Reaction[];
