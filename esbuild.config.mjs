@@ -25,7 +25,7 @@ const context = await esbuild.context({
     target: ['chrome58', 'firefox57', 'safari11', 'edge16']
 });
 
-const dataToCopy = ['index.html', 'reação'];
+const dataToCopy = ['index.html'];
 for (const data of dataToCopy) {
     const target = path.join(outdir, data);
     try {

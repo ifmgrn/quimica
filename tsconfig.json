@@ -9,7 +9,7 @@
         "isolatedModules": true,
         "lib": ["es2024", "dom"],
         "rootDir": "src",
-        "outDir": "dist",
+        "outDir": "dist/src",
         "esModuleInterop": true,
         "forceConsistentCasingInFileNames": true,
         "noImplicitOverride": true,
