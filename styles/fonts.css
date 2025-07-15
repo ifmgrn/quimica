@@ -22,7 +22,7 @@
 @font-face {
     font-family: "ParkLaneNF";
     src: url("../resources/fonts/ParkLaneNF.woff2") format("woff2");
-    font-display: fallback;
+    font-display: swap;
 }
 
 /* https://fonts.google.com/specimen/Limelight
@@ -31,5 +31,5 @@
 @font-face {
     font-family: "Limelight";
     src: url("../resources/fonts/Limelight-Regular.woff2") format("woff2");
-    font-display: fallback;
+    font-display: swap;
 }

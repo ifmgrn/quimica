@@ -1,22 +1,36 @@
-@import url("tree-view.css");
+@import url("common.css");
 
 :root {
-    --h2-font: "Limelight", "Notable", "Noto", "Inter";
+    --heading-spacing: calc(var(--p-spacing) * 2.5);
+
+    --h2-font: "Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
     --h2-color: var(--accent-color);
     --h2-weight: 200;
     --h2-line-height: 1.2em;
     --h2-size: 1.8em;
+
+    --indent-unit: 0.5625em;
+    --list-spacing: 0.075em;
+    --list-indent: calc(var(--indent-unit) * var(--indent-size));
+    --indentation-guide-width: 2px;
+    --indentation-guide-color: color-mix(in lab, var(--background-primary), var(--text-normal) 15%);
+    --indentation-guide-reading-indent: -0.8em;
+    --radius-m: 8px;
+    --list-top-offset: -0.65em;
 }
 
 h2 {
+    margin-top: var(--heading-spacing);
+
     display: flex;
     align-items: center;
     gap: 20px;
 
+    color: var(--h2-color);
     letter-spacing: -0.015em;
     line-height: var(--h2-line-height);
+    
     font-size: var(--h2-size);
-    color: var(--h2-color);
     font-weight: var(--h2-weight);
     font-family: var(--h2-font);
 }
@@ -28,15 +42,90 @@ h2::before, h2::after {
     height: 1px;
 }
 
-.iframe-wrapper {
-    position: relative;
-    width: 100%;
-    padding-bottom: 56.25%;
-    height: 0;
-    overflow: hidden;
+.center {
+    display: table;
+    margin-left: auto;
+    margin-right: auto;
 }
 
-.iframe-wrapper iframe {
+ul, ol {
+    padding-inline-start: 0;
+    margin-block-start: 0;
+    display: flow-root;
+    position: relative;
+}
+ul {
+    list-style-type: disc;
+}
+ul::before, ol::before {
+    content: "";
+    position: absolute;
+    display: block;
+    inset-inline-start: var(--indentation-guide-reading-indent);
+    border-inline-end: var(--indentation-guide-width) solid var(--indentation-guide-color);
+    bottom: calc(0.5em * var(--line-height-normal) + 2px + var(--radius-m));
+    top: calc(var(--list-top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
+    z-index: 1;
+}
+
+:is(ol, ul) :is(ol, ul):first-child {
+    margin-block-start: var(--p-spacing);
+}
+:is(ol, ul) :is(ol, ul):last-child {
+    margin-block-end: var(--p-spacing);
+}
+
+li {
+    padding-top: var(--list-spacing);
+    padding-bottom: var(--list-spacing);
+
+    margin-inline-start: 3ch;
+    position: relative;
+}
+li::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: calc(var(--list-top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
+    left: calc(-1 * var(--list-indent) + var(--indentation-guide-reading-indent));
+    width: calc(var(--list-indent) - 8px);
+    height: calc(1.25em * var(--line-height-normal));
+    border: solid var(--indentation-guide-color);
+    border-width: 0 0 var(--indentation-guide-width) var(--indentation-guide-width);
+    border-bottom-left-radius: var(--radius-m);
+    pointer-events: none;
+}
+li::marker {
+    color: var(--accent-color);
+}
+
+@keyframes bg-slide {
+    from {
+        right: 100%;
+    }
+    to {
+        right: 0;
+    }
+}
+li:hover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background: linear-gradient(to right, var(--accent-color), transparent 100%);
+    opacity: 0.2;
+    animation: bg-slide 0.5s ease-in-out;
+}
+
+.aspect-ratio-wrapper {
+    position: relative;
+    padding-top: 56.25%;
+    width: 100%;
+    height: 0;
+}
+.aspect-ratio-wrapper iframe {
     position: absolute;
     top: 0;
     left: 0;
@@ -45,32 +134,12 @@ h2::before, h2::after {
     border: 0;
 }
 
-.hyperlink-wrapper {
-    text-align: center;
+h2.instructions {
+    margin-bottom: 0;
 }
 
-#reaction-details-container {
-    text-align: center;
-}
-#reaction-details-container > :first-child {
-    display: inline-block;
-    text-align: left;
-    margin: 0;
-}
-
-#instructions-container {
-    width: 94%;
+.margin {
+    width: 88%;
     margin-left: auto;
     margin-right: auto;
-}
-
-#reaction-details-container > ul {
-    --top-offset: -0.6em;
-    --li-after-height: 1.17em;
-}
-
-#instructions-container > ol::before,
-#instructions-container > ol > :first-child::after {
-    --top-offset: -1.33em;
-    --li-after-height: 1.9em;
 }
