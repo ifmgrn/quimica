@@ -21,7 +21,9 @@ const SUBSCRIPTS_CONTAINER_ID = 'subscripts-container',
       REACTIONS_TABLE_ID = 'reactions-table',
       CLICKABLE_ROW_CLASS = 'clickable-row';
 
-let container: HTMLDivElement,
+const SEARCH_URL_PARAMETER = 'pesquisa';
+
+let container: HTMLElement,
     input: HTMLInputElement,
     table: HTMLTableElement;
 
@@ -71,6 +73,16 @@ function addSearchInput() {
             insertTextAtCursor(input, numberToSubscriptMap[event.key]);
             event.preventDefault();
         }
+    });
+    
+    let typingTimer: number;
+    input.addEventListener('input', () => {
+        clearTimeout(typingTimer);
+
+        typingTimer = setTimeout(() => {
+            history.pushState(null, '', input.value ? `?${SEARCH_URL_PARAMETER}=${encodeURIComponent(input.value)}` : window.location.pathname);
+            search();
+        }, 1000);
     });
 
     document.addEventListener('keydown', (event) => {
@@ -144,13 +156,6 @@ function search(query?: string) {
 function addReactionsTable() {
     table = document.getElementById(REACTIONS_TABLE_ID) as HTMLTableElement;
 
-    let typingTimer: number;
-    input.addEventListener('input', () => {
-        clearTimeout(typingTimer);
-
-        typingTimer = setTimeout(search, 1000);
-    });
-
     table.addEventListener('click', (event) => {
         if (!event.target) return;
 
@@ -163,17 +168,25 @@ function addReactionsTable() {
         /* TODO: substituir o conteúdo da página sem precisar recarregá-la 
            Tome cuidado com o gerenciamento de memória quando for implementar isso
         */
-        const url = new URL(window.location.href);
-        url.searchParams.set(REACTION_URL_PARAMETER, removeParentheses(name).replaceAll(' ', '-').toLowerCase());
-        window.location.assign(url);
+        const basePath = window.location.href.slice(0, window.location.href.lastIndexOf('/'));
+        window.location.assign(`${basePath}/?${REACTION_URL_PARAMETER}=${encodeURIComponent(removeParentheses(name).replaceAll(' ', '-').toLowerCase())}`);
     });
+}
+
+function onPopstate() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchQuery = urlParams.get(SEARCH_URL_PARAMETER);
+    input.value = searchQuery ?? '';
 
     search();
 }
 
-export default function openHomepage(localContainer: HTMLDivElement) {
+export default function openHomepage(localContainer: HTMLElement) {
     container = localContainer;
     
     addSearchInput();
     addReactionsTable();
+
+    onPopstate();
+    window.addEventListener('popstate', onPopstate);
 }

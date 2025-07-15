@@ -1,10 +1,10 @@
-import { convertText, interpolate, removeAccents, removeParentheses } from './common';
+import { convertTextToHTMLList, interpolate, removeAccents, removeParentheses } from './common';
 import molecules from './molecules';
 import reactions from './reactions';
 //@ts-ignore
 import template from '../templates/reaction-page.html';
 
-export default function openReaction(container: HTMLDivElement, name: string) {
+export default function openReaction(container: HTMLElement, name: string) {
     name = removeAccents(removeParentheses(name)).replaceAll('-', ' ').toLowerCase();
     
     const reaction = reactions.find(r => removeAccents(removeParentheses(r.nome)).toLowerCase() === name);
@@ -18,7 +18,7 @@ export default function openReaction(container: HTMLDivElement, name: string) {
         ...reaction,
         'reagentes': reaction.reagentes.map(text => `${text} (${molecules[text]})`).join(", "),
         'produtos': reaction.produtos.map(text => `${text} (${molecules[text]})`).join(", "),
-        'instrucoes': convertText(reaction.instrucoes)
+        'instrucoes': convertTextToHTMLList(reaction.instrucoes)
     };
 
     container.insertAdjacentHTML('beforeend', 

@@ -5,9 +5,7 @@ import openReaction from './reaction-page';
 const urlParams = new URLSearchParams(removeAccents(decodeURIComponent(window.location.search)).toLowerCase());
 const reaction = urlParams.get(removeAccents(REACTION_URL_PARAMETER));
 
-const container = document.getElementById('container') as HTMLDivElement;
-
 if (reaction)
-    openReaction(container, reaction);
+    openReaction(document.body, reaction);
 else
-    openHomepage(container);
+    openHomepage(document.body);

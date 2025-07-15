@@ -10,24 +10,26 @@ export type Reaction = {
 
 export const REACTION_URL_PARAMETER = 'reação';
 
+/* Verifica se o caractere dado é um algarismo. */
 export function isDigit(str: string) {
     return str.length === 1 && str >= '0' && str <= '9';
 }
 
+/* Remove todos os acentos do texto dado, incluindo coisas como "ç" (que vira "c"). */
 export function removeAccents(str: string) {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
+/* Remove parênteses e os seus conteúdos do texto dado. */
 export function removeParentheses(str: string) {
     str = str.replace(/\s*\([^)]*\)\s*/g, ' ');
-
     str = str.replace(/\s+/g, ' ');
-
     str = str.trim();
 
     return str;
 };
 
+/* Substitui as variáveis no formato "{{ nome }}" do texto dado pelos valores passados no "data". */
 export function interpolate(template: string, data: { [key: string]: string }) {
     return template.replace(/{{\s*(.*?)\s*}}/g, (_, key) => {
         key = removeAccents(key.trim()).toLowerCase();
@@ -35,7 +37,8 @@ export function interpolate(template: string, data: { [key: string]: string }) {
     });
 }
 
-export function convertText(input: string) {
+/* Converte o texto dado para listas em HTML, usando "\t" para indentação. */
+export function convertTextToHTMLList(input: string) {
     const lines = input.split('\n');
 
     let html = '';
@@ -155,6 +158,7 @@ export function convertText(input: string) {
     return html;
 }
 
+/* Insere o texto dado na posição onde está o cursor do <input> dado. */
 export function insertTextAtCursor(input: HTMLInputElement, text: string) {
     const start = input.selectionStart ?? 0;
     const end = input.selectionEnd ?? 0;
