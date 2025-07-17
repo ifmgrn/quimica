@@ -46,7 +46,8 @@ body {
     tab-size: var(--indent-size);
 
     overflow-x: hidden;
-    margin: 8px 0;
+    margin: 8px auto;
+    width: 88%;
 }
 
 .top-art-deco-frame {

@@ -8,7 +8,7 @@ export type Reaction = {
     instrucoes: string
 };
 
-export const REACTION_URL_PARAMETER = 'reação';
+export const REACTION_URL_PARAMETER = 'r';
 
 /* Verifica se o caractere dado é um algarismo. */
 export function isDigit(str: string) {

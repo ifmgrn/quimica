@@ -21,11 +21,13 @@ const SUBSCRIPTS_CONTAINER_ID = 'subscripts-container',
       REACTIONS_TABLE_ID = 'reactions-table',
       CLICKABLE_ROW_CLASS = 'clickable-row';
 
-const SEARCH_URL_PARAMETER = 'pesquisa';
+const SEARCH_URL_PARAMETER = 'p';
 
 let container: HTMLElement,
     input: HTMLInputElement,
     table: HTMLTableElement;
+
+let lastInputValue = '';
 
 function addSearchInput() {
     const template_data = {
@@ -67,7 +69,7 @@ function addSearchInput() {
             event.preventDefault();
             input.blur();
         }
-        else if (event.altKey && isDigit(event.key)) {
+        else if (event.ctrlKey && isDigit(event.key)) {
             const numberToSubscriptMap: { [key: string]: string } = {'0': '₀', '1': '₁', '2': '₂', '3': '₃', '4': '₄', '5': '₅', '6': '₆', '7': '₇', '8': '₈', '9': '₉'};
             
             insertTextAtCursor(input, numberToSubscriptMap[event.key]);
@@ -79,23 +81,20 @@ function addSearchInput() {
     input.addEventListener('input', () => {
         clearTimeout(typingTimer);
 
-        typingTimer = setTimeout(() => {
-            history.pushState(null, '', input.value ? `?${SEARCH_URL_PARAMETER}=${encodeURIComponent(input.value)}` : window.location.pathname);
-            search();
-        }, 1000);
+        typingTimer = setTimeout(search, 1000);
     });
 
     document.addEventListener('keydown', (event) => {
         if (
             document.activeElement !== input 
-            && !event.ctrlKey 
+            && !event.altKey 
             && !event.metaKey 
-            && (!event.altKey || isDigit(event.key))
+            && (!event.ctrlKey || isDigit(event.key))
             && !['Escape', 'ArrowUp', 'ArrowDown'].includes(event.key)
         ) {
             input.focus();
-            if (event.altKey && isDigit(event.key)) {
-                input.dispatchEvent(new KeyboardEvent('keydown', { altKey: true, key: event.key }));
+            if (event.ctrlKey && isDigit(event.key)) {
+                input.dispatchEvent(new KeyboardEvent('keydown', { ctrlKey: true, key: event.key }));
                 event.preventDefault();
             }
         }
@@ -122,10 +121,19 @@ function generateReactionsTable(data: Reaction[]) {
         }, '')}`;
 }
 
-function search(query?: string) {
+function search(query?: string, addToHistory = true) {
     if (query === undefined)
         query = input.value;
+    else
+        input.value = query;
     
+    if (lastInputValue === query)
+        return;
+
+    if (addToHistory)
+        history.pushState(null, '', query ? `?${SEARCH_URL_PARAMETER}=${encodeURIComponent(query)}` : window.location.pathname);
+
+    lastInputValue = query;
     query = removeAccents(query).toLowerCase();
 
     if (query.length === 0) {
@@ -176,9 +184,7 @@ function addReactionsTable() {
 function onPopstate() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get(SEARCH_URL_PARAMETER);
-    input.value = searchQuery ?? '';
-
-    search();
+    search(searchQuery ?? '', false);
 }
 
 export default function openHomepage(localContainer: HTMLElement) {
