@@ -1,18 +1,9 @@
-import molecules from './molecules';
-import reactions from './reactions';
-import { insertTextAtCursor, interpolate, isDigit, Reaction, REACTION_URL_PARAMETER, removeAccents, removeParentheses } from './common';
+import { convertReactionNameToId, insertTextAtCursor, interpolate, isDigit, Reaction, REACTION_URL_PARAMETER, reactionsTableColumns } from './common';
+import { getSomeReactions, getDB, searchReactionByPrefix } from './indexed-db';
 //@ts-ignore
 import template from '../templates/home-page.html';
 
 const subscripts: { [key: string]: string } = {'X₀': '₀', 'X₁': '₁', 'X₂': '₂', 'X₃': '₃', 'X₄': '₄', 'X₅': '₅', 'X₆': '₆', 'X₇': '₇', 'X₈': '₈', 'X₉': '₉'};
-
-const reactions_table_columns: { [key: string]: keyof Reaction } = {
-    'Reação Química': 'nome',
-    'Tipo': 'tipo',
-    'Reagente(s)': 'reagentes',
-    'Produto(s)': 'produtos',
-    'Equação': 'equacao'
-};
 
 const SUBSCRIPTS_CONTAINER_ID = 'subscripts-container',
       REACTIONS_SEARCH_INPUT_ID = 'search-input',
@@ -27,7 +18,7 @@ let container: HTMLElement,
     input: HTMLInputElement,
     table: HTMLTableElement;
 
-let lastInputValue = '';
+let lastInputValue: string;
 
 function addSearchInput() {
     const template_data = {
@@ -101,27 +92,36 @@ function addSearchInput() {
     });
 }
 
-function generateReactionsTable(data: Reaction[]) {
-    const columns_order = Object.values(reactions_table_columns);
-    return `<tr>
-            ${Object.keys(reactions_table_columns).reduce((acc2, name) => acc2 + `<th>${name}</th>`, '')}
-        </tr>
-        ${data.reduce((accumulator, row) => {
-            return accumulator + `
-                <tr class="${CLICKABLE_ROW_CLASS}" data-name="${row.nome}">
-                    ${columns_order.reduce((acc2, key) => {
-                        return acc2 + 
-                        "<td>" +
-                            (key === 'reagentes' || key === 'produtos' 
-                            ? row[key].map(text => `${text} (${molecules[text]})`).join(", ")
-                            : row[key])
-                        + "</td>"
-                    }, '')}
-                </tr>`
-        }, '')}`;
+async function generateReactionsTable(data: Reaction[]) {
+    const columnsOrder = Object.values(reactionsTableColumns);
+
+    const headers = Object.keys(reactionsTableColumns)
+        .map(name => `<th>${name}</th>`)
+        .join('');
+
+    const tx = (await getDB()).transaction('molecules');
+    async function generateRow(row: Reaction) {
+        const cells = await Promise.all(columnsOrder.map(async (key) => {
+            if (key === 'reagentes' || key === 'produtos') {
+                const parts = await Promise.all(row[key].map(async text => 
+                    `${text} (${await tx.store.get(text)})`
+                ));
+                return `<td>${parts.join(', ')}</td>`;
+            }
+            return `<td>${row[key]}</td>`;
+        }));
+        return `<tr class="${CLICKABLE_ROW_CLASS}" data-name="${row.nome}">${cells.join('')}</tr>`;
+    }
+
+    const rows = await Promise.all(data.map(generateRow));
+
+    return `
+        <tr>${headers}</tr>
+        ${rows.join('')}
+    `;
 }
 
-function search(query?: string, addToHistory = true) {
+async function search(query?: string, addToHistory = true) {
     if (query === undefined)
         query = input.value;
     else
@@ -134,31 +134,13 @@ function search(query?: string, addToHistory = true) {
         history.pushState(null, '', query ? `?${SEARCH_URL_PARAMETER}=${encodeURIComponent(query)}` : window.location.pathname);
 
     lastInputValue = query;
-    query = removeAccents(query).toLowerCase();
 
     if (query.length === 0) {
-        table.innerHTML = generateReactionsTable(reactions);
+        table.innerHTML = await generateReactionsTable(await getSomeReactions());
         return;
     }
     
-    const check = (name: string) => removeAccents(name).toLowerCase().includes(query);
-    
-    const results = [];
-    for (const reaction of reactions) {
-        if (
-            check(reaction.nome)
-            || check(reaction.tipo)
-
-            || reaction.reagentes.some(value => check(value))
-            || reaction.reagentes.map(value => molecules[value]).some(value => check(value))
-
-            || reaction.produtos.some(value => check(value))
-            || reaction.produtos.map(value => molecules[value]).some(value => check(value))
-        )
-            results.push(reaction);
-    }
-
-    table.innerHTML = generateReactionsTable(results);
+    table.innerHTML = await generateReactionsTable(await searchReactionByPrefix(query));
 }
 
 function addReactionsTable() {
@@ -177,7 +159,7 @@ function addReactionsTable() {
            Tome cuidado com o gerenciamento de memória quando for implementar isso
         */
         const basePath = window.location.href.slice(0, window.location.href.lastIndexOf('/'));
-        window.location.assign(`${basePath}/?${REACTION_URL_PARAMETER}=${encodeURIComponent(removeParentheses(name).replaceAll(' ', '-').toLowerCase())}`);
+        window.location.assign(`${basePath}/?${REACTION_URL_PARAMETER}=${encodeURIComponent(convertReactionNameToId(name))}`);
     });
 }
 
@@ -187,12 +169,12 @@ function onPopstate() {
     search(searchQuery ?? '', false);
 }
 
-export default function openHomepage(localContainer: HTMLElement) {
+export default async function openHomepage(localContainer: HTMLElement) {
     container = localContainer;
     
     addSearchInput();
     addReactionsTable();
-
+    
     onPopstate();
     window.addEventListener('popstate', onPopstate);
 }

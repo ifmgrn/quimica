@@ -5,10 +5,21 @@ export type Reaction = {
     produtos: string[],
     equacao: string,
     embedded_link: string,
-    instrucoes: string
+    instrucoes: string,
+
+    id?: string,
+    terms?: string[]
 };
 
 export const REACTION_URL_PARAMETER = 'r';
+
+export const reactionsTableColumns: { [key: string]: keyof Reaction } = {
+    'Reação Química': 'nome',
+    'Tipo': 'tipo',
+    'Reagente(s)': 'reagentes',
+    'Produto(s)': 'produtos',
+    'Equação': 'equacao'
+};
 
 /* Verifica se o caractere dado é um algarismo. */
 export function isDigit(str: string) {
@@ -20,14 +31,13 @@ export function removeAccents(str: string) {
     return str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-/* Remove parênteses e os seus conteúdos do texto dado. */
-export function removeParentheses(str: string) {
-    str = str.replace(/\s*\([^)]*\)\s*/g, ' ');
-    str = str.replace(/\s+/g, ' ');
-    str = str.trim();
+export function normalizeString(str: string) {
+    return removeAccents(str).toLowerCase();
+}
 
-    return str;
-};
+export function convertReactionNameToId(name: string) {
+    return name.replaceAll(' ', '-').toLowerCase();
+}
 
 /* Substitui as variáveis no formato "{{ nome }}" do texto dado pelos valores passados no "data". */
 export function interpolate(template: string, data: { [key: string]: string }) {

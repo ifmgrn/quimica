@@ -7,6 +7,10 @@ settings:
 importers:
 
   .:
+    dependencies:
+      idb:
+        specifier: ^8.0.3
+        version: 8.0.3
     devDependencies:
       esbuild:
         specifier: ^0.25.6
@@ -178,6 +182,9 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
+  idb@8.0.3:
+    resolution: {integrity: sha512-LtwtVyVYO5BqRvcsKuB2iUMnHwPVByPCXFXOpuU96IZPPoPN6xjOGxZQ74pgSVVLQWtUOYgyeL4GE98BY5D3wg==}
+
   typescript@5.8.3:
     resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
     engines: {node: '>=14.17'}
@@ -291,5 +298,7 @@ snapshots:
       '@esbuild/win32-arm64': 0.25.6
       '@esbuild/win32-ia32': 0.25.6
       '@esbuild/win32-x64': 0.25.6
+
+  idb@8.0.3: {}
 
   typescript@5.8.3: {}

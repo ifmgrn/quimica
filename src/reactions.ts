@@ -1,4 +1,4 @@
-import { Reaction } from "./common";
+import { Reaction } from './common';
 
 export default [
     {

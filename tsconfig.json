@@ -5,7 +5,6 @@
         "target": "ES6",
         "module": "ESNext",
         "moduleResolution": "node",
-        "importHelpers": true,
         "isolatedModules": true,
         "lib": ["es2024", "dom"],
         "rootDir": "src",

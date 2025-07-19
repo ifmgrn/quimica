@@ -1,27 +1,37 @@
-import { convertTextToHTMLList, interpolate, removeAccents, removeParentheses } from './common';
-import molecules from './molecules';
-import reactions from './reactions';
+import { convertTextToHTMLList, interpolate } from './common';
+import { closeDB, getDB } from './indexed-db';
 //@ts-ignore
 import template from '../templates/reaction-page.html';
 
-export default function openReaction(container: HTMLElement, name: string) {
-    name = removeAccents(removeParentheses(name)).replaceAll('-', ' ').toLowerCase();
-    
-    const reaction = reactions.find(r => removeAccents(removeParentheses(r.nome)).toLowerCase() === name);
+export default async function openReaction(container: HTMLElement, name: string) {
+    const db = await getDB();
+
+    const reaction = await db.get('reactions', name);
 
     if (!reaction)
         return window.location.assign('.');
     
     document.title = reaction.nome;
 
+    const tx = db.transaction('molecules');
+
+    async function formatMolecules(molecules: string[]) {
+        const output = await Promise.all(molecules.map(async text => 
+            `${text} (${await tx.store.get(text)})`
+        ));
+        return output.join(', ');
+    }
+
     const template_data = {
         ...reaction,
-        'reagentes': reaction.reagentes.map(text => `${text} (${molecules[text]})`).join(", "),
-        'produtos': reaction.produtos.map(text => `${text} (${molecules[text]})`).join(", "),
+        'reagentes': await formatMolecules(reaction.reagentes),
+        'produtos': await formatMolecules(reaction.produtos),
         'instrucoes': convertTextToHTMLList(reaction.instrucoes)
     };
 
     container.insertAdjacentHTML('beforeend', 
-        interpolate(template, template_data)
+        interpolate(template, template_data as any)
     );
+
+    closeDB();
 }

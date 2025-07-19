@@ -13,6 +13,8 @@ const context = await esbuild.context({
     minify: prod,
     sourcemap: prod ? false : 'inline',
     outdir: outdir,
+    format: 'esm',
+    splitting: true,
     loader: {
         '.ts': 'ts',
         '.js': 'js',
@@ -22,7 +24,8 @@ const context = await esbuild.context({
     },
     entryNames: '[dir]/[name]', 
     assetNames: '[dir]/[name]',
-    target: ['chrome58', 'firefox57', 'safari11', 'edge16']
+    chunkNames: '[dir]/[name]',
+    target: ['chrome63', 'firefox67', 'safari12', 'edge79']
 });
 
 const dataToCopy = ['index.html'];
