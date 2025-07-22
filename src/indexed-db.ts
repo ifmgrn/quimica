@@ -110,16 +110,15 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
                 upgradePromise = new Promise(async resolve => {
                     const results = await Promise.all([
                         transaction.done,
-                        import('./molecules.js'),
-                        import('./reactions.js')
+                        import('./data.js')
                     ]);
 
-                    const molecules = results[1].default as { [key: string]: string },
-                          reactions = results[2].default as Reaction[];
+                    const molecules = results[1].molecules,
+                          reactions = results[1].reactions;
 
                     const tx = db.transaction(['reactions', 'molecules'], 'readwrite');
-                    for (const molecule of Object.entries(molecules))
-                        tx.objectStore('molecules').add(molecule[1], molecule[0]);
+                    for (const [ symbol, name ] of Object.entries(molecules))
+                        tx.objectStore('molecules').add(name, symbol);
 
                     for (const reaction of reactions) {
                         tx.objectStore('reactions').add({ 
