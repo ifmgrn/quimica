@@ -21,12 +21,8 @@ function tokenize(text: string) {
     return normalizeString(text).match(/[\p{L}\p{N}]+/gu) ?? [];
 }
 
-async function extractTerms(record: Reaction, molecules?: { [key: string]: string }) {
+function extractTerms(record: Reaction, molecules: { [key: string]: string }) {
     const fieldsToIndex: (keyof Reaction)[] = ['nome', 'tipo', 'reagentes', 'produtos'];
-    
-    let tx;
-    if (!molecules)
-        tx = (await getDB()).transaction('molecules');
 
     const terms = [];
     for (const field of fieldsToIndex) {
@@ -36,7 +32,7 @@ async function extractTerms(record: Reaction, molecules?: { [key: string]: strin
             terms.push(...tokenize(value));
         else if (Array.isArray(value)) {
             for (const v of value)
-                terms.push(...tokenize(v + ' ' + (molecules ? molecules[v] : await tx!.store.get(v))));
+                terms.push(...tokenize(v + ' ' + molecules[v]));
         }
     }
 
@@ -107,28 +103,28 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
                 db.createObjectStore('reactions', { keyPath: 'id' })
                     .createIndex('terms_idx', 'terms', { multiEntry: true });
 
-                upgradePromise = new Promise(async resolve => {
-                    const results = await Promise.all([
+                upgradePromise = new Promise((resolve, reject) => {
+                    Promise.all([
                         transaction.done,
                         import('./data.js')
-                    ]);
+                    ]).then(results => {
+                        const molecules = results[1].molecules,
+                            reactions = results[1].reactions;
 
-                    const molecules = results[1].molecules,
-                          reactions = results[1].reactions;
+                        const tx = db.transaction(['reactions', 'molecules'], 'readwrite');
+                        for (const [ symbol, name ] of Object.entries(molecules))
+                            tx.objectStore('molecules').add(name, symbol);
 
-                    const tx = db.transaction(['reactions', 'molecules'], 'readwrite');
-                    for (const [ symbol, name ] of Object.entries(molecules))
-                        tx.objectStore('molecules').add(name, symbol);
+                        for (const reaction of reactions) {
+                            tx.objectStore('reactions').add({ 
+                                ...reaction, 
+                                id: convertReactionNameToId(reaction.nome),
+                                terms: extractTerms(reaction, molecules) 
+                            });
+                        }
 
-                    for (const reaction of reactions) {
-                        tx.objectStore('reactions').add({ 
-                            ...reaction, 
-                            id: convertReactionNameToId(reaction.nome),
-                            terms: await extractTerms(reaction, molecules) 
-                        });
-                    }
-
-                    tx.done.then(resolve);
+                        return tx.done;
+                    }).then(resolve).catch(reject);
                 });
             }
         });

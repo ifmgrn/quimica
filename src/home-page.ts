@@ -1,6 +1,5 @@
 import { convertReactionNameToId, insertTextAtCursor, interpolate, isDigit, Reaction, REACTION_URL_PARAMETER, reactionsTableColumns } from './common';
 import { getSomeReactions, getDB, searchReactionByPrefix } from './indexed-db';
-//@ts-ignore
 import template from '../templates/home-page.html';
 
 const subscripts: { [key: string]: string } = {'X₀': '₀', 'X₁': '₁', 'X₂': '₂', 'X₃': '₃', 'X₄': '₄', 'X₅': '₅', 'X₆': '₆', 'X₇': '₇', 'X₈': '₈', 'X₉': '₉'};

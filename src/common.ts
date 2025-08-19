@@ -40,10 +40,10 @@ export function convertReactionNameToId(name: string) {
 }
 
 /* Substitui as variáveis no formato "{{ nome }}" do texto dado pelos valores passados no "data". */
-export function interpolate(template: string, data: { [key: string]: string }) {
+export function interpolate(template: string, data: { [key: string]: unknown }) {
     return template.replace(/{{\s*(.*?)\s*}}/g, (_, key) => {
         key = removeAccents(key.trim()).toLowerCase();
-        return data[key] !== undefined ? data[key] : '';
+        return String(data[key]);
     });
 }
 

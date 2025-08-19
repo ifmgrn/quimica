@@ -1,6 +1,5 @@
 import { convertTextToHTMLList, interpolate } from './common';
 import { closeDB, getDB } from './indexed-db';
-//@ts-ignore
 import template from '../templates/reaction-page.html';
 
 export default async function openReaction(container: HTMLElement, name: string) {
@@ -30,7 +29,7 @@ export default async function openReaction(container: HTMLElement, name: string)
     };
 
     container.insertAdjacentHTML('beforeend', 
-        interpolate(template, template_data as any)
+        interpolate(template, template_data)
     );
 
     closeDB();
