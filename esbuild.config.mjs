@@ -25,10 +25,18 @@ const context = await esbuild.context({
     entryNames: '[dir]/[name]', 
     assetNames: '[dir]/[name]',
     chunkNames: '[dir]/[name]',
-    target: ['chrome63', 'firefox67', 'safari12', 'edge79']
+    target: ['chrome63', 'firefox67', 'safari12', 'edge79'],
+    banner: {
+        js: 
+`/*
+    Copyright (c) 2025 John
+    This code is licensed under the GNU GPL-3.0 License.
+    See LICENSE file for details.
+*/`
+    }
 });
 
-const dataToCopy = ['index.html'];
+const dataToCopy = ['index.html', 'LICENSE.txt'];
 for (const data of dataToCopy) {
     const target = path.join(outdir, data);
     try {
