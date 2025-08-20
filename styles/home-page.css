@@ -1,9 +1,14 @@
 @import url("common.css");
 
 :root {
+    /* "color-mix" ainda não é amplamente suportado:
     --background-modifier-border-focus: color-mix(in lab, var(--background-primary), var(--text-normal) 40%);
     --background-modifier-form-field: color-mix(in lab, var(--background-primary), var(--text-normal) 25%);
     --background-modifier-border: color-mix(in lab, var(--background-primary), var(--text-normal) 20%);
+    */
+    --background-modifier-border-focus: #585757;
+    --background-modifier-form-field: #39393e;
+    --background-modifier-border: #2f3036;
     --input-height: 30px;
     --input-border-width: 1px;
     --input-radius: 0;
@@ -19,7 +24,11 @@
     --table-border-width: 1px;
     --table-white-space: break-spaces;
     --table-header-weight: 600;
+
+    /* "color-mix" ainda não é amplamente suportado:
     --table-border-color: color-mix(in lab, var(--background-primary), var(--text-normal) 10%);
+    */
+    --table-border-color: #1d1e26;
     --table-cell-vertical-alignment: top;
 }
 
@@ -30,24 +39,25 @@
 }
 
 #subscripts-container {
-    display: flex;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
     position: absolute;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
     bottom: 100%;
     left: 0;
-    white-space: nowrap;
     z-index: 10;
+    display: flex;
+    visibility: hidden;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    white-space: nowrap;
+    pointer-events: none;
+    opacity: 0;
 }
 
 #subscripts-container.visible {
-    opacity: 1;
     visibility: visible;
     pointer-events: auto;
+    opacity: 1;
 }
 
 #subscripts-container > :first-child {
@@ -59,30 +69,36 @@
 }
 
 .subscript-button {
-    color: var(--text-normal);
-    background-color: var(--background-modifier-border);
-    box-shadow: var(--input-shadow);
-    border: 0;
-    font-size: var(--font-ui-small);
-    padding: 4px 12px;
     height: var(--input-height);
+    padding: 4px 12px;
+    font-size: var(--font-ui-small);
     font-weight: var(--input-font-weight);
+    color: var(--text-normal);
+    
+    /* "outline" básico é amplamente suportado */
+    /* stylelint-disable-next-line plugin/use-baseline */
     outline: none;
+    background-color: var(--background-modifier-border);
+    border: 0;
+    box-shadow: var(--input-shadow);
 }
 
 input[type="search"] {
-    text-align: center;
     width: 100%;
     height: var(--input-height);
-    transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;
+    padding: 4px 8px;
+    font-family: inherit;
+    font-size: var(--font-ui-small);
+    color: var(--text-normal);
+    text-align: center;
+    
+    /* "outline" básico é amplamente suportado */
+    /* stylelint-disable-next-line plugin/use-baseline */
+    outline: none;
     background: var(--background-modifier-form-field);
     border: var(--input-border-width) solid var(--background-modifier-border);
-    color: var(--text-normal);
-    font-family: inherit;
-    padding: 4px 8px;
-    font-size: var(--font-ui-small);
     border-radius: var(--input-radius);
-    outline: none;
+    transition: box-shadow 0.15s ease-in-out, border 0.15s ease-in-out;
 }
 
 input[type="search"]:focus {
@@ -94,15 +110,23 @@ input[type="search"]:focus {
 }
 
 .search-input-wrapper::before {
-    top: calc((var(--input-height) - var(--search-icon-size)) / 2);
-    inset-inline-start: 8px;
     position: absolute;
-    content: "";
-    height: var(--search-icon-size);
-    width: var(--search-icon-size);
+    inset-inline-start: 8px;
+    top: calc((var(--input-height) - var(--search-icon-size)) / 2);
     display: block;
+    width: var(--search-icon-size);
+    height: var(--search-icon-size);
+    content: "";
     background-color: var(--search-icon-color);
+
+    /* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit" */
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'></circle><line x1='21' y1='21' x2='16.65' y2='16.65'></line></svg>");
+    /* stylelint-disable-next-line plugin/use-baseline */
     mask-image: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'></circle><line x1='21' y1='21' x2='16.65' y2='16.65'></line></svg>");
+    /* stylelint-disable-next-line property-no-vendor-prefix */
+    -webkit-mask-repeat: no-repeat;
+    /* stylelint-disable-next-line plugin/use-baseline */
     mask-repeat: no-repeat;
 }
 
@@ -113,26 +137,30 @@ input[type="search"]:focus {
 
 .table-wrapper {
     width: 100%;
+
+    /* "scrollbar-gutter" ainda não é amplamente suportado */
+    /* stylelint-disable-next-line plugin/use-defensive-css */
     overflow-x: auto;
+    overscroll-behavior-x: contain;
 }
 
 table {
-    border-collapse: collapse;
-    line-height: var(--table-line-height);
     width: 100%;
+    line-height: var(--table-line-height);
     overflow-wrap: break-word;
+    border-collapse: collapse;
 }
 
 th, td {
     padding: 4px 8px;
-    border: var(--table-border-width) solid var(--table-border-color);
-    white-space: var(--table-white-space);
     vertical-align: var(--table-cell-vertical-alignment);
+    white-space: var(--table-white-space);
+    border: var(--table-border-width) solid var(--table-border-color);
 }
 
 th {
-    border-bottom-width: calc(var(--table-border-width) + 2px);
     font-weight: var(--table-header-weight);
+    border-bottom-width: calc(var(--table-border-width) + 2px);
 }
 
 .clickable-row {

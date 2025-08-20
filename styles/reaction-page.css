@@ -11,44 +11,49 @@
     --list-spacing: 0.075em;
     --list-indent: calc(var(--indent-unit) * var(--indent-size));
     --indentation-guide-width: 2px;
+    
+    /* "color-mix" ainda não é amplamente suportado:
     --indentation-guide-color: color-mix(in lab, var(--background-primary), var(--text-normal) 15%);
+    */
+    --indentation-guide-color: #26262e;
     --indentation-guide-reading-indent: -0.8em;
     --radius-m: 8px;
     --list-top-offset: -0.65em;
 }
 
 h2 {
-    margin-top: var(--heading-spacing);
     display: flex;
-    align-items: center;
+    flex-wrap: nowrap;
     gap: 20px;
-    color: var(--h2-color);
-    letter-spacing: -0.015em;
-    line-height: var(--h2-line-height);
+    align-items: center;
+    margin-top: var(--heading-spacing);
+    font-family: var(--h2-font);
     font-size: var(--h2-size);
     font-weight: var(--h2-weight);
-    font-family: var(--h2-font);
+    line-height: var(--h2-line-height);
+    color: var(--h2-color);
+    letter-spacing: -0.015em;
 }
 
 h2::before, h2::after {
-    content: "";
     display: block;
     flex-grow: 1;
-    background-color: currentcolor;
     height: 1px;
+    content: "";
+    background-color: currentcolor;
 }
 
 .center {
     display: table;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
 }
 
 ul, ol {
+    position: relative;
+    display: flow-root;
     padding-inline-start: 0;
     margin-block-start: 0;
-    display: flow-root;
-    position: relative;
 }
 
 ul {
@@ -56,14 +61,14 @@ ul {
 }
 
 ul::before, ol::before {
-    content: "";
     position: absolute;
-    display: block;
     inset-inline-start: var(--indentation-guide-reading-indent);
-    border-inline-end: var(--indentation-guide-width) solid var(--indentation-guide-color);
-    bottom: calc(0.5em * var(--line-height-normal) + 2px + var(--radius-m));
     top: calc(var(--list-top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
+    bottom: calc(0.5em * var(--line-height-normal) + 2px + var(--radius-m));
     z-index: 1;
+    display: block;
+    content: "";
+    border-inline-end: var(--indentation-guide-width) solid var(--indentation-guide-color);
 }
 
 :is(ol, ul) :is(ol, ul):first-child {
@@ -75,26 +80,28 @@ ul::before, ol::before {
 }
 
 li {
+    position: relative;
     padding-top: var(--list-spacing);
     padding-bottom: var(--list-spacing);
     margin-inline-start: 3ch;
-    position: relative;
 }
 
 li::after {
-    content: "";
-    display: block;
     position: absolute;
     top: calc(var(--list-top-offset) * var(--line-height-normal) - var(--indentation-guide-width) * 0.5);
     left: calc(-1 * var(--list-indent) + var(--indentation-guide-reading-indent));
+    display: block;
     width: calc(var(--list-indent) - 8px);
     height: calc(1.25em * var(--line-height-normal));
+    pointer-events: none;
+    content: "";
     border: solid var(--indentation-guide-color);
     border-width: 0 0 var(--indentation-guide-width) var(--indentation-guide-width);
     border-bottom-left-radius: var(--radius-m);
-    pointer-events: none;
 }
 
+/* "marker" sem animações é amplamente suportado */
+/* stylelint-disable-next-line plugin/use-baseline */
 li::marker {
     color: var(--accent-color);
 }
@@ -109,20 +116,22 @@ li::marker {
     }
 }
 
-li:hover::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, var(--accent-color), transparent 100%);
-    opacity: 0.2;
-    animation: bg-slide 0.5s ease-in-out;
+@media (hover: hover) {
+    li:hover::before {
+        position: absolute;
+        inset: 0;
+        content: "";
+        background: linear-gradient(to right, var(--accent-color), transparent 100%);
+        opacity: 0.2;
+        animation: bg-slide 0.5s ease-in-out;
+    }
 }
 
 .aspect-ratio-wrapper {
     position: relative;
-    padding-top: 56.25%;
     width: 100%;
     height: 0;
+    padding-top: 56.25%;
 }
 
 .aspect-ratio-wrapper iframe {
@@ -140,6 +149,6 @@ h2.instructions {
 
 .margin {
     width: 94%;
-    margin-left: auto;
     margin-right: auto;
+    margin-left: auto;
 }

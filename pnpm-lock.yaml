@@ -24,9 +24,21 @@ importers:
       stylelint:
         specifier: ^16.23.1
         version: 16.23.1(typescript@5.8.3)
+      stylelint-config-recess-order:
+        specifier: ^7.2.0
+        version: 7.2.0(stylelint-order@7.0.0(stylelint@16.23.1(typescript@5.8.3)))(stylelint@16.23.1(typescript@5.8.3))
       stylelint-config-standard:
         specifier: ^39.0.0
         version: 39.0.0(stylelint@16.23.1(typescript@5.8.3))
+      stylelint-order:
+        specifier: ^7.0.0
+        version: 7.0.0(stylelint@16.23.1(typescript@5.8.3))
+      stylelint-plugin-defensive-css:
+        specifier: ^1.0.4
+        version: 1.0.4(stylelint@16.23.1(typescript@5.8.3))
+      stylelint-plugin-use-baseline:
+        specifier: ^0.8.2
+        version: 0.8.2(stylelint@16.23.1(typescript@5.8.3))
       typescript:
         specifier: ~5.8.3
         version: 5.8.3
@@ -948,6 +960,11 @@ packages:
     resolution: {integrity: sha512-8sLjZwK0R+JlxlYcTuVnyT2v+htpdrjDOKuMcOVdYjt52Lh8hWRYpxBPoKx/Zg+bcjc3wx6fmQevMmUztS/ccA==}
     engines: {node: '>=4'}
 
+  postcss-sorting@9.1.0:
+    resolution: {integrity: sha512-Mn8KJ45HNNG6JBpBizXcyf6LqY/qyqetGcou/nprDnFwBFBLGj0j/sNKV2lj2KMOVOwdXu14aEzqJv8CIV6e8g==}
+    peerDependencies:
+      postcss: ^8.4.20
+
   postcss-value-parser@4.2.0:
     resolution: {integrity: sha512-1NNCs6uurfkVbeXG4S8JFT9t19m45ICnif8zWLd5oPSZ50QnwMfK+H3jv408d4jw/7Bttv5axS5IiHoLaVNHeQ==}
 
@@ -1031,6 +1048,12 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
+  stylelint-config-recess-order@7.2.0:
+    resolution: {integrity: sha512-3Y97dhsWkUHFKRLGNLF6LE5JuNB2EVAZKYJ41wBRK4gplYdk7eHhSIwE24hanu0AoNmv5534Djip70pE+y5qkA==}
+    peerDependencies:
+      stylelint: '>=16.18'
+      stylelint-order: '>=7'
+
   stylelint-config-recommended@17.0.0:
     resolution: {integrity: sha512-WaMSdEiPfZTSFVoYmJbxorJfA610O0tlYuU2aEwY33UQhSPgFbClrVJYWvy3jGJx+XW37O+LyNLiZOEXhKhJmA==}
     engines: {node: '>=18.12.0'}
@@ -1042,6 +1065,23 @@ packages:
     engines: {node: '>=18.12.0'}
     peerDependencies:
       stylelint: ^16.23.0
+
+  stylelint-order@7.0.0:
+    resolution: {integrity: sha512-rSWxx0KscYfxU02wEskKXES9lkRzuuONMMNkZ7SUc6uiF3tDKm7e+sE0Ax/SBlG4TUf1sp1R6f3/SlsPGmzthg==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      stylelint: ^16.18.0
+
+  stylelint-plugin-defensive-css@1.0.4:
+    resolution: {integrity: sha512-8H5z8u+k/C88s1guEGwpcdZlbPhUdu0qHkQphqidCCchryx3/c95IFKiwg3aEhiXjADqdsOvMtckbqNDpjuU9g==}
+    engines: {node: '>=18.12.0'}
+    peerDependencies:
+      stylelint: ^14.0.0 || ^15.0.0 || ^16.0.0
+
+  stylelint-plugin-use-baseline@0.8.2:
+    resolution: {integrity: sha512-lo7yCNdEWvwPc3n6fDg/ZueTyxRG4paMZ3C1EtRG6o+qH1QKhxO0PYRo5373BlS3n7bzapZlR8exB1y9P1sR+A==}
+    peerDependencies:
+      stylelint: ^16.0.2
 
   stylelint@16.23.1:
     resolution: {integrity: sha512-dNvDTsKV1U2YtiUDfe9d2gp902veFeo3ecCWdGlmLm2WFrAV0+L5LoOj/qHSBABQwMsZPJwfC4bf39mQm1S5zw==}
@@ -1958,6 +1998,10 @@ snapshots:
       cssesc: 3.0.0
       util-deprecate: 1.0.2
 
+  postcss-sorting@9.1.0(postcss@8.5.6):
+    dependencies:
+      postcss: 8.5.6
+
   postcss-value-parser@4.2.0: {}
 
   postcss@8.5.6:
@@ -2042,6 +2086,11 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
+  stylelint-config-recess-order@7.2.0(stylelint-order@7.0.0(stylelint@16.23.1(typescript@5.8.3)))(stylelint@16.23.1(typescript@5.8.3)):
+    dependencies:
+      stylelint: 16.23.1(typescript@5.8.3)
+      stylelint-order: 7.0.0(stylelint@16.23.1(typescript@5.8.3))
+
   stylelint-config-recommended@17.0.0(stylelint@16.23.1(typescript@5.8.3)):
     dependencies:
       stylelint: 16.23.1(typescript@5.8.3)
@@ -2050,6 +2099,23 @@ snapshots:
     dependencies:
       stylelint: 16.23.1(typescript@5.8.3)
       stylelint-config-recommended: 17.0.0(stylelint@16.23.1(typescript@5.8.3))
+
+  stylelint-order@7.0.0(stylelint@16.23.1(typescript@5.8.3)):
+    dependencies:
+      postcss: 8.5.6
+      postcss-sorting: 9.1.0(postcss@8.5.6)
+      stylelint: 16.23.1(typescript@5.8.3)
+
+  stylelint-plugin-defensive-css@1.0.4(stylelint@16.23.1(typescript@5.8.3)):
+    dependencies:
+      stylelint: 16.23.1(typescript@5.8.3)
+
+  stylelint-plugin-use-baseline@0.8.2(stylelint@16.23.1(typescript@5.8.3)):
+    dependencies:
+      css-tree: 3.1.0
+      postcss: 8.5.6
+      postcss-value-parser: 4.2.0
+      stylelint: 16.23.1(typescript@5.8.3)
 
   stylelint@16.23.1(typescript@5.8.3):
     dependencies:

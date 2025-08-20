@@ -10,9 +10,6 @@ const banner = `/*
 
 export default defineConfig({
     base: '/reacoes-quimicas/',
-    build: {
-        target: ['chrome63', 'firefox67', 'safari11.1', 'edge79']
-    },
     plugins: [
         {
             name: 'inject-banner',
