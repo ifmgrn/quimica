@@ -1,20 +1,25 @@
 {
-    "compilerOptions": {
-        "baseUrl": ".",
-        "strict": true,
-        "target": "ES6",
-        "module": "ESNext",
-        "moduleResolution": "node",
-        "isolatedModules": true,
-        "lib": ["es2024", "dom"],
-        "rootDir": "src",
-        "outDir": "dist/src",
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "noImplicitOverride": true,
-        "noPropertyAccessFromIndexSignature": true,
-        "noFallthroughCasesInSwitch": true
-    },
-    "include": ["src/**/*"],
-    "exclude": []
+  "compilerOptions": {
+    "target": "ES2017",
+    "useDefineForClassFields": true,
+    "module": "ESNext",
+    "lib": ["ES2017", "DOM", "DOM.Iterable", "ES2018.AsyncIterable", "ES2021.String"],
+    "skipLibCheck": true,
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "noEmit": true,
+
+    /* Linting */
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "erasableSyntaxOnly": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedSideEffectImports": true
+  },
+  "include": ["src"]
 }

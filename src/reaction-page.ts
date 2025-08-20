@@ -1,6 +1,6 @@
 import { convertTextToHTMLList, interpolate } from './common';
 import { closeDB, getDB } from './indexed-db';
-import template from '../templates/reaction-page.html';
+import template from '../templates/reaction-page.html?raw';
 
 export default async function openReaction(container: HTMLElement, name: string) {
     const db = await getDB();

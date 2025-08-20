@@ -1,5 +1,5 @@
-import { convertReactionNameToId, normalizeString, Reaction } from './common';
-import { DBSchema, deleteDB, IDBPDatabase, openDB } from 'idb';
+import { convertReactionNameToId, normalizeString, type Reaction } from './common';
+import { type DBSchema, deleteDB, type IDBPDatabase, openDB } from 'idb';
 
 interface ChemistryDB extends DBSchema {
     reactions: {
@@ -98,7 +98,7 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
     return dbPromise = (async () => {
         let upgradePromise: Promise<void> | undefined;
         const db = await openDB<ChemistryDB>('ChemistryDB-dev', 1, {
-            upgrade(db, oldVersion, newVersion, transaction) {
+            upgrade(db, _oldVersion, _newVersion, transaction) {
                 db.createObjectStore('molecules'); 
                 db.createObjectStore('reactions', { keyPath: 'id' })
                     .createIndex('terms_idx', 'terms', { multiEntry: true });
@@ -109,7 +109,7 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
                         import('./data.js')
                     ]).then(results => {
                         const molecules = results[1].molecules,
-                            reactions = results[1].reactions;
+                              reactions = results[1].reactions;
 
                         const tx = db.transaction(['reactions', 'molecules'], 'readwrite');
                         for (const [ symbol, name ] of Object.entries(molecules))
