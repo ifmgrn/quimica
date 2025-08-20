@@ -7,6 +7,7 @@
     font-weight: 200 900;
     font-display: fallback;
 }
+
 @font-face {
     font-family: "Noto Serif";
     font-style: italic;
@@ -20,7 +21,7 @@
    LICENSE: [1001Fonts Free For Commercial Use License (FFC)](https://www.1001fonts.com/licenses/ffc.html)
 */
 @font-face {
-    font-family: "ParkLaneNF";
+    font-family: ParkLaneNF;
     src: url("../resources/fonts/ParkLaneNF.woff2") format("woff2");
     font-display: swap;
 }
@@ -29,7 +30,7 @@
    LICENSE: [Open Font License](https://openfontlicense.org/)
 */
 @font-face {
-    font-family: "Limelight";
+    font-family: Limelight;
     src: url("../resources/fonts/Limelight-Regular.woff2") format("woff2");
     font-display: swap;
 }

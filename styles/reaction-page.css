@@ -2,13 +2,11 @@
 
 :root {
     --heading-spacing: calc(var(--p-spacing) * 2.5);
-
     --h2-font: "Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
     --h2-color: var(--accent-color);
     --h2-weight: 200;
     --h2-line-height: 1.2em;
     --h2-size: 1.8em;
-
     --indent-unit: 0.5625em;
     --list-spacing: 0.075em;
     --list-indent: calc(var(--indent-unit) * var(--indent-size));
@@ -21,24 +19,22 @@
 
 h2 {
     margin-top: var(--heading-spacing);
-
     display: flex;
     align-items: center;
     gap: 20px;
-
     color: var(--h2-color);
     letter-spacing: -0.015em;
     line-height: var(--h2-line-height);
-    
     font-size: var(--h2-size);
     font-weight: var(--h2-weight);
     font-family: var(--h2-font);
 }
+
 h2::before, h2::after {
     content: "";
     display: block;
     flex-grow: 1;
-    background-color: currentColor;
+    background-color: currentcolor;
     height: 1px;
 }
 
@@ -54,9 +50,11 @@ ul, ol {
     display: flow-root;
     position: relative;
 }
+
 ul {
     list-style-type: disc;
 }
+
 ul::before, ol::before {
     content: "";
     position: absolute;
@@ -71,6 +69,7 @@ ul::before, ol::before {
 :is(ol, ul) :is(ol, ul):first-child {
     margin-block-start: var(--p-spacing);
 }
+
 :is(ol, ul) :is(ol, ul):last-child {
     margin-block-end: var(--p-spacing);
 }
@@ -78,10 +77,10 @@ ul::before, ol::before {
 li {
     padding-top: var(--list-spacing);
     padding-bottom: var(--list-spacing);
-
     margin-inline-start: 3ch;
     position: relative;
 }
+
 li::after {
     content: "";
     display: block;
@@ -95,6 +94,7 @@ li::after {
     border-bottom-left-radius: var(--radius-m);
     pointer-events: none;
 }
+
 li::marker {
     color: var(--accent-color);
 }
@@ -103,17 +103,16 @@ li::marker {
     from {
         right: 100%;
     }
+
     to {
         right: 0;
     }
 }
+
 li:hover::before {
     content: "";
     position: absolute;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
+    inset: 0;
     background: linear-gradient(to right, var(--accent-color), transparent 100%);
     opacity: 0.2;
     animation: bg-slide 0.5s ease-in-out;
@@ -125,6 +124,7 @@ li:hover::before {
     width: 100%;
     height: 0;
 }
+
 .aspect-ratio-wrapper iframe {
     position: absolute;
     top: 0;

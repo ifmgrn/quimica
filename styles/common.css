@@ -3,25 +3,20 @@
 
 :root {
     --p-spacing: 1rem;
-
     --accent-color: #8a5cf5;
 
-    /*--text-font-size: 16px;*/
+    /* --text-font-size: 16px; */
     --text-font-size: clamp(12px, 3vw, 16px);
-    /*--font-ui-small: 13px;*/
-    --font-ui-small: clamp(12px, 2vw, 13px);
-    --text-font: "Noto Serif", Georgia, "Times New Roman", serif;
 
+    /* --font-ui-small: 13px; */
+    --font-ui-small: clamp(12px, 2vw, 13px);
+    --text-font: "Noto Serif", georgia, "Times New Roman", serif;
     --line-height-normal: 1.5;
     --indent-size: 4;
-
     --page-margins: 32px 32px;
-
     --background-primary: #070918;
     --text-normal: #e2dec5;
-
     --text-muted: color-mix(in lab, var(--background-primary), var(--text-normal) 70%);
-
     --h1-font: "ParkLaneNF", "Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
     --h1-color: var(--accent-color);
     --h1-weight: 500;
@@ -38,13 +33,10 @@ body {
     padding: var(--page-margins);
     color: var(--text-normal);
     background-color: var(--background-primary);
-
     font-size: var(--text-font-size);
     font-family: var(--text-font);
-
     line-height: var(--line-height-normal);
     tab-size: var(--indent-size);
-
     overflow-x: hidden;
     margin: 8px auto;
     width: 88%;
@@ -57,6 +49,7 @@ body {
     top: 0;
     position: absolute;
 }
+
 .top-art-deco-frame::after {
     content: "";
     display: block;
@@ -83,27 +76,24 @@ h1 {
     margin-top: 0;
     color: var(--h1-color);
     text-align: center;
-    
     font-family: var(--h1-font);
     font-weight: var(--h1-weight);
     font-size: var(--h1-size);
-
     letter-spacing: -0.015em;
     line-height: var(--h1-line-height);
-    
     position: relative;
     clip-path: none;
     padding-block: 19px;
-
     z-index: 2;
 }
+
 h1::before {
     content: "";
     position: absolute;
     inset: 0;
     clip-path: unset;
     background-image: var(--art-deco-gradient);
-    mask: var(--art-deco-h-top-left) left top/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-top-right) right top/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-bottom-right) right bottom/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-bottom-left) left bottom/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-hline) var(--h1-corner-size) top/calc(100% - 2 * var(--h1-corner-size)) calc(0.2514469152 * var(--h1-corner-size)) no-repeat, var(--art-deco-h-hline) var(--h1-corner-size) bottom/calc(100% - 2 * var(--h1-corner-size)) calc(0.2514469152 * var(--h1-corner-size)) no-repeat, var(--art-deco-h-vline) left var(--h1-corner-size)/calc(0.2507139294 * var(--h1-corner-size)) calc(100% - 2 * var(--h1-corner-size)) no-repeat, var(--art-deco-h-vline) right var(--h1-corner-size)/calc(0.2514469152 * var(--h1-corner-size) - 0.5px) calc(100% - 2 * var(--h1-corner-size)) no-repeat;
+    mask: var(--art-deco-h-top-left) left top/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-top-right) right top/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-bottom-right) right bottom/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-bottom-left) left bottom/var(--h1-corner-size) var(--h1-corner-size) no-repeat, var(--art-deco-h-hline) var(--h1-corner-size) top/calc(100% - 2 * var(--h1-corner-size)) calc(0.2514 * var(--h1-corner-size)) no-repeat, var(--art-deco-h-hline) var(--h1-corner-size) bottom/calc(100% - 2 * var(--h1-corner-size)) calc(0.2514 * var(--h1-corner-size)) no-repeat, var(--art-deco-h-vline) left var(--h1-corner-size)/calc(0.2507 * var(--h1-corner-size)) calc(100% - 2 * var(--h1-corner-size)) no-repeat, var(--art-deco-h-vline) right var(--h1-corner-size)/calc(0.2514 * var(--h1-corner-size) - 0.5px) calc(100% - 2 * var(--h1-corner-size)) no-repeat;
 }
 
 a {

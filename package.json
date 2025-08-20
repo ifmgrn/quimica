@@ -1,8 +1,8 @@
 {
     "scripts": {
         "dev": "node esbuild.config.mjs",
-        "build": "eslint eslint.config.mjs && node esbuild.config.mjs production",
-        "lint": "eslint eslint.config.mjs"
+        "build": "eslint eslint.config.mjs && stylelint \"styles/**/*.css\" && node esbuild.config.mjs production",
+        "lint": "eslint eslint.config.mjs && stylelint \"styles/**/*.css\""
     },
     "license": "GPL-3.0-or-later",
     "packageManager": "pnpm@10.12.4",
@@ -12,6 +12,8 @@
         "esbuild": "^0.25.6",
         "eslint": "^9.33.0",
         "globals": "^16.3.0",
+        "stylelint": "^16.23.1",
+        "stylelint-config-standard": "^39.0.0",
         "typescript-eslint": "^8.40.0"
     },
     "dependencies": {
