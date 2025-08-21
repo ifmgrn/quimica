@@ -1,4 +1,4 @@
-import { convertReactionNameToId, insertTextAtCursor, interpolate, isDigit, type Reaction, REACTION_URL_PARAMETER, reactionsTableColumns } from './common';
+import { insertTextAtCursor, interpolate, isDigit, type Reaction, REACTION_URL_PARAMETER, reactionsTableColumns } from './common';
 import { getSomeReactions, getDB, searchReactionByPrefix } from './indexed-db';
 import template from '../templates/home-page.html?raw';
 
@@ -8,8 +8,7 @@ const SUBSCRIPTS_CONTAINER_ID = 'subscripts-container',
       REACTIONS_SEARCH_INPUT_ID = 'search-input',
       SUBSCRIPT_BUTTON_CLASS = 'subscript-button',
       SUBSCRIPT_BUTTON_VISIBLE_CLASS = 'visible',
-      REACTIONS_TABLE_ID = 'reactions-table',
-      CLICKABLE_ROW_CLASS = 'clickable-row';
+      REACTIONS_TABLE_ID = 'reactions-table';
 
 const SEARCH_URL_PARAMETER = 'p';
 
@@ -19,7 +18,7 @@ let container: HTMLElement,
 
 let lastInputValue: string;
 
-function addSearchInput() {
+function setupPage() {
     const template_data = {
         'titulo': document.title,
         'barra de numeros': SUBSCRIPTS_CONTAINER_ID,
@@ -40,6 +39,7 @@ function addSearchInput() {
     }
 
     input = document.getElementById(REACTIONS_SEARCH_INPUT_ID) as HTMLInputElement;
+    table = document.getElementById(REACTIONS_TABLE_ID) as HTMLTableElement;
 
     subscriptsContainer.addEventListener('click', (event) => {
         insertTextAtCursor(input, subscripts[(event.target as HTMLButtonElement).textContent!]);
@@ -71,6 +71,7 @@ function addSearchInput() {
     input.addEventListener('input', () => {
         clearTimeout(typingTimer);
 
+        getDB();
         typingTimer = setTimeout(search, 1000);
     });
 
@@ -100,16 +101,21 @@ async function generateReactionsTable(data: Reaction[]) {
 
     const tx = (await getDB()).transaction('molecules');
     async function generateRow(row: Reaction) {
-        const cells = await Promise.all(columnsOrder.map(async (key) => {
-            if (key === 'reagentes' || key === 'produtos') {
-                const parts = await Promise.all(row[key].map(async text => 
+        const generateCell = (data: string, link: boolean) => 
+            '<td>' + (link ? `<a href="?${REACTION_URL_PARAMETER}=${encodeURIComponent(row.id!)}">` : '')
+                + data
+            + (link ? '</a>' : '') + '</td>';
+        const cells = await Promise.all(columnsOrder.map(async (key, index) => {
+            const value = row[key]!;
+            if (Array.isArray(value)) {
+                const parts = await Promise.all(value.map(async text => 
                     `${text} (${await tx.store.get(text)})`
                 ));
-                return `<td>${parts.join(', ')}</td>`;
+                return generateCell(parts.join(', '), index === 0);
             }
-            return `<td>${row[key]}</td>`;
+            return generateCell(value, index === 0);
         }));
-        return `<tr class="${CLICKABLE_ROW_CLASS}" data-name="${row.nome}">${cells.join('')}</tr>`;
+        return `<tr>${cells.join('')}</tr>`;
     }
 
     const rows = await Promise.all(data.map(generateRow));
@@ -142,26 +148,6 @@ async function search(query?: string, addToHistory = true) {
     table.innerHTML = await generateReactionsTable(await searchReactionByPrefix(query));
 }
 
-function addReactionsTable() {
-    table = document.getElementById(REACTIONS_TABLE_ID) as HTMLTableElement;
-
-    table.addEventListener('click', (event) => {
-        if (!event.target) return;
-
-        const row = (event.target as HTMLElement).closest('.' + CLICKABLE_ROW_CLASS);
-        if (!row) return;
-
-        const name = row.getAttribute('data-name');
-        if (!name) return;
-
-        /* TODO: substituir o conteúdo da página sem precisar recarregá-la 
-           Tome cuidado com o gerenciamento de memória quando for implementar isso
-        */
-        const basePath = window.location.href.slice(0, window.location.href.lastIndexOf('/'));
-        window.location.assign(`${basePath}/?${REACTION_URL_PARAMETER}=${encodeURIComponent(convertReactionNameToId(name))}`);
-    });
-}
-
 function onPopstate() {
     const urlParams = new URLSearchParams(window.location.search);
     const searchQuery = urlParams.get(SEARCH_URL_PARAMETER);
@@ -171,8 +157,7 @@ function onPopstate() {
 export default async function openHomepage(localContainer: HTMLElement) {
     container = localContainer;
     
-    addSearchInput();
-    addReactionsTable();
+    setupPage();
     
     onPopstate();
     window.addEventListener('popstate', onPopstate);

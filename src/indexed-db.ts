@@ -126,6 +126,9 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
                         return tx.done;
                     }).then(resolve).catch(reject);
                 });
+            },
+            blocking() {
+                closeDB();
             }
         });
 
