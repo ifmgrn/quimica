@@ -1,10 +1,10 @@
 $gitVersion = '2.51.0'
-$nodeVersion = 'node-v22.18.0-win-x64'
+$nodeVersion = '22.18.0'
 $repoUrl = 'https://github.com/ifmg-rn/reacoes-quimicas'
 
 
 $currentDir = (Get-Location).Path
-if (Test-Path $(Join-Path $currentDir '.git')) {
+if (Test-Path (Join-Path $currentDir '.git')) {
     Write-Host 'Parece que estamos num projeto Git; execute este script fora dele.'
     Exit
 }
@@ -28,7 +28,7 @@ function Get-Archive($url, $destination, $fileName) {
     if ($fileName -like '*.zip') {
         Expand-Archive -Path $tempFile -DestinationPath $destination -Force
     } elseif ($fileName -like '*.7z.exe') {
-        return Start-Process -FilePath $tempFile -PassThru
+        Start-Process -FilePath $tempFile -Wait
     }
 
     Remove-Item $tempFile
@@ -63,24 +63,24 @@ function Add-ToDesktop($targetPath, $fileName, $arguments) {
 
 if (-not (Test-ExecutableInPATH 'git')) {
     Write-Host 'Nenhum Git foi encontrado no PATH. Baixando Git localmente...'
-    $gitName = "PortableGit-$gitVersion-64-bit.7z.exe"
-    $gitUrl = "https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/$gitName"
-    $gitDest = Join-Path $currentDir 'PortableGit'
-    Write-Host 'Click OK ou pressione Enter para continuar na tela que aparecer.' -ForegroundColor Yellow
-    $gitProcess = Get-Archive $gitUrl $gitDest
-
-    $gitBinPath = Join-Path $gitDest 'cmd'
-    Add-ToUserPath $gitBinPath
+    $url = "https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/PortableGit-$gitVersion-64-bit.7z.exe"
+    $dest = Join-Path $currentDir 'PortableGit'
+    Write-Host 'Click OK ou pressione Enter para continuar na tela que aparecer depois do download.' -ForegroundColor Yellow
+    Get-Archive $url $dest
+    if ($?) {
+        Add-ToUserPath (Join-Path $dest 'cmd')
+    }
 }
 
 if (-not (Test-ExecutableInPATH 'node')) {
     Write-Host 'Nenhum Node.js foi encontrado no PATH. Baixando Node.js localmente...'
-    $nodeUrl = "https://nodejs.org/dist/v22.18.0/$nodeVersion.zip"
-    Get-Archive $nodeUrl $currentDir
-
-    $nodeDest = Join-Path $currentDir $nodeVersion
-    Add-ToUserPath $nodeDest
-    Add-ToUserPath "$env:APPDATA\npm"
+    $name = "node-v$nodeVersion-win-x64"
+    $url = "https://nodejs.org/dist/v$nodeVersion/$name.zip"
+    Get-Archive $url $currentDir
+    if ($?) {
+        Add-ToUserPath (Join-Path $currentDir $name)
+        Add-ToUserPath "$env:APPDATA\npm"
+    }
 }
 
 if (-not (Test-ExecutableInPATH 'pnpm')) {
@@ -88,20 +88,10 @@ if (-not (Test-ExecutableInPATH 'pnpm')) {
     npm install -g pnpm > $null
 }
 
-if ($gitProcess) {
-    Wait-Process -ID $gitProcess.ID *> $null
-}
-if ($gitName) {
-    $gitInstaller = Join-Path $currentDir $gitName
-    if (Test-Path $gitInstaller) {
-        Remove-Item $gitInstaller
-    }
-}
-
-$repoFolder = Join-Path $currentDir $(Split-Path $repoUrl -Leaf)
+$repoFolder = Join-Path $currentDir (Split-Path $repoUrl -Leaf)
 if (-not (Test-Path $repoFolder)) {
     Write-Host 'Clonando o projeto...'
-    git clone -q "$repoUrl.git" $repoFolder
+    git clone -q $repoUrl "$repoFolder"
 }
 
 Push-Location $repoFolder
@@ -111,22 +101,23 @@ Write-Host 'Instalando bibliotecas do projeto...'
 pnpm install -s
 Pop-Location
 
-$vscodeDest = Join-Path $currentDir 'PortableVSCode'
-$vscodeExe = Join-Path $vscodeDest 'Code.exe'
-if (-not (Test-Path $vscodeDest)) {
+$dest = Join-Path $currentDir 'PortableVSCode'
+$exe = Join-Path $dest 'Code.exe'
+if (-not (Test-Path $dest)) {
     Write-Host 'Deseja baixar o VS Code atualizado localmente? (s/N) ' -NoNewLine -ForegroundColor Yellow
     $response = Read-Host
     if ($response -match '^[Ss]$') {
         Write-Host 'Baixando o VS Code atualizado localmente...'
-        $vscodeUrl = 'https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive'
-        Get-Archive $vscodeUrl $vscodeDest "VSCode-win32-x64.zip"
-
-        Write-Host 'Adicionando VS Code para o Desktop ("VS Code Local")...'
-        Add-ToDesktop $vscodeExe 'VS Code Local' "`"$repoFolder`""
+        $url = 'https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive'
+        Get-Archive $url $dest 'VSCode-win32-x64.zip'
+        if ($?) {
+            Write-Host 'Adicionando VS Code para o Desktop ("VS Code Local")...'
+            Add-ToDesktop $exe 'VS Code Local' "`"$repoFolder`""
+        }
     }
 }
 
 Write-Host 'Iniciando servidor local de desenvolvimento do projeto...'
-Write-Host 'Para acessar o website do projeto, abra a URL: http://localhost:5173/reacoes-quimicas/'
+Write-Host 'Para acessar o website do projeto, abra a URL: http://localhost:5173/reacoes-quimicas/' -ForegroundColor Yellow
 Write-Host 'Para parar o servidor, pressione Ctrl+C.'
-pnpm --dir $repoFolder run dev > $null
+pnpm --dir "$repoFolder" run dev > $null
