@@ -20,11 +20,27 @@
     margin-left: auto;
 }
 
-button {
+// Remove o efeito padrão de hover do picocss para ser implementado só quando o dispositivo permite hover (não mobile)
+/* stylelint-disable-next-line plugin/use-defensive-css */
+button, button:is(:hover, :active, :focus) {
     #{$css-var-prefix}background-color: var(#{$css-var-prefix}form-element-background-color);
     #{$css-var-prefix}color: var(#{$css-var-prefix}muted-color);
+    #{$css-var-prefix}box-shadow: var(#{$css-var-prefix}button-box-shadow, 0 0 0 rgb(0 0 0 / 0%));
     cursor: unset;
+    border-color: var(#{$css-var-prefix}border-color);
     border-radius: var(#{$css-var-prefix}border-radius);
+}
+
+button:is(:active, :focus) {
+    #{$css-var-prefix}background-color: var(#{$css-var-prefix}primary-hover-background);
+    #{$css-var-prefix}color: var(#{$css-var-prefix}color);
+}
+
+@media (hover: hover) {
+    button:hover {
+        #{$css-var-prefix}background-color: var(#{$css-var-prefix}primary-hover-background);
+        #{$css-var-prefix}color: var(#{$css-var-prefix}color);
+    }
 }
 
 [role='group'] {
