@@ -1,19 +1,19 @@
 /* https://fonts.google.com/noto/specimen/Noto+Serif */
 @font-face {
-    font-family: "Noto Serif";
+    font-family: 'Noto Serif';
     font-style: normal;
     font-weight: 200 900;
-    src: url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2-variations"),
-         url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2");
+    src: url('/fonts/NotoSerif-VariableFont_wdth,wght.woff2') format('woff2-variations'),
+         url('/fonts/NotoSerif-VariableFont_wdth,wght.woff2') format('woff2');
     font-display: fallback;
 }
 
 @font-face {
-    font-family: "Noto Serif";
+    font-family: 'Noto Serif';
     font-style: italic;
     font-weight: 200 900;
-    src: url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2-variations"),
-         url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2");
+    src: url('/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2') format('woff2-variations'),
+         url('/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2') format('woff2');
     font-display: fallback;
 }
 
@@ -22,7 +22,7 @@
 */
 @font-face {
     font-family: ParkLaneNF;
-    src: url("/fonts/ParkLaneNF.woff2") format("woff2");
+    src: url('/fonts/ParkLaneNF.woff2') format('woff2');
     font-display: swap;
 }
 
@@ -31,6 +31,6 @@
 */
 @font-face {
     font-family: Limelight;
-    src: url("/fonts/Limelight-Regular.woff2") format("woff2");
-    font-display: swap;
+    src: url('/fonts/Limelight-Regular.woff2') format('woff2');
+    font-display: fallback;
 }

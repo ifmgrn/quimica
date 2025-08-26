@@ -13,14 +13,6 @@ export type Reaction = {
 
 export const REACTION_URL_PARAMETER = 'r';
 
-export const reactionsTableColumns: { [key: string]: keyof Reaction } = {
-    'Reação Química': 'nome',
-    'Tipo': 'tipo',
-    'Reagente(s)': 'reagentes',
-    'Produto(s)': 'produtos',
-    'Equação': 'equacao'
-};
-
 /* Verifica se o caractere dado é um algarismo. */
 export function isDigit(str: string) {
     return str.length === 1 && str >= '0' && str <= '9';

@@ -15,7 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { REACTION_URL_PARAMETER } from './common';
+import { insertTextAtCursor, REACTION_URL_PARAMETER } from './common';
 import openHomepage from './home-page';
 import openReaction from './reaction-page';
 
@@ -26,3 +26,33 @@ if (reaction)
     openReaction(document.body, reaction);
 else
     openHomepage(document.body);
+
+{
+    const input_containers = document.getElementsByClassName('input-container');
+    for (const container of input_containers) {
+        const toolbar = container.querySelector('[role="group"]');
+        const input = container.querySelector('input');
+        if (!toolbar || !input)
+            continue;
+
+        toolbar.addEventListener('click', event => {
+            const button = event.target as HTMLElement | undefined;
+            if (button && button.tagName.toLowerCase() === 'button') {
+                insertTextAtCursor(input, button.dataset.toInsert ?? button.textContent ?? '');
+            }
+        });
+
+        input.addEventListener('focus', () => {
+            toolbar.removeAttribute('aria-hidden');
+            toolbar.classList.remove('hidden');
+        });
+        input.addEventListener('blur', event => {
+            if (!toolbar.contains(event.relatedTarget as Node)) {
+                toolbar.setAttribute('aria-hidden', 'true');
+                toolbar.classList.add('hidden');
+            }
+
+            input.selectionStart = input.selectionEnd = input.value.length;
+        });
+    }
+}

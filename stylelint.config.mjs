@@ -1,7 +1,7 @@
 /** @type {import('stylelint').Config} */
 export default {
     extends: [
-        'stylelint-config-standard',
+        'stylelint-config-standard-scss',
         'stylelint-config-recess-order'
     ],
     plugins: [
@@ -18,6 +18,15 @@ export default {
             'scrollbar-gutter': true,
             'vendor-prefix-grouping': true
         }],
-        'plugin/use-baseline': [true, { severity: 'warning' }]
-    }
+        'plugin/use-baseline': [true, { 
+            severity: 'warning',
+            ignoreSelectors: ['nesting']
+        }],
+    },
+    overrides: [
+        {
+            files: ["styles/**/*.scss"],
+            customSyntax: "postcss-scss"
+        }
+    ]
 };

@@ -1,20 +1,25 @@
-<div class="top-art-deco-frame"></div>
-
-<h1>{{ nome }}</h1>
-
-<ul class="center">
-    <li>Tipo: {{ tipo }}</li>
-    <li>Reagente(s): {{ reagentes }}</li>
-    <li>Produto(s): {{ produtos }}</li>
-    <li>Equação balanceada: {{ equação }}</li>
-</ul>
-
-<h2>Demonstração</h2>
-<iframe src="{{ embedded_link }}" loading="lazy" title="YouTube video player" frameborder="0" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-
-<h2 class="instructions">Instruções</h2>
-<div class="margin">
-    {{ instruções }}
-</div>
-
-<a class="center" href=".">Ir para a página principal</a>
+<header>
+    <div aria-hidden="true"></div>
+    <h1>{{ nome }}</h1>
+</header>
+<main>
+    <section>
+        <ul class="center">
+            <li>Tipo: {{ tipo }}</li>
+            <li>Reagente(s): {{ reagentes }}</li>
+            <li>Produto(s): {{ produtos }}</li>
+            <li>Equação balanceada: {{ equação }}</li>
+        </ul>
+    </section>
+    <section>
+        <h2>Demonstração</h2>
+        <iframe src="{{ embedded_link }}" loading="lazy" title="YouTube video player" frameborder="0" allow="encrypted-media; picture-in-picture" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </section>
+    <section>
+        <h2>Instruções</h2>
+        {{ instruções }}
+    </section>
+</main>
+<footer>
+    <a class="center" href=".">Ir para a página principal</a>
+</footer>

@@ -1,0 +1,26 @@
+@use 'sass:math';
+@use 'sass:color';
+
+$css-var-prefix: '--';
+
+// Accent colors
+$accent-color: #8a5cf5;
+$accent-h: math.round(color.channel($accent-color, 'hue', hsl));
+$accent-s: math.round(color.channel($accent-color, 'saturation', hsl));
+$accent-l: math.round(color.channel($accent-color, 'lightness', hsl));
+$accent-color-text: hsl(calc($accent-h - 3deg), calc($accent-s * 1.02), calc($accent-l * 1.15));
+$accent-color-text-hover: hsl(calc($accent-h - 5deg), calc($accent-s * 1.05), calc($accent-l * 1.29));
+
+// Headings
+$headings-color: 'accent';
+$headings-appearance: (
+    h1: 'display',
+    h2: 'stroke'
+);
+
+// Art deco
+$art-deco-prefix: $css-var-prefix + 'art-deco-';
+$art-deco-color: $accent-color;
+$enable-top-art-deco-frame: true;
+$include-art-deco: false;
+$enable-tree-view: true;

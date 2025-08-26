@@ -1,0 +1,21 @@
+@use 'dark';
+
+// @use "light";
+
+// Dark color scheme (Default)
+// Can be forced with data-theme="dark"
+[data-theme='dark'],
+:root:not([data-theme='light']),
+:host(:not([data-theme='light'])) {
+    @include dark.theme;
+}
+
+// Light color scheme (Auto)
+// Automatically enabled if user has Light mode enabled
+
+/* @media only screen and (prefers-color-scheme: light) {
+    :root:not([data-theme]),
+    :host(:not([data-theme])) {
+        @include light.theme;
+    }
+} */

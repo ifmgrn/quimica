@@ -1,59 +1,22 @@
-import { insertTextAtCursor, interpolate, isDigit, type Reaction, REACTION_URL_PARAMETER, reactionsTableColumns } from './common';
+import { insertTextAtCursor, isDigit, type Reaction, REACTION_URL_PARAMETER } from './common';
 import { getSomeReactions, getDB, searchReactionByPrefix } from './indexed-db';
 import template from '../templates/home-page.html?raw';
 
-const subscripts: { [key: string]: string } = {'X₀': '₀', 'X₁': '₁', 'X₂': '₂', 'X₃': '₃', 'X₄': '₄', 'X₅': '₅', 'X₆': '₆', 'X₇': '₇', 'X₈': '₈', 'X₉': '₉'};
-
-const SUBSCRIPTS_CONTAINER_ID = 'subscripts-container',
-      REACTIONS_SEARCH_INPUT_ID = 'search-input',
-      SUBSCRIPT_BUTTON_CLASS = 'subscript-button',
-      SUBSCRIPT_BUTTON_VISIBLE_CLASS = 'visible',
-      REACTIONS_TABLE_ID = 'reactions-table';
-
 const SEARCH_URL_PARAMETER = 'p';
+const reactionsTableColumns: { [key: string]: keyof Reaction } = {
+    'Reação Química': 'nome',
+    'Tipo': 'tipo',
+    'Reagente(s)': 'reagentes',
+    'Produto(s)': 'produtos',
+    'Equação': 'equacao'
+};
 
-let container: HTMLElement,
-    input: HTMLInputElement,
-    table: HTMLTableElement;
+declare const input: HTMLInputElement;
+declare const table: HTMLTableElement;
 
 let lastInputValue: string;
 
 function setupPage() {
-    const template_data = {
-        'titulo': document.title,
-        'barra de numeros': SUBSCRIPTS_CONTAINER_ID,
-        'pesquisa de reacoes': REACTIONS_SEARCH_INPUT_ID,
-        'tabela de reacoes': REACTIONS_TABLE_ID
-    };
-
-    container.insertAdjacentHTML('beforeend', 
-        interpolate(template, template_data)
-    );
-
-    const subscriptsContainer = document.getElementById(SUBSCRIPTS_CONTAINER_ID) as HTMLDivElement;
-    for (const subscript of Object.keys(subscripts)) {
-        const button = document.createElement('button');
-        button.textContent = subscript;
-        button.classList.add(SUBSCRIPT_BUTTON_CLASS);
-        subscriptsContainer.appendChild(button);
-    }
-
-    input = document.getElementById(REACTIONS_SEARCH_INPUT_ID) as HTMLInputElement;
-    table = document.getElementById(REACTIONS_TABLE_ID) as HTMLTableElement;
-
-    subscriptsContainer.addEventListener('click', (event) => {
-        insertTextAtCursor(input, subscripts[(event.target as HTMLButtonElement).textContent!]);
-    });
-
-    input.addEventListener('focus', () => {
-        subscriptsContainer.classList.add(SUBSCRIPT_BUTTON_VISIBLE_CLASS);
-    });
-    input.addEventListener('blur', (event) => {
-        if (!event.relatedTarget || !(event.relatedTarget as HTMLElement).classList.contains(SUBSCRIPT_BUTTON_CLASS))
-            subscriptsContainer.classList.remove(SUBSCRIPT_BUTTON_VISIBLE_CLASS);
-
-        input.selectionStart = input.selectionEnd = input.value.length;
-    });
     input.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             event.preventDefault();
@@ -77,11 +40,12 @@ function setupPage() {
 
     document.addEventListener('keydown', (event) => {
         if (
-            document.activeElement !== input 
+            !['input', 'textarea'].includes(document.activeElement!.tagName.toLowerCase()) 
             && !event.altKey 
+            && (!event.shiftKey || event.key.length === 1)
             && !event.metaKey 
             && (!event.ctrlKey || isDigit(event.key))
-            && !['Escape', 'ArrowUp', 'ArrowDown'].includes(event.key)
+            && (event.key.length === 1 || ['Backspace', 'Delete'].includes(event.key))
         ) {
             input.focus();
             if (event.ctrlKey && isDigit(event.key)) {
@@ -101,19 +65,21 @@ async function generateReactionsTable(data: Reaction[]) {
 
     const tx = (await getDB()).transaction('molecules');
     async function generateRow(row: Reaction) {
-        const generateCell = (data: string, link: boolean) => 
-            '<td>' + (link ? `<a href="?${REACTION_URL_PARAMETER}=${encodeURIComponent(row.id!)}">` : '')
-                + data
-            + (link ? '</a>' : '') + '</td>';
         const cells = await Promise.all(columnsOrder.map(async (key, index) => {
             const value = row[key]!;
+
+            const generateCell = (data: string) => 
+                '<td>' + (index === 0 ? `<a href="?${REACTION_URL_PARAMETER}=${encodeURIComponent(row.id!)}">` : '')
+                    + data
+                + (index === 0 ? '</a>' : '') + '</td>';
+
             if (Array.isArray(value)) {
                 const parts = await Promise.all(value.map(async text => 
                     `${text} (${await tx.store.get(text)})`
                 ));
-                return generateCell(parts.join(', '), index === 0);
+                return generateCell(parts.join(', '));
             }
-            return generateCell(value, index === 0);
+            return generateCell(value);
         }));
         return `<tr>${cells.join('')}</tr>`;
     }
@@ -154,9 +120,8 @@ function onPopstate() {
     search(searchQuery ?? '', false);
 }
 
-export default async function openHomepage(localContainer: HTMLElement) {
-    container = localContainer;
-    
+export default async function openHomepage(container: HTMLElement) {
+    container.insertAdjacentHTML('beforeend', template);
     setupPage();
     
     onPopstate();

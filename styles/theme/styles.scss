@@ -1,0 +1,269 @@
+@use 'sass:map';
+@use 'common';
+@use 'fonts';
+@use '../settings' as *;
+
+:root,
+:host {
+    // Typography
+    #{$css-var-prefix}font-family: 'Noto Serif', georgia, 'Times New Roman', serif;
+    #{$css-var-prefix}line-height: 1.5;
+    #{$css-var-prefix}font-weight: 400;
+
+    // Borders
+    #{$css-var-prefix}border-radius: 0.5rem;
+    #{$css-var-prefix}border-width: 0.0625rem;
+    #{$css-var-prefix}outline-width: 0.125rem;
+
+    // Transitions
+    #{$css-var-prefix}transition-duration: 200ms;
+    #{$css-var-prefix}transition: var(#{$css-var-prefix}transition-duration) ease-in-out;
+
+    // Spacings
+    #{$css-var-prefix}spacing: 1rem;
+
+    // Spacings for typography elements
+    #{$css-var-prefix}typography-spacing-vertical: 1rem;
+        
+    // Spacings for body > header, body > main, body > footer, section, article
+    #{$css-var-prefix}block-spacing-vertical: 0;
+    #{$css-var-prefix}block-spacing-horizontal: var(#{$css-var-prefix}spacing);
+    
+    --section-spacing-vertical: calc(var(#{$css-var-prefix}spacing) * 2.5);
+
+    // Spacings for form elements and button
+    #{$css-var-prefix}form-element-spacing-vertical: 0.25rem;
+    #{$css-var-prefix}form-element-spacing-horizontal: 0.5rem;
+
+    // Mask size for .top-art-deco-frame
+    @if $enable-top-art-deco-frame {
+        --top-art-deco-frame-size: 2.5rem;
+    }
+
+    @if $enable-tree-view {
+        --indentation-guide-width: 0.125rem;
+        --indentation-guide-radius: 0.5rem;
+        --indentation-guide-indent: 2.25rem;
+        --indentation-guide-secondary-indent: -1.3rem;
+    }
+}
+
+@if $enable-top-art-deco-frame {
+    $include-art-deco: true !global;
+
+    body {
+        /* "overflow-x" só é necessário porque "scrollbar-gutter" ainda não é amplamente suportado */ 
+        overflow-x: hidden;
+    }
+
+    $top-deco-frame: ':is(body, body > noscript) > header > div:first-child';
+    #{$top-deco-frame} {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        /* "100vw" só é necessário porque "scrollbar-gutter" ainda não é amplamente suportado, caso contrário "100%" seria o ideal */
+        width: 100vw;
+        border-bottom: 1px solid var(#{$css-var-prefix}primary-background);
+    }
+
+    #{$top-deco-frame}::after {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 10;
+        display: block;
+        height: var(--top-art-deco-frame-size);
+        pointer-events: none;
+        content: '';
+        background-image: var(#{$art-deco-prefix}gradient);
+
+        /* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit" */
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-mask-image: var(#{$art-deco-prefix}bottom-frame);
+        /* stylelint-disable-next-line plugin/use-baseline */
+        mask-image: var(#{$art-deco-prefix}bottom-frame);
+
+        $mask-repeat: no-repeat;
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-mask-repeat: $mask-repeat;
+        /* stylelint-disable-next-line plugin/use-baseline */
+        mask-repeat: $mask-repeat;
+
+        $mask-position: center;
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-mask-position: $mask-position;
+        /* stylelint-disable-next-line plugin/use-baseline */
+        mask-position: $mask-position;
+
+        $mask-size: auto var(--top-art-deco-frame-size);
+        /* stylelint-disable-next-line property-no-vendor-prefix */
+        -webkit-mask-size: $mask-size;
+        /* stylelint-disable-next-line plugin/use-baseline */
+        mask-size: $mask-size;
+        transform: scaleY(-1) translateY(calc(-100% + 6px));
+    }
+
+    #{$top-deco-frame} + * {
+        margin-top: var(--top-art-deco-frame-size);
+    }
+}
+
+section {
+    margin-bottom: var(--section-spacing-vertical);
+}
+
+h1 {
+    #{$css-var-prefix}font-weight: 500;
+    #{$css-var-prefix}font-size: 3em;
+    #{$css-var-prefix}line-height: 1.2;
+    #{$css-var-prefix}font-family: 'ParkLaneNF', 'Limelight', 'Notable', 'Noto Sans', 'Inter', sans-serif;
+    text-align: center;
+    letter-spacing: -0.015em;
+}
+
+h2 {
+    #{$css-var-prefix}font-weight: 200;
+    #{$css-var-prefix}font-size: 1.8rem;
+    #{$css-var-prefix}line-height: 1.2;
+    #{$css-var-prefix}font-family: 'Limelight', 'Notable', 'Noto Sans', 'Inter', sans-serif;
+    margin-bottom: 0;
+    letter-spacing: -0.015em;
+}
+
+@for $i from 1 through 6 {
+    $appearance: map.get($headings-appearance, h#{$i});
+
+    @if $appearance == 'display' {
+        $include-art-deco: true !global;
+
+        h#{$i} {
+            --corner-size: 0.5em;
+
+            position: relative;
+            z-index: 2;
+            padding-block: var(#{$css-var-prefix}spacing);
+            clip-path: none;
+        }
+
+        h#{$i}::before {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            content: '';
+            background-image: var(#{$art-deco-prefix}gradient);
+            clip-path: unset;
+            
+            /* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit-" */
+            $mask: var(#{$art-deco-prefix}h-top-left) left top/var(#{$css-var-prefix}corner-size) var(#{$css-var-prefix}corner-size) no-repeat, var(#{$art-deco-prefix}h-top-right) right top/var(#{$css-var-prefix}corner-size) var(#{$css-var-prefix}corner-size) no-repeat, var(#{$art-deco-prefix}h-bottom-right) right bottom/var(#{$css-var-prefix}corner-size) var(#{$css-var-prefix}corner-size) no-repeat, var(#{$art-deco-prefix}h-bottom-left) left bottom/var(#{$css-var-prefix}corner-size) var(#{$css-var-prefix}corner-size) no-repeat, var(#{$art-deco-prefix}h-hline) var(#{$css-var-prefix}corner-size) top/calc(100% - 2 * var(#{$css-var-prefix}corner-size)) calc(0.2514 * var(#{$css-var-prefix}corner-size)) no-repeat, var(#{$art-deco-prefix}h-hline) var(#{$css-var-prefix}corner-size) bottom/calc(100% - 2 * var(#{$css-var-prefix}corner-size)) calc(0.2514 * var(#{$css-var-prefix}corner-size)) no-repeat, var(#{$art-deco-prefix}h-vline) left var(#{$css-var-prefix}corner-size) / calc(0.2507 * var(#{$css-var-prefix}corner-size)) calc(100% - 2 * var(#{$css-var-prefix}corner-size)) no-repeat, var(#{$art-deco-prefix}h-vline) right var(#{$css-var-prefix}corner-size) / calc(0.2514 * var(#{$css-var-prefix}corner-size) - 0.5px) calc(100% - 2 * var(#{$css-var-prefix}corner-size)) no-repeat;
+            /* stylelint-disable-next-line property-no-vendor-prefix */
+            -webkit-mask: $mask;
+            /* stylelint-disable-next-line plugin/use-baseline */
+            mask: $mask;
+        }
+    } @else if $appearance == 'stroke' {
+        h#{$i} {
+            --line-size: 1px;
+            --corner-distance: 20px;
+
+            display: flex;
+            flex-wrap: nowrap;
+            gap: var(--corner-distance);
+            align-items: center;
+        }
+
+        h#{$i}::before, h#{$i}::after {
+            display: block;
+            flex-grow: 1;
+            height: var(--line-size);
+            pointer-events: none;
+            content: '';
+            background-color: currentcolor;
+        }
+    }
+}
+
+input:not([type='checkbox'], [type='radio'], [type='range'], [type='file'])[type='search'] {
+    text-align: center;
+}
+
+.input-container {
+    position: relative;
+}
+
+.input-container > [role='group'] {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    z-index: 10;
+    transform: translateX(-50%);
+    transition: opacity var(#{$css-var-prefix}transition);
+}
+
+@if $enable-tree-view {
+    ul,
+    ol {
+        position: relative;
+        display: flow-root !important;
+        padding-inline-start: 0;
+    }
+
+    li > ul::before,
+    li > ol::before {
+        position: absolute;
+        inset-inline-start: calc(var(--indentation-guide-secondary-indent) + 8px);
+        top: 0;
+        bottom: 0;
+        z-index: 1;
+        display: block;
+        content: '';
+        border-inline-end: var(--indentation-guide-width) solid var(--indentation-guide-color);
+    }
+
+    li {
+        position: relative;
+        margin-inline-start: 3ch;
+    }
+
+    li::after {
+        position: absolute;
+        top: calc(-0.4em * var(#{$css-var-prefix}line-height) - var(--indentation-guide-width) * 0.4);
+        left: calc(-1 * var(--indentation-guide-indent) + var(--indentation-guide-secondary-indent));
+        display: block;
+        width: calc(var(--indentation-guide-indent) + 2px);
+        height: calc(1em * var(#{$css-var-prefix}line-height));
+        pointer-events: none;
+        content: '';
+        border: solid var(--indentation-guide-color);
+        border-width: 0 0 var(--indentation-guide-width) var(--indentation-guide-width);
+        border-bottom-left-radius: var(--indentation-guide-radius);
+    }
+
+    :not(li) > * > li::after {
+        top: calc(-0.65em * var(#{$css-var-prefix}line-height) - var(--indentation-guide-width) * 0.65);
+        left: calc(-1 * var(--indentation-guide-indent) + var(--indentation-guide-secondary-indent) + 20px);
+        width: calc(var(--indentation-guide-indent) - 18px);
+        height: calc(1.3em * var(#{$css-var-prefix}line-height));
+    }
+
+    @media (hover: hover) {
+        li:hover::after,
+        li:hover > :is(ul, ol)::before {
+            z-index: 2;
+            border-color: var(#{$css-var-prefix}primary-background);
+        }
+    }
+}
+
+:not(li) > :is(ol, ul) {
+    &,
+    &::before {
+        padding-left: 1.5rem;
+    }
+}
+
+iframe {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
