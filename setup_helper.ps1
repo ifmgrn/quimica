@@ -61,6 +61,11 @@ function Add-ToDesktop($targetPath, $fileName, $arguments) {
     $shortcut.Save()
 }
 
+$env:Path = [Environment]::ExpandEnvironmentVariables(
+    $([Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::User)) + ';' +
+    [Environment]::GetEnvironmentVariable('PATH', [EnvironmentVariableTarget]::Machine)
+)
+
 if (-not (Test-ExecutableInPATH 'git')) {
     Write-Host 'Nenhum Git foi encontrado no PATH. Baixando Git localmente...'
     $url = "https://github.com/git-for-windows/git/releases/download/v$gitVersion.windows.1/PortableGit-$gitVersion-64-bit.7z.exe"
@@ -72,8 +77,15 @@ if (-not (Test-ExecutableInPATH 'git')) {
     }
 }
 
-if (-not (Test-ExecutableInPATH 'node')) {
-    Write-Host 'Nenhum Node.js foi encontrado no PATH. Baixando Node.js localmente...'
+try {
+    $nodeVersionOutput = node -v
+    $currentVersion = [version]$nodeVersionOutput.TrimStart('v')
+} catch {
+    $currentVersion = $null
+}
+
+if (-not $currentVersion -or $currentVersion -lt [version]$nodeVersion) {
+    Write-Host "Nenhum Node.js igual ou maior que v$nodeVersion foi encontrado no PATH. Baixando Node.js localmente..."
     $name = "node-v$nodeVersion-win-x64"
     $url = "https://nodejs.org/dist/v$nodeVersion/$name.zip"
     Get-Archive $url $currentDir
@@ -94,12 +106,7 @@ if (-not (Test-Path $repoFolder)) {
     git clone -q $repoUrl "$repoFolder"
 }
 
-Push-Location $repoFolder
-Write-Host 'Atualizando o projeto conforme a necessidade...'
-git pull -q
-Write-Host 'Instalando bibliotecas do projeto...'
-pnpm install -s
-Pop-Location
+pnpm --dir "$repoFolder" install -s
 
 $dest = Join-Path $currentDir 'PortableVSCode'
 $exe = Join-Path $dest 'Code.exe'
@@ -120,4 +127,4 @@ if (-not (Test-Path $dest)) {
 Write-Host 'Iniciando servidor local de desenvolvimento do projeto...'
 Write-Host 'Para acessar o website do projeto, abra a URL: http://localhost:5173/reacoes-quimicas/' -ForegroundColor Yellow
 Write-Host 'Para parar o servidor, pressione Ctrl+C.'
-pnpm --dir "$repoFolder" run dev > $null
+pnpm --dir "$repoFolder" run dev
