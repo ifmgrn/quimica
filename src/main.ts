@@ -42,11 +42,11 @@ else
             }
         });
 
-        input.addEventListener('focus', () => {
+        input.addEventListener('focusin', () => {
             toolbar.removeAttribute('aria-hidden');
             toolbar.classList.remove('hidden');
         });
-        input.addEventListener('blur', event => {
+        input.addEventListener('focusout', event => {
             if (!toolbar.contains(event.relatedTarget as Node)) {
                 toolbar.setAttribute('aria-hidden', 'true');
                 toolbar.classList.add('hidden');
