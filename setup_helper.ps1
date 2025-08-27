@@ -85,6 +85,8 @@ if (-not (Test-ExecutableInPATH 'git')) {
     Get-Archive $url $dest
     if ($?) {
         Add-ToUserPath (Join-Path $dest 'cmd')
+        git config --global user.name "$(Read-Host 'Qual nome deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o seu projeto localmente)?')"
+        git config --global user.email "$(Read-Host 'Qual email deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o seu projeto localmente)?')"
     }
 }
 
@@ -103,11 +105,12 @@ if (-not $currentVersion -or $currentVersion -lt [version]$nodeVersion) {
     if ($?) {
         Add-ToUserPath (Join-Path $currentDir $name)
         Add-ToUserPath "$env:APPDATA\npm"
+        npm update -g npm *> $null
     }
 }
 if (-not (Test-ExecutableInPATH 'pnpm')) {
     Write-Host 'Instalando pnpm globalmente...'
-    npm install -g pnpm > $null
+    npm install -g pnpm *> $null
 }
 
 
