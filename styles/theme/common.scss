@@ -98,7 +98,13 @@ th {
 }
 
 tr {
-    position: relative;
+    /*
+        Safari não suporta `position: relative` em elementos `<tr>`,
+        mas essas duas propriedades podem ser usadas como uma alternativa.
+        Fonte: https://mtsknn.fi/blog/relative-tr-in-safari/
+    */
+    clip-path: inset(0);    
+    transform: translate(0);
 }
 
 tr a {
