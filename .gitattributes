@@ -1,2 +1,5 @@
 * text=auto
 *.woff2 binary
+*.png binary
+package.json text eol=lf
+pnpm-lock.yaml text eol=lf
