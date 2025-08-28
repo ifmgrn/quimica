@@ -52,40 +52,39 @@
 
 @if $enable-top-art-deco-frame {
 	$include-art-deco: true !global;
+	$top-deco-frame: ":is(body, body > noscript) > header > div:first-child";
 
 	body {
 		/* "overflow-x" só é necessário porque "scrollbar-gutter" ainda não é amplamente suportado */
 		overflow-x: hidden;
 	}
-
-	$top-deco-frame: ":is(body, body > noscript) > header > div:first-child";
 	#{$top-deco-frame} {
 		position: absolute;
 		top: 0;
 		left: 0;
+		border-bottom: 1px solid var(#{$css-var-prefix}primary-background);
 
 		/* "100vw" só é necessário porque "scrollbar-gutter" ainda não é amplamente suportado, caso contrário "100%" seria o ideal */
 		width: 100vw;
-		border-bottom: 1px solid var(#{$css-var-prefix}primary-background);
 	}
 
 	#{$top-deco-frame}::after {
+		display: block;
 		position: absolute;
 		right: 0;
 		bottom: 0;
 		left: 0;
 		z-index: 10;
-		display: block;
-		height: var(--top-art-deco-frame-size);
-		pointer-events: none;
-		content: "";
-		background-image: var(#{$art-deco-prefix}gradient);
 
 		/* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit" */
 		/* stylelint-disable-next-line property-no-vendor-prefix */
 		-webkit-mask-image: var(#{$art-deco-prefix}bottom-frame);
 		/* stylelint-disable-next-line plugin/use-baseline */
 		mask-image: var(#{$art-deco-prefix}bottom-frame);
+		background-image: var(#{$art-deco-prefix}gradient);
+		height: var(--top-art-deco-frame-size);
+		pointer-events: none;
+		content: "";
 
 		$mask-repeat: no-repeat;
 		/* stylelint-disable-next-line property-no-vendor-prefix */
@@ -100,11 +99,12 @@
 		mask-position: $mask-position;
 
 		$mask-size: auto var(--top-art-deco-frame-size);
+
+		transform: scaleY(-1) translateY(calc(-100% + 6px));
 		/* stylelint-disable-next-line property-no-vendor-prefix */
 		-webkit-mask-size: $mask-size;
 		/* stylelint-disable-next-line plugin/use-baseline */
 		mask-size: $mask-size;
-		transform: scaleY(-1) translateY(calc(-100% + 6px));
 	}
 
 	#{$top-deco-frame} + * {
@@ -122,8 +122,8 @@ h1 {
 	#{$css-var-prefix}line-height: 1.2;
 	#{$css-var-prefix}font-family:
 		"ParkLaneNF", "Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
-	text-align: center;
 	letter-spacing: -0.015em;
+	text-align: center;
 }
 
 h2 {
@@ -147,17 +147,17 @@ h2 {
 
 			position: relative;
 			z-index: 2;
-			padding-block: var(#{$css-var-prefix}spacing);
 			clip-path: none;
+			padding-block: var(#{$css-var-prefix}spacing);
 		}
 
 		h#{$i}::before {
 			position: absolute;
+			clip-path: unset;
 			inset: 0;
+			background-image: var(#{$art-deco-prefix}gradient);
 			pointer-events: none;
 			content: "";
-			background-image: var(#{$art-deco-prefix}gradient);
-			clip-path: unset;
 
 			/* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit-" */
 			$mask:
@@ -215,18 +215,18 @@ h2 {
 
 			display: flex;
 			flex-wrap: nowrap;
-			gap: var(--corner-distance);
 			align-items: center;
+			gap: var(--corner-distance);
 		}
 
 		h#{$i}::before,
 		h#{$i}::after {
 			display: block;
 			flex-grow: 1;
+			background-color: currentcolor;
 			height: var(--line-size);
 			pointer-events: none;
 			content: "";
-			background-color: currentcolor;
 		}
 	}
 }
@@ -248,31 +248,31 @@ input:not(
 	position: absolute;
 	bottom: 100%;
 	left: 50%;
-	z-index: 10;
 	transform: translateX(-50%);
+	z-index: 10;
 	transition: opacity var(#{$css-var-prefix}transition);
 }
 
 @if $enable-tree-view {
 	ul,
 	ol {
-		position: relative;
 		display: flow-root !important;
+		position: relative;
 		padding-inline-start: 0;
 	}
 
 	li > ul::before,
 	li > ol::before {
+		display: block;
 		position: absolute;
-		inset-inline-start: calc(var(--indentation-guide-secondary-indent) + 8px);
 		top: 0;
 		bottom: 0;
 		z-index: 1;
-		display: block;
-		content: "";
+		inset-inline-start: calc(var(--indentation-guide-secondary-indent) + 8px);
 		border-inline-end: var(--indentation-guide-width)
 			solid
 			var(--indentation-guide-color);
+		content: "";
 	}
 
 	li {
@@ -281,6 +281,7 @@ input:not(
 	}
 
 	li::after {
+		display: block;
 		position: absolute;
 		top: calc(
 			-0.4em *
@@ -292,17 +293,16 @@ input:not(
 				var(--indentation-guide-indent) +
 				var(--indentation-guide-secondary-indent)
 		);
-		display: block;
-		width: calc(var(--indentation-guide-indent) + 2px);
-		height: calc(1em * var(#{$css-var-prefix}line-height));
-		pointer-events: none;
-		content: "";
 		border: solid var(--indentation-guide-color);
 		border-width: 0
 			0
 			var(--indentation-guide-width)
 			var(--indentation-guide-width);
 		border-bottom-left-radius: var(--indentation-guide-radius);
+		width: calc(var(--indentation-guide-indent) + 2px);
+		height: calc(1em * var(#{$css-var-prefix}line-height));
+		pointer-events: none;
+		content: "";
 	}
 
 	:not(li) > * > li::after {
@@ -338,6 +338,6 @@ input:not(
 }
 
 iframe {
-	width: 100%;
 	aspect-ratio: 16 / 9;
+	width: 100%;
 }

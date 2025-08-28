@@ -1,23 +1,23 @@
 /* https://fonts.google.com/noto/specimen/Noto+Serif */
 @font-face {
-	font-family: "Noto Serif";
 	font-style: normal;
 	font-weight: 200 900;
 	src:
 		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2")
 			format("woff2-variations"),
 		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2");
+	font-family: "Noto Serif";
 	font-display: fallback;
 }
 
 @font-face {
-	font-family: "Noto Serif";
 	font-style: italic;
 	font-weight: 200 900;
 	src:
 		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2")
 			format("woff2-variations"),
 		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2");
+	font-family: "Noto Serif";
 	font-display: fallback;
 }
 
@@ -25,8 +25,8 @@
    LICENSE: [1001Fonts Free For Commercial Use License (FFC)](https://www.1001fonts.com/licenses/ffc.html)
 */
 @font-face {
-	font-family: ParkLaneNF;
 	src: url("/fonts/ParkLaneNF.woff2") format("woff2");
+	font-family: ParkLaneNF;
 	font-display: swap;
 }
 
@@ -34,7 +34,7 @@
    LICENSE: [Open Font License](https://openfontlicense.org/)
 */
 @font-face {
-	font-family: Limelight;
 	src: url("/fonts/Limelight-Regular.woff2") format("woff2");
+	font-family: Limelight;
 	font-display: fallback;
 }

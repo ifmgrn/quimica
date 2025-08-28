@@ -1,8 +1,6 @@
 @use "../settings" as *;
 
 .overflow-auto {
-	// "scrollbar-gutter" não é amplamente suportado
-	/* stylelint-disable-next-line plugin/use-defensive-css */
 	overflow: auto;
 	overscroll-behavior: auto;
 }
@@ -17,9 +15,9 @@
 
 .center {
 	display: block;
-	width: fit-content;
 	margin-right: auto;
 	margin-left: auto;
+	width: fit-content;
 }
 
 // Remove o efeito padrão de hover do picocss para ser implementado só quando o dispositivo permite hover (não mobile)
@@ -58,13 +56,12 @@ button:is(:active, :focus) {
 [role="group"] {
 	display: inline-flex;
 	flex-wrap: nowrap;
+	vertical-align: middle;
+	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
+	border-radius: var(#{$css-var-prefix}border-radius);
 	width: auto;
-	/* stylelint-disable-next-line plugin/use-defensive-css */
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
-	vertical-align: middle;
-	border-radius: var(#{$css-var-prefix}border-radius);
-	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
 
 	button {
 		#{$css-var-prefix}form-element-spacing-vertical: 0.25rem;
@@ -101,26 +98,26 @@ button:is(:active, :focus) {
 
 th,
 td {
+	transition: background-color var(#{$css-var-prefix}transition);
 	padding: calc(var(#{$css-var-prefix}spacing) / 2)
 		calc(var(#{$css-var-prefix}spacing) * 0.75);
 	text-align: center;
 	white-space: break-spaces;
-	transition: background-color var(#{$css-var-prefix}transition);
 }
 
 th {
-	font-weight: calc(var(#{$css-var-prefix}font-weight) * 1.5);
 	border-bottom-width: calc(var(#{$css-var-prefix}border-width) + 0.125rem);
+	font-weight: calc(var(#{$css-var-prefix}font-weight) * 1.5);
 }
 
 tr {
 	/*
-        Safari não suporta `position: relative` em elementos `<tr>`,
-        mas essas duas propriedades podem ser usadas como uma alternativa.
-        Fonte: https://mtsknn.fi/blog/relative-tr-in-safari/
+	Safari não suporta `position: relative` em elementos `<tr>`,
+	mas essas duas propriedades podem ser usadas como uma alternativa.
+	Fonte: https://mtsknn.fi/blog/relative-tr-in-safari/
     */
-	clip-path: inset(0);
 	transform: translate(0);
+	clip-path: inset(0);
 }
 
 tr a {
@@ -129,11 +126,11 @@ tr a {
 }
 
 tr a::before {
+	display: block;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
-	display: block;
 	width: 100%;
 	content: "";
 }
@@ -169,16 +166,16 @@ ul li {
 	tr:hover td::before,
 	li:hover::before {
 		position: absolute;
+		opacity: 0.2;
+		animation: bg-slide var(#{$css-var-prefix}transition);
 		inset: 0;
-		pointer-events: none;
-		content: "";
 		background: linear-gradient(
 			to right,
 			var(#{$css-var-prefix}primary),
 			transparent 100%
 		);
-		opacity: 0.2;
-		animation: bg-slide var(#{$css-var-prefix}transition);
+		pointer-events: none;
+		content: "";
 	}
 }
 

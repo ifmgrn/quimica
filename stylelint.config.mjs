@@ -1,10 +1,6 @@
 /** @type {import('stylelint').Config} */
 export default {
-	extends: [
-		"stylelint-config-standard-scss",
-		"stylelint-config-prettier-scss",
-		"stylelint-config-recess-order",
-	],
+	extends: ["stylelint-config-standard-scss", "stylelint-config-prettier-scss"],
 	plugins: ["stylelint-plugin-defensive-css", "stylelint-plugin-use-baseline"],
 	ignoreFiles: ["**/*", "!styles/**/*"],
 	rules: {
@@ -16,7 +12,8 @@ export default {
 				"background-repeat": true,
 				"flex-wrapping": true,
 				"scroll-chaining": true,
-				"scrollbar-gutter": true,
+				// "scrollbar-gutter" não é amplamente suportado
+				"scrollbar-gutter": false,
 				"vendor-prefix-grouping": true,
 			},
 		],
