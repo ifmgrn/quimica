@@ -39,7 +39,7 @@ function Add-ToUserPath($newPath) {
         [Environment]::SetEnvironmentVariable('PATH', $newPaths, [EnvironmentVariableTarget]::User)
         $env:Path = [Environment]::ExpandEnvironmentVariables("$newPaths;$systemCurrentPaths")
 
-        Write-Host "Adicionei '$newPath' ao seu PATH."
+        Write-Host "Adicionei `"$newPath`" ao seu PATH."
     }
 }
 
@@ -73,7 +73,7 @@ if (-not (Test-Path -Path $targetProfile)) {
 $content = Get-Content -Path $targetProfile -Raw
 if (-not $content -or $content -notmatch [Regex]::Escape($updatePathContent)) {
     Add-Content -Path $targetProfile -Value "`n$updatePathContent"
-    Write-Host 'O Powershell agora prioriza o seu PATH sobre o PATH do sistema.'
+    Write-Host 'O Powershell agora deve priorizar o seu PATH sobre o PATH do sistema.'
 }
 
 
@@ -85,8 +85,8 @@ if (-not (Test-ExecutableInPATH 'git')) {
     Get-Archive $url $dest
     if ($?) {
         Add-ToUserPath (Join-Path $dest 'cmd')
-        git config --global user.name "$(Read-Host 'Qual nome deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o seu projeto localmente)?')"
-        git config --global user.email "$(Read-Host 'Qual email deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o seu projeto localmente)?')"
+        git config --global user.name "$(Read-Host 'Qual nome deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o projeto localmente)?')"
+        git config --global user.email "$(Read-Host 'Qual email deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o projeto localmente)?')"
     }
 }
 
@@ -105,12 +105,12 @@ if (-not $currentVersion -or $currentVersion -lt [version]$nodeVersion) {
     if ($?) {
         Add-ToUserPath (Join-Path $currentDir $name)
         Add-ToUserPath "$env:APPDATA\npm"
-        npm update -g npm *> $null
+        npm update -g npm > $null
     }
 }
 if (-not (Test-ExecutableInPATH 'pnpm')) {
     Write-Host 'Instalando pnpm globalmente...'
-    npm install -g pnpm *> $null
+    npm install -g pnpm > $null
 }
 
 
@@ -142,4 +142,4 @@ if (-not (Test-Path $dest)) {
 Write-Host 'Iniciando servidor local de desenvolvimento do projeto...'
 Write-Host 'Para acessar o website do projeto, abra a URL: http://localhost:5173/reacoes-quimicas/' -ForegroundColor Yellow
 Write-Host 'Para parar o servidor, pressione Ctrl+C.'
-pnpm --dir "$repoFolder" run dev
+pnpm --dir "$repoFolder" -s run dev --clearScreen false -l warn
