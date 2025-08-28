@@ -6,10 +6,9 @@
 	"recommendations": [
 		"visualstudioexptteam.vscodeintellicode",
 		"dbaeumer.vscode-eslint",
-		"stylelint.vscode-stylelint"
+		"stylelint.vscode-stylelint",
+		"esbenp.prettier-vscode"
 	],
 	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
-	"unwantedRecommendations": [
-		
-	]
+	"unwantedRecommendations": []
 }

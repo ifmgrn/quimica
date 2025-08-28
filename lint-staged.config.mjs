@@ -1,7 +1,13 @@
 /**
  * @type {import('lint-staged').Configuration}
-*/
-export default {
-    'src/**/*.{js,ts}': [() => 'tsc', 'eslint --fix'],
-    'styles/**/*.{css,scss}': 'stylelint --fix'
+ */
+
+const settings = {
+	"src/**/*": [() => "tsc", "eslint --fix", "prettier --write"],
+	"styles/**/*": ["stylelint --fix", "prettier --write"],
 };
+settings[`!(${Object.keys(settings).join("|")})`] = [
+	"prettier --write --ignore-unknown",
+];
+
+export default settings;
