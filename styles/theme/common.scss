@@ -57,8 +57,11 @@ button:is(:active, :focus) {
 
 [role="group"] {
 	display: inline-flex;
-	flex-wrap: wrap;
+	flex-wrap: nowrap;
 	width: auto;
+	/* stylelint-disable-next-line plugin/use-defensive-css */
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
 	vertical-align: middle;
 	border-radius: var(#{$css-var-prefix}border-radius);
 	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
