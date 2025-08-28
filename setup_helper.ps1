@@ -85,8 +85,8 @@ if (-not (Test-ExecutableInPATH 'git')) {
     Get-Archive $url $dest
     if ($?) {
         Add-ToUserPath (Join-Path $dest 'cmd')
-        git config --global user.name "$(Read-Host 'Qual nome deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o projeto localmente)?')"
-        git config --global user.email "$(Read-Host 'Qual email deve aparecer no Git (não vai aparecer no GitHub, apenas quando clonarem o projeto localmente)?')"
+        git config --global user.name "$(Read-Host 'Qual nome deve aparecer no Git (pode ser o mesmo nome que aparece no GitHub)?')"
+        git config --global user.email "$(Read-Host 'Qual email deve aparecer no Git (pode ser o mesmo email que aparece no GitHub)?')"
     }
 }
 
