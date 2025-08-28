@@ -7,8 +7,8 @@
   "packageManager": "pnpm@10.12.4",
   "scripts": {
     "dev": "vite",
-    "lint": "tsc && eslint && stylelint \"styles/**/*\"",
-    "build": "pnpm run lint && vite build",
+    "lint": "tsc && eslint --fix && stylelint \"styles/**/*\" --fix",
+    "build": "pnpm -s run lint && vite build",
     "preview": "vite preview",
     "prepare": "husky"
   },
@@ -17,6 +17,7 @@
     "eslint": "^9.33.0",
     "globals": "^16.3.0",
     "husky": "^9.1.7",
+    "lint-staged": "^16.1.5",
     "postcss-scss": "^4.0.9",
     "sass-embedded": "^1.90.0",
     "stylelint": "^16.23.1",
