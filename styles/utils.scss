@@ -1,16 +1,15 @@
-@use 'sass:color';
-@use 'sass:math';
-
+@use "sass:color";
+@use "sass:math";
 
 @function round-color($color) {
-    $hue: math.round(color.channel($color, 'hue', hsl));
-    $saturation: math.round(color.channel($color, 'saturation', hsl));
-    $lightness: math.round(color.channel($color, 'lightness', hsl));
-    $alpha: calc(math.round(color.channel($color, 'alpha') * 100) / 100);
+	$hue: math.round(color.channel($color, "hue", hsl));
+	$saturation: math.round(color.channel($color, "saturation", hsl));
+	$lightness: math.round(color.channel($color, "lightness", hsl));
+	$alpha: calc(math.round(color.channel($color, "alpha") * 100) / 100);
 
-    @return hsla($hue, $saturation, $lightness, $alpha);
+	@return hsla($hue, $saturation, $lightness, $alpha);
 }
 
 @function css-color-mix($space, $color1, $color2, $weight) {
-    @return round-color(color.mix($color2, $color1, $weight, $space));
+	@return round-color(color.mix($color2, $color1, $weight, $space));
 }

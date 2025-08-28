@@ -12,5 +12,5 @@ export default defineConfig([
 		},
 	},
 	tseslint.configs.recommended,
-	globalIgnores(["*", "!src/"])
+	globalIgnores(["*", "!src/"]),
 ]);

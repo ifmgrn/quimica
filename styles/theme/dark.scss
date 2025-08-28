@@ -1,61 +1,107 @@
-@use '../settings' as *;
-@use '../utils' as *;
+@use "../settings" as *;
+@use "../utils" as *;
 
 $text-color: #d9d9d9;
 $primary-background: #070918;
 $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 
 @mixin theme {
-    color-scheme: dark;
-    #{$css-var-prefix}background-color: $primary-background;
+	color-scheme: dark;
+	#{$css-var-prefix}background-color: $primary-background;
 
-    // Text color
-    #{$css-var-prefix}color: $text-color;
+	// Text color
+	#{$css-var-prefix}color: $text-color;
 
-    // Text selection color
-    #{$css-var-prefix}text-selection-color: hsla($accent-h, $accent-s, $accent-l, 33%);
+	// Text selection color
+	#{$css-var-prefix}text-selection-color: hsla(
+		$accent-h,
+		$accent-s,
+		$accent-l,
+		33%
+	);
 
-    // Muted colors
-    #{$css-var-prefix}muted-color: $muted-color;
-    #{$css-var-prefix}muted-border-color: css-color-mix(lab, $primary-background, $text-color, 10%);
+	// Muted colors
+	#{$css-var-prefix}muted-color: $muted-color;
+	#{$css-var-prefix}muted-border-color: css-color-mix(
+		lab,
+		$primary-background,
+		$text-color,
+		10%
+	);
 
-    // Primary colors
-    #{$css-var-prefix}primary: $accent-color-text;
-    #{$css-var-prefix}primary-background: $accent-color;
-    #{$css-var-prefix}primary-border: css-color-mix(lab, $primary-background, $text-color, 20%);
-    #{$css-var-prefix}primary-underline: var(#{$css-var-prefix}primary);
-    #{$css-var-prefix}primary-hover: $accent-color-text-hover;
-    #{$css-var-prefix}primary-hover-background: var(#{$css-var-prefix}form-element-focus-color);
-    #{$css-var-prefix}primary-hover-border: var(#{$css-var-prefix}primary-hover-background);
-    #{$css-var-prefix}primary-hover-underline: var(#{$css-var-prefix}primary-hover);
-    #{$css-var-prefix}primary-focus-border: css-color-mix(lab, $primary-background, $text-color, 40%);
-    #{$css-var-prefix}primary-inverse: inherit;
+	// Primary colors
+	#{$css-var-prefix}primary: $accent-color-text;
+	#{$css-var-prefix}primary-background: $accent-color;
+	#{$css-var-prefix}primary-border: css-color-mix(
+		lab,
+		$primary-background,
+		$text-color,
+		20%
+	);
+	#{$css-var-prefix}primary-underline: var(#{$css-var-prefix}primary);
+	#{$css-var-prefix}primary-hover: $accent-color-text-hover;
+	#{$css-var-prefix}primary-hover-background: var(
+		#{$css-var-prefix}form-element-focus-color
+	);
+	#{$css-var-prefix}primary-hover-border: var(
+		#{$css-var-prefix}primary-hover-background
+	);
+	#{$css-var-prefix}primary-hover-underline: var(
+		#{$css-var-prefix}primary-hover
+	);
+	#{$css-var-prefix}primary-focus-border: css-color-mix(
+		lab,
+		$primary-background,
+		$text-color,
+		40%
+	);
+	#{$css-var-prefix}primary-inverse: inherit;
 
-    // Headings colors
-    @if $headings-color == 'accent' {
-        @for $i from 1 through 6 {
-            #{$css-var-prefix}h#{$i}-color: var(#{$css-var-prefix}primary-background);
-        }
-    }
+	// Headings colors
+	@if $headings-color == "accent" {
+		@for $i from 1 through 6 {
+			#{$css-var-prefix}h#{$i}-color: var(#{$css-var-prefix}primary-background);
+		}
+	}
 
-    // To disable box-shadow, remove the var or set to '0 0 0 rgba(0, 0, 0, 0)'
-    // Don't use, 'none, 'false, 'null', '0', etc.
-    #{$css-var-prefix}button-box-shadow: 0 0 0 rgb(0 0 0 / 0%);
-    #{$css-var-prefix}button-hover-box-shadow: 0 0 0 rgb(0 0 0 / 0%);
+	// To disable box-shadow, remove the var or set to '0 0 0 rgba(0, 0, 0, 0)'
+	// Don't use, 'none, 'false, 'null', '0', etc.
+	#{$css-var-prefix}button-box-shadow: 0 0 0 rgb(0 0 0 / 0%);
+	#{$css-var-prefix}button-hover-box-shadow: 0 0 0 rgb(0 0 0 / 0%);
 
-    // Table
-    #{$css-var-prefix}table-border-color: var(#{$css-var-prefix}muted-border-color);
+	// Table
+	#{$css-var-prefix}table-border-color: var(
+		#{$css-var-prefix}muted-border-color
+	);
 
-    // Form elements
-    #{$css-var-prefix}form-element-background-color: css-color-mix(lab, $primary-background, $text-color, 25%);
-    #{$css-var-prefix}form-element-border-color: var(#{$css-var-prefix}primary-border);
-    #{$css-var-prefix}form-element-color: var(#{$css-var-prefix}color);
-    #{$css-var-prefix}form-element-active-background-color: var(#{$css-var-prefix}form-element-background-color);
-    #{$css-var-prefix}form-element-active-border-color: var(#{$css-var-prefix}primary-focus-border);
-    #{$css-var-prefix}form-element-focus-color: var(#{$css-var-prefix}primary-focus-border);
-    #{$css-var-prefix}icon-search: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#{$muted-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'></circle><line x1='21' y1='21' x2='16.65' y2='16.65'></line></svg>");
+	// Form elements
+	#{$css-var-prefix}form-element-background-color: css-color-mix(
+		lab,
+		$primary-background,
+		$text-color,
+		25%
+	);
+	#{$css-var-prefix}form-element-border-color: var(
+		#{$css-var-prefix}primary-border
+	);
+	#{$css-var-prefix}form-element-color: var(#{$css-var-prefix}color);
+	#{$css-var-prefix}form-element-active-background-color: var(
+		#{$css-var-prefix}form-element-background-color
+	);
+	#{$css-var-prefix}form-element-active-border-color: var(
+		#{$css-var-prefix}primary-focus-border
+	);
+	#{$css-var-prefix}form-element-focus-color: var(
+		#{$css-var-prefix}primary-focus-border
+	);
+	#{$css-var-prefix}icon-search: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#{$muted-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'></circle><line x1='21' y1='21' x2='16.65' y2='16.65'></line></svg>");
 
-    @if $enable-tree-view {
-        #{$css-var-prefix}indentation-guide-color: css-color-mix(lab, $primary-background, $text-color, 15%);
-    }
+	@if $enable-tree-view {
+		#{$css-var-prefix}indentation-guide-color: css-color-mix(
+			lab,
+			$primary-background,
+			$text-color,
+			15%
+		);
+	}
 }

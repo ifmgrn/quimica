@@ -1,168 +1,186 @@
-@use '../settings' as *;
+@use "../settings" as *;
 
 .overflow-auto {
-    // "scrollbar-gutter" não é amplamente suportado
-    /* stylelint-disable-next-line plugin/use-defensive-css */
-    overflow: auto;
-    overscroll-behavior: auto;
+	// "scrollbar-gutter" não é amplamente suportado
+	/* stylelint-disable-next-line plugin/use-defensive-css */
+	overflow: auto;
+	overscroll-behavior: auto;
 }
 
 .hidden {
-    visibility: hidden !important;
-    opacity: 0 !important;
-    transition: opacity var(#{$css-var-prefix}transition), visibility 0s linear var(#{$css-var-prefix}transition-duration) !important;
+	visibility: hidden !important;
+	opacity: 0 !important;
+	transition:
+		opacity var(#{$css-var-prefix}transition),
+		visibility 0s linear var(#{$css-var-prefix}transition-duration) !important;
 }
 
 .center {
-    display: block;
-    width: fit-content;
-    margin-right: auto;
-    margin-left: auto;
+	display: block;
+	width: fit-content;
+	margin-right: auto;
+	margin-left: auto;
 }
 
 // Remove o efeito padrão de hover do picocss para ser implementado só quando o dispositivo permite hover (não mobile)
 /* stylelint-disable-next-line plugin/use-defensive-css */
-button, button:is(:hover, :active, :focus) {
-    #{$css-var-prefix}background-color: var(#{$css-var-prefix}form-element-background-color);
-    #{$css-var-prefix}color: var(#{$css-var-prefix}muted-color);
-    #{$css-var-prefix}box-shadow: var(#{$css-var-prefix}button-box-shadow, 0 0 0 rgb(0 0 0 / 0%));
-    cursor: unset;
-    border-color: var(#{$css-var-prefix}border-color);
-    border-radius: var(#{$css-var-prefix}border-radius);
+button,
+button:is(:hover, :active, :focus) {
+	#{$css-var-prefix}background-color: var(
+		#{$css-var-prefix}form-element-background-color
+	);
+	#{$css-var-prefix}color: var(#{$css-var-prefix}muted-color);
+	#{$css-var-prefix}box-shadow: var(
+		#{$css-var-prefix}button-box-shadow,
+		0 0 0 rgb(0 0 0 / 0%)
+	);
+	cursor: unset;
+	border-color: var(#{$css-var-prefix}border-color);
+	border-radius: var(#{$css-var-prefix}border-radius);
 }
 
 button:is(:active, :focus) {
-    #{$css-var-prefix}background-color: var(#{$css-var-prefix}primary-hover-background);
-    #{$css-var-prefix}color: var(#{$css-var-prefix}color);
+	#{$css-var-prefix}background-color: var(
+		#{$css-var-prefix}primary-hover-background
+	);
+	#{$css-var-prefix}color: var(#{$css-var-prefix}color);
 }
 
 @media (hover: hover) {
-    button:hover {
-        #{$css-var-prefix}background-color: var(#{$css-var-prefix}primary-hover-background);
-        #{$css-var-prefix}color: var(#{$css-var-prefix}color);
-    }
+	button:hover {
+		#{$css-var-prefix}background-color: var(
+			#{$css-var-prefix}primary-hover-background
+		);
+		#{$css-var-prefix}color: var(#{$css-var-prefix}color);
+	}
 }
 
-[role='group'] {
-    display: inline-flex;
-    flex-wrap: wrap;
-    width: auto;
-    vertical-align: middle;
-    border-radius: var(#{$css-var-prefix}border-radius);
-    box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
+[role="group"] {
+	display: inline-flex;
+	flex-wrap: wrap;
+	width: auto;
+	vertical-align: middle;
+	border-radius: var(#{$css-var-prefix}border-radius);
+	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
 
-    button {
-        #{$css-var-prefix}form-element-spacing-vertical: 0.25rem;
-        #{$css-var-prefix}form-element-spacing-horizontal: 0.75rem;
-        border-bottom: 0;
-    }
+	button {
+		#{$css-var-prefix}form-element-spacing-vertical: 0.25rem;
+		#{$css-var-prefix}form-element-spacing-horizontal: 0.75rem;
+		border-bottom: 0;
+	}
 
-    > *,
-    input:not([type='checkbox'], [type='radio']),
-    select {
-        &:not(:first-child) {
-            margin-left: 0;
-            border-top-left-radius: 0;
-            border-bottom-left-radius: 0;
-        }
+	> *,
+	input:not([type="checkbox"], [type="radio"]),
+	select {
+		&:not(:first-child) {
+			margin-left: 0;
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
 
-        &:not(:last-child) {
-            border-top-right-radius: 0;
-            border-bottom-right-radius: 0;
-        }
-    }
+		&:not(:last-child) {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+	}
 
-    button,
-    input:not([type='checkbox'], [type='radio']) {
-        &:not(:first-child) {
-            margin-left: calc(var(#{$css-var-prefix}border-width) * -1);
-        }
-    }
+	button,
+	input:not([type="checkbox"], [type="radio"]) {
+		&:not(:first-child) {
+			margin-left: calc(var(#{$css-var-prefix}border-width) * -1);
+		}
+	}
 }
 
 :is(input, textarea)::placeholder {
-    color: var(#{$css-var-prefix}muted-color);
+	color: var(#{$css-var-prefix}muted-color);
 }
 
 th,
 td {
-    padding: calc(var(#{$css-var-prefix}spacing) / 2) calc(var(#{$css-var-prefix}spacing) * 0.75);
-    text-align: center;
-    white-space: break-spaces;
-    transition: background-color var(#{$css-var-prefix}transition);
+	padding: calc(var(#{$css-var-prefix}spacing) / 2)
+		calc(var(#{$css-var-prefix}spacing) * 0.75);
+	text-align: center;
+	white-space: break-spaces;
+	transition: background-color var(#{$css-var-prefix}transition);
 }
 
 th {
-    font-weight: calc(var(#{$css-var-prefix}font-weight) * 1.5);
-    border-bottom-width: calc(var(#{$css-var-prefix}border-width) + 0.125rem);
+	font-weight: calc(var(#{$css-var-prefix}font-weight) * 1.5);
+	border-bottom-width: calc(var(#{$css-var-prefix}border-width) + 0.125rem);
 }
 
 tr {
-    /*
+	/*
         Safari não suporta `position: relative` em elementos `<tr>`,
         mas essas duas propriedades podem ser usadas como uma alternativa.
         Fonte: https://mtsknn.fi/blog/relative-tr-in-safari/
     */
-    clip-path: inset(0);    
-    transform: translate(0);
+	clip-path: inset(0);
+	transform: translate(0);
 }
 
 tr a {
-    color: unset;
-    text-decoration: none;
+	color: unset;
+	text-decoration: none;
 }
 
 tr a::before {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    display: block;
-    width: 100%;
-    content: '';
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	display: block;
+	width: 100%;
+	content: "";
 }
 
 :is(th, td):not(:first-child) {
-    border-left: var(#{$css-var-prefix}border-width) solid var(#{$css-var-prefix}table-border-color);
+	border-left: var(#{$css-var-prefix}border-width) solid
+		var(#{$css-var-prefix}table-border-color);
 }
 
 tr:last-child td {
-    border-bottom: 0;
+	border-bottom: 0;
 }
 
 li {
-    margin-bottom: 0;
+	margin-bottom: 0;
 }
 
 ul li {
-    list-style: disc;
+	list-style: disc;
 }
 
 @media (hover: hover) {
-    @keyframes bg-slide {
-        from {
-            right: 100%;
-        }
+	@keyframes bg-slide {
+		from {
+			right: 100%;
+		}
 
-        to {
-            right: 0;
-        }
-    }
+		to {
+			right: 0;
+		}
+	}
 
-    tr:hover td::before,
-    li:hover::before {
-        position: absolute;
-        inset: 0;
-        pointer-events: none;
-        content: '';
-        background: linear-gradient(to right, var(#{$css-var-prefix}primary), transparent 100%);
-        opacity: 0.2;
-        animation: bg-slide var(#{$css-var-prefix}transition);
-    }
+	tr:hover td::before,
+	li:hover::before {
+		position: absolute;
+		inset: 0;
+		pointer-events: none;
+		content: "";
+		background: linear-gradient(
+			to right,
+			var(#{$css-var-prefix}primary),
+			transparent 100%
+		);
+		opacity: 0.2;
+		animation: bg-slide var(#{$css-var-prefix}transition);
+	}
 }
 
 /* "marker" sem animações é amplamente suportado */
 /* stylelint-disable-next-line plugin/use-baseline */
 li::marker {
-    color: var(#{$css-var-prefix}primary-background);
+	color: var(#{$css-var-prefix}primary-background);
 }

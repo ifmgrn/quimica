@@ -1,6 +1,10 @@
 /** @type {import('stylelint').Config} */
 export default {
-	extends: ["stylelint-config-standard-scss", "stylelint-config-prettier-scss", "stylelint-config-recess-order"],
+	extends: [
+		"stylelint-config-standard-scss",
+		"stylelint-config-prettier-scss",
+		"stylelint-config-recess-order",
+	],
 	plugins: ["stylelint-plugin-defensive-css", "stylelint-plugin-use-baseline"],
 	ignoreFiles: ["**/*", "!styles/**/*"],
 	rules: {
@@ -23,5 +27,5 @@ export default {
 				ignoreSelectors: ["nesting"],
 			},
 		],
-	}
+	},
 };
