@@ -5,16 +5,9 @@
 	"type": "module",
 	"license": "GPL-3.0-or-later",
 	"packageManager": "pnpm@10.12.4",
-	"prettier": {
-		"useTabs": true,
-		"endOfLine": "auto",
-		"plugins": [
-			"prettier-plugin-css-order"
-		]
-	},
 	"scripts": {
 		"dev": "vite",
-		"lint": "tsc && eslint && stylelint . && prettier --check .",
+		"lint": "tsc && eslint && stylelint . && prettier --log-level warn --check .",
 		"build": "pnpm -s run lint && vite build",
 		"preview": "vite preview",
 		"prepare": "husky"

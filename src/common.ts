@@ -104,7 +104,11 @@ export function convertTextToHTMLList(input: string) {
 				} else {
 					html += "<ul>";
 				}
-				listStack.push({ type: "ul", indent: indentLevel, openLi: false });
+				listStack.push({
+					type: "ul",
+					indent: indentLevel,
+					openLi: false,
+				});
 			} else {
 				// Close previous <li> in the same list if open
 				const currentList = listStack[listStack.length - 1];
@@ -139,7 +143,11 @@ export function convertTextToHTMLList(input: string) {
 				} else {
 					html += "<ol>";
 				}
-				listStack.push({ type: "ol", indent: indentLevel, openLi: false });
+				listStack.push({
+					type: "ol",
+					indent: indentLevel,
+					openLi: false,
+				});
 			} else {
 				// Close previous <li> in the same list if open
 				const currentList = listStack[listStack.length - 1];

@@ -107,11 +107,9 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
 		const db = await openDB<ChemistryDB>("ChemistryDB-dev", 1, {
 			upgrade(db, _oldVersion, _newVersion, transaction) {
 				db.createObjectStore("molecules");
-				db.createObjectStore("reactions", { keyPath: "id" }).createIndex(
-					"terms_idx",
-					"terms",
-					{ multiEntry: true },
-				);
+				db.createObjectStore("reactions", {
+					keyPath: "id",
+				}).createIndex("terms_idx", "terms", { multiEntry: true });
 
 				upgradePromise = new Promise((resolve, reject) => {
 					Promise.all([transaction.done, import("./data.js")])
