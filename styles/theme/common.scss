@@ -96,6 +96,10 @@ button:is(:active, :focus) {
 	color: var(#{$css-var-prefix}muted-color);
 }
 
+[type="search"]::-webkit-search-cancel-button {
+	appearance: none;
+}
+
 th,
 td {
 	transition: background-color var(#{$css-var-prefix}transition);
