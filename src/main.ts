@@ -47,12 +47,14 @@ else openHomepage(document.body);
 			toolbar.classList.remove("hidden");
 		});
 		input.addEventListener("focusout", (event) => {
-			if (!toolbar.contains(event.relatedTarget as Node)) {
-				toolbar.setAttribute("aria-hidden", "true");
-				toolbar.classList.add("hidden");
-			}
-
-			input.selectionStart = input.selectionEnd = input.value.length;
+			// Certifica-se que "focusout" acontece depois de "focusin" no Safari
+			setTimeout(() => {
+				const target = event.relatedTarget;
+				if (!(target instanceof Node) || !toolbar.contains(target)) {
+					toolbar.setAttribute("aria-hidden", "true");
+					toolbar.classList.add("hidden");
+				}
+			}, 0);
 		});
 	}
 }

@@ -64,10 +64,14 @@ function setupPage() {
 			(!event.ctrlKey || isDigit(event.key)) &&
 			(event.key.length === 1 || ["Backspace", "Delete"].includes(event.key))
 		) {
+			input.setSelectionRange(input.value.length, input.value.length);
 			input.focus();
 			if (event.ctrlKey && isDigit(event.key)) {
 				input.dispatchEvent(
-					new KeyboardEvent("keydown", { ctrlKey: true, key: event.key }),
+					new KeyboardEvent("keydown", {
+						ctrlKey: true,
+						key: event.key,
+					}),
 				);
 				event.preventDefault();
 			}
