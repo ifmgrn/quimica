@@ -122,17 +122,18 @@ if (-not (Test-Path $repoFolder)) {
 pnpm --dir "$repoFolder" install -s
 
 
-$dest = Join-Path $currentDir 'PortableVSCode'
+$dest = Join-Path $currentDir 'Microsoft VS Code (Portable)'
 $exe = Join-Path $dest 'Code.exe'
 if (-not (Test-Path $dest)) {
-    Write-Host 'Deseja baixar o VS Code atualizado localmente? (s/N) ' -NoNewLine -ForegroundColor Yellow
+    Write-Host 'Deseja baixar o Visual Studio Code atualizado localmente? (s/N) ' -NoNewLine -ForegroundColor Yellow
     $response = Read-Host
     if ($response -match '^[Ss]$') {
-        Write-Host 'Baixando o VS Code atualizado localmente...'
+        Write-Host 'Baixando o Visual Studio Code atualizado localmente...'
         $url = 'https://code.visualstudio.com/sha/download?build=stable&os=win32-x64-archive'
         Get-Archive $url $dest 'VSCode-win32-x64.zip'
         if ($?) {
-            Write-Host 'Adicionando VS Code para o Desktop ("VS Code Local")...'
+            Add-ToUserPath (Join-Path $dest 'bin')
+            Write-Host 'Adicionando Visual Studio Code para o Desktop ("VS Code Local")...'
             Add-ToDesktop $exe 'VS Code Local' "`"$repoFolder`""
         }
     }
