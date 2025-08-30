@@ -1,3 +1,9 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
 import { convertTextToHTMLList, interpolate } from "./common";
 import { closeDB, getDB } from "./indexed-db";
 import template from "../templates/reaction-page.html?raw";

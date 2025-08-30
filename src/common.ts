@@ -1,3 +1,9 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
 export type Reaction = {
 	nome: string;
 	tipo: string;

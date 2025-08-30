@@ -2,11 +2,11 @@ import { defineConfig } from "vite";
 import { copyFileSync } from "node:fs";
 import { resolve } from "node:path";
 
-const banner = `/*
-    Copyright (c) 2025 John
-    This code is licensed under the GNU GPL-3.0 License.
-    See LICENSE.txt file for details.
-*/\n`;
+const banner = `/*!
+ * Copyright (c) 2025 ifmgrn
+ * Licensed under the GNU AGPL-3.0 License.
+ * See LICENSE.txt for details.
+ */`;
 
 export default defineConfig({
 	base: "/reacoes-quimicas/",
