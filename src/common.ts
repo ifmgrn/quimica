@@ -4,6 +4,7 @@
 	See LICENSE.txt for details.
 */
 
+// Informações de uma reação química
 export type Reaction = {
 	nome: string;
 	tipo: string;
@@ -17,22 +18,25 @@ export type Reaction = {
 	terms?: string[];
 };
 
+// Parâmetro usado para especificar uma reação na URL (ex.: ?r=combustão)
 export const REACTION_URL_PARAMETER = "r";
 
-/* Verifica se o caractere dado é um algarismo. */
+// Verifica se o caractere dado é um algarismo (número de uma casa).
 export function isDigit(str: string) {
 	return str.length === 1 && str >= "0" && str <= "9";
 }
 
-/* Remove todos os acentos do texto dado, incluindo coisas como "ç" (que vira "c"). */
+// Remove todos os acentos do texto dado, incluindo coisas como "ç" (que vira "c").
 export function removeAccents(str: string) {
 	return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
 
+// Normaliza um texto ao remover acentos e fazer todas as letras minúsculas
 export function normalizeString(str: string) {
 	return removeAccents(str).toLowerCase();
 }
 
+// Faz o nome de uma reação ficar num bom formato para ser incluído na URL (ainda precisaria fazer "encode")
 export function convertReactionNameToId(name: string) {
 	return name.replaceAll(" ", "-").toLowerCase();
 }
@@ -52,29 +56,39 @@ export function interpolate(
 export function convertTextToHTMLList(input: string) {
 	const lines = input.split("\n");
 
-	let html = "";
+	const htmlParts: string[] = [];
 	const listStack: { type: "ul" | "ol"; indent: number; openLi: boolean }[] =
 		[];
 
-	// Close lists with indentation strictly greater than targetIndent
+	// Escapa texto para HTML
+	function escapeHTML(text: string) {
+		return text
+			.replace(/&/g, "&amp;")
+			.replace(/</g, "&lt;")
+			.replace(/>/g, "&gt;")
+			.replace(/"/g, "&quot;")
+			.replace(/'/g, "&#39;");
+	}
+
+	// Fecha listas com recuo estritamente maior que targetIndent
 	function closeLists(targetIndent: number) {
 		while (
 			listStack.length > 0 &&
 			listStack[listStack.length - 1].indent > targetIndent
 		) {
 			const list = listStack.pop()!;
-			// Close the last <li> if still open
+			// Fecha o último <li> se ainda estiver aberto
 			if (list.openLi) {
-				html += "</li>";
+				htmlParts.push("</li>");
 				list.openLi = false;
 			}
-			html += list.type === "ul" ? "</ul>" : "</ol>";
+			htmlParts.push(list.type === "ul" ? "</ul>" : "</ol>");
 		}
 	}
 
 	lines.forEach((line) => {
 		if (!line.trim()) {
-			closeLists(-1); // Close all lists on empty line
+			closeLists(-1); // Fecha todas as listas se for uma linha vazia
 			return;
 		}
 
@@ -83,100 +97,59 @@ export function convertTextToHTMLList(input: string) {
 
 		const content = line.trim();
 
+		/* Regex para listas ordenadas que aceita:
+		 * números seguidos de . ou ) e espaço (ex: 1. item, 2) item)
+		 * letras (a-z ou A-Z) seguidas de . ou ) e espaço (ex: a) item, B. item)
+		 */
 		const ulMatch = content.match(/^-\s+(.*)/);
-		const olMatch = content.match(/^(\d+)\)\s?(.*)/);
+		const olMatch = content.match(/^([0-9a-zA-Z]+)[.)]\s+(.*)/);
 
-		if (ulMatch) {
-			const itemText = ulMatch[1];
-
-			// Close lists deeper than current indent
-			closeLists(indentLevel);
-
-			// Check if we need to open a new ul
-			if (
-				listStack.length === 0 ||
-				listStack[listStack.length - 1].indent < indentLevel ||
-				listStack[listStack.length - 1].type !== "ul"
-			) {
-				// Before opening a new list, close the previous <li> if open at the current level
-				if (listStack.length > 0) {
-					const currentList = listStack[listStack.length - 1];
-					if (currentList.openLi) {
-						html += "<ul>";
-						// We don't close the <li> here, because nested list goes inside it
-					} else {
-						html += "<ul>";
-					}
-				} else {
-					html += "<ul>";
-				}
-				listStack.push({
-					type: "ul",
-					indent: indentLevel,
-					openLi: false,
-				});
-			} else {
-				// Close previous <li> in the same list if open
-				const currentList = listStack[listStack.length - 1];
-				if (currentList.openLi) {
-					html += "</li>";
-					currentList.openLi = false;
-				}
-			}
-
-			// Open new <li>
-			html += `<li>${itemText}`;
-			listStack[listStack.length - 1].openLi = true;
-		} else if (olMatch) {
-			const itemText = olMatch[2];
-
-			// Close lists deeper than current indent
-			closeLists(indentLevel);
-
-			// Check if we need to open a new ol
-			if (
-				listStack.length === 0 ||
-				listStack[listStack.length - 1].indent < indentLevel ||
-				listStack[listStack.length - 1].type !== "ol"
-			) {
-				if (listStack.length > 0) {
-					const currentList = listStack[listStack.length - 1];
-					if (currentList.openLi) {
-						html += "<ol>";
-					} else {
-						html += "<ol>";
-					}
-				} else {
-					html += "<ol>";
-				}
-				listStack.push({
-					type: "ol",
-					indent: indentLevel,
-					openLi: false,
-				});
-			} else {
-				// Close previous <li> in the same list if open
-				const currentList = listStack[listStack.length - 1];
-				if (currentList.openLi) {
-					html += "</li>";
-					currentList.openLi = false;
-				}
-			}
-
-			// Open new <li>
-			html += `<li>${itemText}`;
-			listStack[listStack.length - 1].openLi = true;
-		} else {
-			// Close all lists on normal text lines
+		let itemText;
+		if (ulMatch) itemText = ulMatch[1];
+		else if (olMatch) itemText = olMatch[2];
+		else {
+			// Fecha todas as listas em linhas de texto normais
 			closeLists(-1);
-			html += `<p>${content}</p>`;
+			htmlParts.push(escapeHTML(`<p>${content}</p>`));
+			return;
 		}
+
+		const type = ulMatch ? "ul" : "ol";
+
+		// Fecha listas mais indentadas que o recuo atual
+		closeLists(indentLevel);
+
+		// Verifica se precisamos abrir uma nova <ul> ou <ol>
+		if (
+			listStack.length === 0 ||
+			listStack[listStack.length - 1].indent < indentLevel ||
+			listStack[listStack.length - 1].type !== type
+		) {
+			htmlParts.push(`<${type}>`);
+
+			listStack.push({
+				type: type,
+				indent: indentLevel,
+				openLi: false,
+			});
+		} else {
+			// Fecha o <li> anterior na mesma lista se estiver aberto
+			const currentList = listStack[listStack.length - 1];
+			if (currentList.openLi) {
+				htmlParts.push("</li>");
+				currentList.openLi = false;
+			}
+		}
+
+		// Abre um novo <li>
+		htmlParts.push(`<li>${escapeHTML(itemText)}`);
+		listStack[listStack.length - 1].openLi = true;
 	});
 
-	// Close any remaining open lists and <li>
+	// Feche todas as listas abertas restantes e <li>
 	closeLists(-1);
 
-	return html;
+	return htmlParts.join("");
 }
 
 /* Insere o texto dado na posição onde está o cursor do <input> dado. */
