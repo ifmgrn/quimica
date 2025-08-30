@@ -1,5 +1,5 @@
 $gitVersion = '2.51.0'
-$nodeVersion = '22.18.0'
+$nodeVersion = '22.19.0'
 $repoUrl = 'https://github.com/ifmg-rn/reacoes-quimicas'
 
 
@@ -39,7 +39,7 @@ function Add-ToUserPath($newPath) {
         [Environment]::SetEnvironmentVariable('PATH', $newPaths, [EnvironmentVariableTarget]::User)
         $env:Path = [Environment]::ExpandEnvironmentVariables("$newPaths;$systemCurrentPaths")
 
-        Write-Host "Adicionei `"$newPath`" ao seu PATH."
+        Write-Host "`"$newPath`" foi adicionado ao seu PATH."
     }
 }
 
@@ -99,11 +99,20 @@ try {
 }
 if (-not $currentVersion -or $currentVersion -lt [version]$nodeVersion) {
     Write-Host "Nenhum Node.js igual ou maior que v$nodeVersion foi encontrado no PATH. Baixando Node.js localmente..."
+    
     $name = "node-v$nodeVersion-win-x64"
     $url = "https://nodejs.org/dist/v$nodeVersion/$name.zip"
+    $newName = 'nodejs'
+    $dest = Join-Path $currentDir $newName
+    
+    if (Test-Path $dest) {
+        Write-Host 'Removendo Node.js localmente...'
+        Remove-Item -Path $dest -Recurse -Force
+    }
     Get-Archive $url $currentDir
     if ($?) {
-        Add-ToUserPath (Join-Path $currentDir $name)
+        Rename-Item -Path (Join-Path $currentDir $name) -NewName $newName
+        Add-ToUserPath $dest
         Add-ToUserPath "$env:APPDATA\npm"
         npm update -g npm > $null
     }
@@ -122,7 +131,7 @@ if (-not (Test-Path $repoFolder)) {
 pnpm --dir "$repoFolder" install -s
 
 
-$dest = Join-Path $currentDir 'Microsoft VS Code (Portable)'
+$dest = Join-Path $currentDir 'Microsoft VS Code'
 $exe = Join-Path $dest 'Code.exe'
 if (-not (Test-Path $dest)) {
     Write-Host 'Deseja baixar o Visual Studio Code atualizado localmente? (s/N) ' -NoNewLine -ForegroundColor Yellow
@@ -133,8 +142,8 @@ if (-not (Test-Path $dest)) {
         Get-Archive $url $dest 'VSCode-win32-x64.zip'
         if ($?) {
             Add-ToUserPath (Join-Path $dest 'bin')
-            Write-Host 'Adicionando Visual Studio Code para o Desktop ("VS Code Local")...'
-            Add-ToDesktop $exe 'VS Code Local' "`"$repoFolder`""
+            Write-Host 'Adicionando Visual Studio Code para o Desktop ("VS Code")...'
+            Add-ToDesktop $exe 'VS Code' "`"$repoFolder`""
         }
     }
 }
