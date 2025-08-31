@@ -4,7 +4,9 @@
 	See LICENSE.txt for details.
 */
 
-import { convertTextToHTMLList, interpolate } from "./common";
+// Contém a lógica por trás da página de reação
+
+import { convertTextToHTMLList, formatMolecules, interpolate } from "./common";
 import { closeDB, getDB } from "./indexed-db";
 import template from "../templates/reaction-page.html?raw";
 
@@ -12,34 +14,35 @@ export default async function openReaction(
 	container: HTMLElement,
 	name: string,
 ) {
+	// Abre uma conexão com o banco de dados e busca a reação
 	const db = await getDB();
-
 	const reaction = await db.get("reactions", name);
 
+	// Volta para a página principal se a reação for inválida
 	if (!reaction) return window.location.assign(".");
 
 	document.title = reaction.nome;
 
+	/* Disponibiliza os dados para substituir no template.
+	 * Formata as moléculas dos reagentes e dos produtos.
+	 * Converte as instruções para listas HTML.
+	 * Nós preparamos os dados sem verificar se eles serão usados ou não,
+	 * pois o String.replace não suporta métodos assíncronos (e a performance não deve mudar muito)
+	 */
 	const tx = db.transaction("molecules");
-
-	async function formatMolecules(molecules: string[]) {
-		const output = await Promise.all(
-			molecules.map(async (text) => `${text} (${await tx.store.get(text)})`),
-		);
-		return output.join(", ");
-	}
-
 	const template_data = {
 		...reaction,
-		reagentes: await formatMolecules(reaction.reagentes),
-		produtos: await formatMolecules(reaction.produtos),
+		reagentes: await formatMolecules(tx.store, reaction.reagentes),
+		produtos: await formatMolecules(tx.store, reaction.produtos),
 		instrucoes: convertTextToHTMLList(reaction.instrucoes),
 	};
 
+	// Insere o template atualizado na página
 	container.insertAdjacentHTML(
 		"beforeend",
 		interpolate(template, template_data),
 	);
 
+	// Fecha o banco de dados (não precisamos mais dele nesta guia)
 	closeDB();
 }

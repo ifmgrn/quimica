@@ -4,21 +4,11 @@
 	See LICENSE.txt for details.
 */
 
-// Informações de uma reação química
-export type Reaction = {
-	nome: string;
-	tipo: string;
-	reagentes: string[];
-	produtos: string[];
-	equacao: string;
-	embedded_link: string;
-	instrucoes: string;
+// Contém variáveis e funções utilitárias (usadas em mais de um arquivo), exceto coisas relacionadas ao banco de dados
 
-	id?: string;
-	terms?: string[];
-};
+import type { IDBPObjectStore } from "idb";
 
-// Parâmetro usado para especificar uma reação na URL (ex.: ?r=combustão)
+// Parâmetro usado para especificar uma reação na URL (ex.: ?r=combustao)
 export const REACTION_URL_PARAMETER = "r";
 
 // Verifica se o caractere dado é um algarismo (número de uma casa).
@@ -165,4 +155,15 @@ export function insertTextAtCursor(input: HTMLInputElement, text: string) {
 
 	input.focus();
 	input.dispatchEvent(new Event("input", { bubbles: true }));
+}
+
+// Formata uma lista de moléculas no formato de símbolos ([M, M2]) para o formato "M (nome), M2 (nome 2)"
+export async function formatMolecules(
+	store: IDBPObjectStore<ChemistryDB, ["molecules"], "molecules">,
+	molecules: string[],
+) {
+	const output = await Promise.all(
+		molecules.map(async (text) => `${text} (${await store.get(text)})`),
+	);
+	return output.join(", ");
 }

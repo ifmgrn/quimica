@@ -4,8 +4,6 @@
 	See LICENSE.txt for details.
 */
 
-import type { Reaction } from "./common";
-
 export default [
 	{
 		nome: "Formação da água",
