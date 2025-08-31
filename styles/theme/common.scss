@@ -6,8 +6,8 @@
 }
 
 .hidden {
-	visibility: hidden !important;
 	opacity: 0 !important;
+	visibility: hidden !important;
 	transition:
 		opacity var(#{$css-var-prefix}transition),
 		visibility 0s linear var(#{$css-var-prefix}transition-duration) !important;
@@ -15,9 +15,9 @@
 
 .center {
 	display: block;
+	width: fit-content;
 	margin-right: auto;
 	margin-left: auto;
-	width: fit-content;
 }
 
 // Remove o efeito padrão de hover do picocss para ser implementado só quando o dispositivo permite hover (não mobile)
@@ -28,20 +28,16 @@ button:is(:hover, :active, :focus) {
 		#{$css-var-prefix}form-element-background-color
 	);
 	#{$css-var-prefix}color: var(#{$css-var-prefix}muted-color);
-	#{$css-var-prefix}box-shadow: var(
-		#{$css-var-prefix}button-box-shadow,
-		0 0 0 rgb(0 0 0 / 0%)
-	);
+	#{$css-var-prefix}border-color: var(#{$css-var-prefix}primary-border);
 	cursor: unset;
-	border-color: var(#{$css-var-prefix}border-color);
-	border-radius: var(#{$css-var-prefix}border-radius);
 }
 
-button:is(:active, :focus) {
+button:is(:active, :focus-visible) {
 	#{$css-var-prefix}background-color: var(
 		#{$css-var-prefix}primary-hover-background
 	);
 	#{$css-var-prefix}color: var(#{$css-var-prefix}color);
+	#{$css-var-prefix}border-color: var(#{$css-var-prefix}primary-hover-border);
 }
 
 @media (hover: hover) {
@@ -55,11 +51,15 @@ button:is(:active, :focus) {
 
 [role="group"] {
 	display: inline-flex;
-	flex-wrap: nowrap;
-	vertical-align: middle;
-	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
-	border-radius: var(#{$css-var-prefix}border-radius);
 	width: auto;
+
+	flex-wrap: nowrap;
+
+	vertical-align: middle;
+
+	border-radius: var(#{$css-var-prefix}border-radius);
+	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
+
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
 
@@ -102,26 +102,27 @@ button:is(:active, :focus) {
 
 th,
 td {
-	transition: background-color var(#{$css-var-prefix}transition);
 	padding: calc(var(#{$css-var-prefix}spacing) / 2)
 		calc(var(#{$css-var-prefix}spacing) * 0.75);
 	text-align: center;
 	white-space: break-spaces;
+	transition: background-color var(#{$css-var-prefix}transition);
 }
 
 th {
-	border-bottom-width: calc(var(#{$css-var-prefix}border-width) + 0.125rem);
 	font-weight: calc(var(#{$css-var-prefix}font-weight) * 1.5);
+	border-bottom-width: calc(var(#{$css-var-prefix}border-width) + 0.125rem);
 }
 
 tr {
+	clip-path: inset(0);
+
 	/*
 	Safari não suporta `position: relative` em elementos `<tr>`,
 	mas essas duas propriedades podem ser usadas como uma alternativa.
 	Fonte: https://mtsknn.fi/blog/relative-tr-in-safari/
     */
 	transform: translate(0);
-	clip-path: inset(0);
 }
 
 tr a {
@@ -130,12 +131,14 @@ tr a {
 }
 
 tr a::before {
-	display: block;
 	position: absolute;
 	top: 0;
 	bottom: 0;
 	left: 0;
+
+	display: block;
 	width: 100%;
+
 	content: "";
 }
 
@@ -170,15 +173,19 @@ ul li {
 	tr:hover td::before,
 	li:hover::before {
 		position: absolute;
-		opacity: 0.2;
-		animation: bg-slide var(#{$css-var-prefix}transition);
 		inset: 0;
+
 		background: linear-gradient(
 			to right,
 			var(#{$css-var-prefix}primary),
 			transparent 100%
 		);
+		opacity: 0.2;
+
+		animation: bg-slide var(#{$css-var-prefix}transition);
+
 		pointer-events: none;
+
 		content: "";
 	}
 }

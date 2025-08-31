@@ -6,7 +6,6 @@ $primary-background: #070918;
 $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 
 @mixin theme {
-	color-scheme: dark;
 	#{$css-var-prefix}background-color: $primary-background;
 
 	// Text color
@@ -56,6 +55,7 @@ $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 		40%
 	);
 	#{$css-var-prefix}primary-inverse: inherit;
+	color-scheme: dark;
 
 	// Headings colors
 	@if $headings-color == "accent" {

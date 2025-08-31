@@ -1,40 +1,42 @@
 /* https://fonts.google.com/noto/specimen/Noto+Serif */
 @font-face {
-	font-style: normal;
+	font-family: "Noto Serif";
 	font-weight: 200 900;
+	font-style: normal;
+	font-display: fallback;
+
 	src:
 		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2")
 			format("woff2-variations"),
 		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2");
-	font-family: "Noto Serif";
-	font-display: fallback;
 }
 
 @font-face {
-	font-style: italic;
+	font-family: "Noto Serif";
 	font-weight: 200 900;
+	font-style: italic;
+	font-display: fallback;
+
 	src:
 		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2")
 			format("woff2-variations"),
 		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2");
-	font-family: "Noto Serif";
-	font-display: fallback;
 }
 
 /* https://www.1001fonts.com/parklane-font.html
    LICENSE: [1001Fonts Free For Commercial Use License (FFC)](https://www.1001fonts.com/licenses/ffc.html)
 */
 @font-face {
-	src: url("/fonts/ParkLaneNF.woff2") format("woff2");
 	font-family: ParkLaneNF;
 	font-display: swap;
+	src: url("/fonts/ParkLaneNF.woff2") format("woff2");
 }
 
 /* https://fonts.google.com/specimen/Limelight
    LICENSE: [Open Font License](https://openfontlicense.org/)
 */
 @font-face {
-	src: url("/fonts/Limelight-Regular.woff2") format("woff2");
 	font-family: Limelight;
 	font-display: fallback;
+	src: url("/fonts/Limelight-Regular.woff2") format("woff2");
 }
