@@ -47,7 +47,6 @@ export default {
 		"plugin/use-defensive-css": [
 			true,
 			{
-				severity: "warning",
 				"accidental-hover": true,
 				"background-repeat": true,
 				"flex-wrapping": true,
@@ -57,12 +56,6 @@ export default {
 				"vendor-prefix-grouping": true,
 			},
 		],
-		"plugin/use-baseline": [
-			true,
-			{
-				severity: "warning",
-				ignoreSelectors: ["nesting"],
-			},
-		],
+		"plugin/use-baseline": [true, { ignoreSelectors: ["nesting"] }],
 	},
 };
