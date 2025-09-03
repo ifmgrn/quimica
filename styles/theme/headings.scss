@@ -1,0 +1,99 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Estiliza os títulos com diferentes estilos
+
+@use "settings" as *;
+@use "art-deco";
+
+@each $heading, $style in $headings-appearance {
+	@if $style == "display" {
+		$include-art-deco: true !global;
+
+		#{$heading} {
+			position: relative;
+			z-index: 2;
+			padding-block: var(--spacing);
+			clip-path: none;
+		}
+
+		#{$heading}::before {
+			/* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit-" */
+			$mask:
+				var(--art-deco-h-top-left)
+					left
+					top/var(--headings-corner-size)
+					var(--headings-corner-size)
+					no-repeat,
+				var(--art-deco-h-top-right)
+					right
+					top/var(--headings-corner-size)
+					var(--headings-corner-size)
+					no-repeat,
+				var(--art-deco-h-bottom-right)
+					right
+					bottom/var(--headings-corner-size)
+					var(--headings-corner-size)
+					no-repeat,
+				var(--art-deco-h-bottom-left)
+					left
+					bottom/var(--headings-corner-size)
+					var(--headings-corner-size)
+					no-repeat,
+				var(--art-deco-h-hline)
+					var(--headings-corner-size)
+					top/calc(100% - 2 * var(--headings-corner-size))
+					calc(0.2514 * var(--headings-corner-size))
+					no-repeat,
+				var(--art-deco-h-hline)
+					var(--headings-corner-size)
+					bottom/calc(100% - 2 * var(--headings-corner-size))
+					calc(0.2514 * var(--headings-corner-size))
+					no-repeat,
+				var(--art-deco-h-vline)
+					left
+					var(--headings-corner-size) /
+					calc(0.2507 * var(--headings-corner-size))
+					calc(100% - 2 * var(--headings-corner-size))
+					no-repeat,
+				var(--art-deco-h-vline)
+					right
+					var(--headings-corner-size) /
+					calc(0.2514 * var(--headings-corner-size) - 0.5px)
+					calc(100% - 2 * var(--headings-corner-size))
+					no-repeat;
+
+			position: absolute;
+			inset: 0;
+			background-image: var(--art-deco-gradient);
+			/* stylelint-disable-next-line property-no-vendor-prefix */
+			-webkit-mask: $mask;
+			/* stylelint-disable-next-line plugin/use-baseline */
+			mask: $mask;
+			clip-path: unset;
+			/* stylelint-disable-next-line plugin/use-baseline */
+			pointer-events: none;
+			content: "";
+		}
+	} @else if $style == "stroke" {
+		#{$heading} {
+			display: flex;
+			flex-wrap: nowrap;
+			align-items: center;
+			gap: var(--headings-corner-distance);
+		}
+
+		#{$heading}::before,
+		#{$heading}::after {
+			display: block;
+			height: var(--headings-line-size);
+			flex-grow: 1;
+			background-color: currentcolor;
+			pointer-events: none;
+			content: "";
+		}
+	}
+}

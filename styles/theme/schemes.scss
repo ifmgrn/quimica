@@ -1,17 +1,23 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Aplica o tema escuro ou claro dependendo do ambiente
+
 @use "dark";
 
-// @use "light";
+// @use "light"; (para-fazer)
 
-// Dark color scheme (Default)
-// Can be forced with data-theme="dark"
+// Esquema de tema escuro (Padrão)
 [data-theme="dark"],
 :root:not([data-theme="light"]),
 :host(:not([data-theme="light"])) {
 	@include dark.theme;
 }
 
-// Light color scheme (Auto)
-// Automatically enabled if user has Light mode enabled
+// Esquema de tema claro (para-fazer)
 
 /* @media only screen and (prefers-color-scheme: light) {
     :root:not([data-theme]),

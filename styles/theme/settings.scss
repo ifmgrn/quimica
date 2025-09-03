@@ -1,0 +1,29 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Configurações padrões para todos os módulos (arquivos)
+
+// Títulos
+$headings-appearance: () !default;
+$headings-color: red !default;
+$headings-corner-size: 0.5em !default;
+$headings-corner-distance: 20px !default;
+$headings-line-size: 1px !default;
+
+// Decoração de arte
+$enable-art-deco-top-frame: false !default;
+$art-deco-top-frame: ":is(body, body > noscript) > header > div:first-child" !default;
+$art-deco-color: red !default;
+$include-art-deco: false !default;
+
+// Cor
+$accent-color: red !default;
+$accent-color-text: red !default;
+$accent-color-text-hover: red !default;
+$accent-color-text-selected: red !default;
+
+// Visualização de árvore
+$enable-tree-view: false !default;

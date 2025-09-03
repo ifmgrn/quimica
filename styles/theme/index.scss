@@ -1,3 +1,17 @@
-@use "styles";
-@use "schemes";
+/*!
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Ponto de partida para o nosso tema customizado
+
+@forward "settings";
+
 @use "art-deco";
+@use "fonts";
+@use "common";
+@use "headings";
+@use "tree-view";
+@use "schemes";
+@use "styles";

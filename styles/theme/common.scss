@@ -1,4 +1,12 @@
-@use "../settings" as *;
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Melhora os padrões do Pico (e adiciona classes utilitárias)
+
+@use "tree-view";
 
 .overflow-auto {
 	overflow: auto;
@@ -9,8 +17,8 @@
 	opacity: 0 !important;
 	visibility: hidden !important;
 	transition:
-		opacity var(#{$css-var-prefix}transition),
-		visibility 0s linear var(#{$css-var-prefix}transition-duration) !important;
+		opacity var(--transition),
+		visibility 0s linear var(--transition-duration) !important;
 }
 
 .center {
@@ -24,48 +32,40 @@
 /* stylelint-disable-next-line plugin/use-defensive-css */
 button,
 button:is(:hover, :active, :focus) {
-	#{$css-var-prefix}background-color: var(
-		#{$css-var-prefix}form-element-background-color
-	);
-	#{$css-var-prefix}color: var(#{$css-var-prefix}muted-color);
-	#{$css-var-prefix}border-color: var(#{$css-var-prefix}primary-border);
+	--background-color: var(--form-element-background-color);
+	--color: var(--muted-color);
+	--border-color: var(--primary-border);
+
 	cursor: unset;
 }
 
 button:is(:active, :focus-visible) {
-	#{$css-var-prefix}background-color: var(
-		#{$css-var-prefix}primary-hover-background
-	);
-	#{$css-var-prefix}color: var(#{$css-var-prefix}color);
-	#{$css-var-prefix}border-color: var(#{$css-var-prefix}primary-hover-border);
+	--background-color: var(--primary-hover-background);
+	--color: var(--color);
+	--border-color: var(--primary-hover-border);
 }
 
 @media (hover: hover) {
 	button:hover {
-		#{$css-var-prefix}background-color: var(
-			#{$css-var-prefix}primary-hover-background
-		);
-		#{$css-var-prefix}color: var(#{$css-var-prefix}color);
+		--background-color: var(--primary-hover-background);
+		--color: var(--color);
 	}
 }
 
 [role="group"] {
 	display: inline-flex;
 	width: auto;
-
 	flex-wrap: nowrap;
-
 	vertical-align: middle;
-
-	border-radius: var(#{$css-var-prefix}border-radius);
+	border-radius: var(--border-radius);
 	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
-
 	overflow-x: auto;
 	overscroll-behavior-x: contain;
 
 	button {
-		#{$css-var-prefix}form-element-spacing-vertical: 0.25rem;
-		#{$css-var-prefix}form-element-spacing-horizontal: 0.75rem;
+		--form-element-spacing-vertical: 0.25rem;
+		--form-element-spacing-horizontal: 0.75rem;
+
 		border-bottom: 0;
 	}
 
@@ -87,13 +87,13 @@ button:is(:active, :focus-visible) {
 	button,
 	input:not([type="checkbox"], [type="radio"]) {
 		&:not(:first-child) {
-			margin-left: calc(var(#{$css-var-prefix}border-width) * -1);
+			margin-left: calc(var(--border-width) * -1);
 		}
 	}
 }
 
 :is(input, textarea)::placeholder {
-	color: var(#{$css-var-prefix}muted-color);
+	color: var(--muted-color);
 }
 
 [type="search"]::-webkit-search-cancel-button {
@@ -102,26 +102,24 @@ button:is(:active, :focus-visible) {
 
 th,
 td {
-	padding: calc(var(#{$css-var-prefix}spacing) / 2)
-		calc(var(#{$css-var-prefix}spacing) * 0.75);
+	padding: calc(var(--spacing) / 2) calc(var(--spacing) * 0.75);
 	text-align: center;
 	white-space: break-spaces;
-	transition: background-color var(#{$css-var-prefix}transition);
+	transition: background-color var(--transition);
 }
 
 th {
-	font-weight: calc(var(#{$css-var-prefix}font-weight) * 1.5);
-	border-bottom-width: calc(var(#{$css-var-prefix}border-width) + 0.125rem);
+	font-weight: calc(var(--font-weight) * 1.5);
+	border-bottom-width: calc(var(--border-width) + 0.125rem);
 }
 
 tr {
-	clip-path: inset(0);
-
 	/*
 	Safari não suporta `position: relative` em elementos `<tr>`,
 	mas essas duas propriedades podem ser usadas como uma alternativa.
 	Fonte: https://mtsknn.fi/blog/relative-tr-in-safari/
     */
+	clip-path: inset(0);
 	transform: translate(0);
 }
 
@@ -135,16 +133,13 @@ tr a::before {
 	top: 0;
 	bottom: 0;
 	left: 0;
-
 	display: block;
 	width: 100%;
-
 	content: "";
 }
 
 :is(th, td):not(:first-child) {
-	border-left: var(#{$css-var-prefix}border-width) solid
-		var(#{$css-var-prefix}table-border-color);
+	border-left: var(--border-width) solid var(--table-border-color);
 }
 
 tr:last-child td {
@@ -160,38 +155,13 @@ ul li {
 }
 
 @media (hover: hover) {
-	@keyframes bg-slide {
-		from {
-			right: 100%;
-		}
-
-		to {
-			right: 0;
-		}
-	}
-
-	tr:hover td::before,
-	li:hover::before {
-		position: absolute;
-		inset: 0;
-
-		background: linear-gradient(
-			to right,
-			var(#{$css-var-prefix}primary),
-			transparent 100%
-		);
-		opacity: 0.2;
-
-		animation: bg-slide var(#{$css-var-prefix}transition);
-
-		pointer-events: none;
-
-		content: "";
+	tr:hover td::before {
+		@include tree-view.hover-effect;
 	}
 }
 
 /* "marker" sem animações é amplamente suportado */
 /* stylelint-disable-next-line plugin/use-baseline */
 li::marker {
-	color: var(#{$css-var-prefix}primary-background);
+	color: var(--primary-background);
 }

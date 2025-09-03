@@ -1,10 +1,17 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Define as fontes dos textos
+
 /* https://fonts.google.com/noto/specimen/Noto+Serif */
 @font-face {
 	font-family: "Noto Serif";
 	font-weight: 200 900;
 	font-style: normal;
 	font-display: fallback;
-
 	src:
 		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2")
 			format("woff2-variations"),
@@ -16,7 +23,6 @@
 	font-weight: 200 900;
 	font-style: italic;
 	font-display: fallback;
-
 	src:
 		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2")
 			format("woff2-variations"),

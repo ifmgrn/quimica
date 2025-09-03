@@ -9,9 +9,31 @@ export default {
 		"stylelint-plugin-use-baseline",
 	],
 	ignoreFiles: ["**/*", "!styles/**/*"],
+	defaultSeverity: "warning",
 	rules: {
-		"declaration-empty-line-before": null,
-		"at-rule-empty-line-before": null,
+		"declaration-empty-line-before": [
+			"always",
+			{
+				except: ["first-nested"],
+				ignore: [
+					"after-declaration",
+					"after-comment",
+					"inside-single-line-block",
+				],
+			},
+		],
+		"at-rule-empty-line-before": [
+			"always",
+			{
+				ignore: [
+					"first-nested",
+					"blockless-after-same-name-blockless",
+					"after-comment",
+				],
+				ignoreAtRules: ["else"],
+			},
+		],
+
 		"order/order": [
 			[
 				{ type: "at-rule", name: "import" },
@@ -33,12 +55,10 @@ export default {
 				"rules",
 				{ type: "at-rule", name: "media", hasBlock: true },
 			],
-			{ severity: "warning" },
 		],
 		"order/properties-order": [
 			order,
 			{
-				severity: "warning",
 				unspecified: "bottomAlphabetical",
 				emptyLineBeforeUnspecified: "always",
 				emptyLineMinimumPropertyThreshold: 5,
@@ -47,6 +67,7 @@ export default {
 		"plugin/use-defensive-css": [
 			true,
 			{
+				severity: "error",
 				"accidental-hover": true,
 				"background-repeat": true,
 				"flex-wrapping": true,
@@ -56,6 +77,12 @@ export default {
 				"vendor-prefix-grouping": true,
 			},
 		],
-		"plugin/use-baseline": [true, { ignoreSelectors: ["nesting"] }],
+		"plugin/use-baseline": [
+			true,
+			{
+				severity: "error",
+				ignoreSelectors: ["nesting"],
+			},
+		],
 	},
 };

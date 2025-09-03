@@ -1,0 +1,113 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Ponto de partida, primeiro arquivo a ser executado pelo navegador
+
+// Importa e configura o Pico (desativa coisas desncessárias para diminuir o tamanho do arquivo final)
+@use "@picocss/pico/scss/pico" with (
+	// Cor do tema (irrelevante se o módulo "themes/default" estiver desativado)
+	$theme-color: "violet",
+
+	// Prefixo para as váriaveis do CSS (deve começar com "--")
+	$css-var-prefix: "--",
+
+	/* Defina o elemento raiz usado para estilizar <header>, <main>, <footer> com $enable-semantic-container e $enable-responsive-spacings
+	 * Padrão: body
+	 */
+	$semantic-root-element: ":is(body, body > noscript)",
+
+	// Habilita <header>, <main>, <footer> dentro do $semantic-root-element como contêineres
+	$enable-semantic-container: true,
+
+	// Habilita um layout centralizado para <header>, <main>, <footer> dentro do $semantic-root-element (se for desativado, será um layout fluido)
+	$enable-viewport: true,
+
+	// Habilita espaçamentos responsivos para <header>, <main>, <footer>, <section>, <article> (espaçamentos fixos por padrão)
+	$enable-responsive-spacings: false,
+
+	// Habilita tipografia responsiva (se for desativado, será tamanho fixo do elemento raiz, rem)
+	$enable-responsive-typography: true,
+
+	// Habilita classes (se for desativado, usará semântica de HTML)
+	$enable-classes: false,
+
+	// Habilita transições
+	$enable-transitions: true,
+
+	// Habilita a substituição com "!important"
+	$enable-important: true,
+
+	// Se definido, todas as tags HTML serão encapsuladas com este seletor (tirando :root)
+	$parent-selector: "",
+
+	// Pontos de interrupção, janelas de visualização e tamanho da fonte raiz
+	$breakpoints: (
+			// Pequeno (telefones em modo paisagem)
+			// Tamanho da fonte: 17px
+			sm: (breakpoint: 576px, viewport: 510px, root-font-size: 106.25%),
+			// Médio (tablets)
+			// Tamanho da fonte: 18px
+			md: (breakpoint: 768px, viewport: 700px, root-font-size: 112.5%),
+			// Grande
+			// Tamanho da fonte: 19px
+			lg: (breakpoint: 1024px, viewport: 960px, root-font-size: 118.75%),
+			// Extra grande
+			// Tamanho da fonte: 20px
+			xl: (breakpoint: 1280px, viewport: 1080px, root-font-size: 125%),
+			// Extra extra grande
+			// Tamanho da fonte: 21px
+			xxl: (breakpoint: 1536px, viewport: 1450px, root-font-size: 131.25%)
+		),
+
+	// Módulos para exportar
+	$modules: (
+			// Tema padrão (do Pico)
+			"themes/default": false,
+
+			// Layout
+			"layout/document": true,
+			"layout/landmarks": true,
+			"layout/container": false,
+			"layout/section": false,
+			"layout/grid": false,
+			"layout/overflow-auto": false,
+
+			// Conteúdo
+			"content/link": true,
+			"content/typography": true,
+			"content/embedded": true,
+			"content/button": true,
+			"content/table": true,
+			"content/code": false,
+			"content/figure": false,
+			"content/misc": false,
+
+			// Formulários
+			"forms/basics": true,
+			"forms/checkbox-radio-switch": false,
+			"forms/input-color": false,
+			"forms/input-date": false,
+			"forms/input-file": false,
+			"forms/input-range": false,
+			"forms/input-search": true,
+
+			// Componentes
+			"components/accordion": false,
+			"components/card": false,
+			"components/dropdown": false,
+			"components/group": false,
+			"components/loading": false,
+			"components/modal": false,
+			"components/nav": false,
+			"components/progress": false,
+			"components/tooltip": false,
+
+			// Utilitários
+			"utilities/accessibility": false,
+			"utilities/reduce-motion": false
+		)
+);
+@use "main";

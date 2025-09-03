@@ -1,47 +1,66 @@
+/*
+	Copyright (c) 2025 ifmgrn
+	Licensed under the GNU AGPL-3.0 License.
+	See LICENSE.txt for details.
+*/
+
+// Aplica estilos comuns tanto no tema escuro quanto no claro
+
+@use "settings" as *;
+@use "art-deco";
+
 @use "sass:map";
-@use "common";
-@use "fonts";
-@use "../settings" as *;
 
 :root,
 :host {
-	// Typography
-	#{$css-var-prefix}font-family:
-		"Noto Serif", georgia, "Times New Roman", serif;
-	#{$css-var-prefix}line-height: 1.5;
-	#{$css-var-prefix}font-weight: 400;
+	// Tipografia
+	--font-family: "Noto Serif", georgia, "Times New Roman", serif;
+	--line-height: 1.5;
+	--font-weight: 400;
 
-	// Borders
-	#{$css-var-prefix}border-radius: 0.5rem;
-	#{$css-var-prefix}border-width: 0.0625rem;
-	#{$css-var-prefix}outline-width: 0.125rem;
+	// Bordas
+	--border-radius: 0.5rem;
+	--border-width: 0.0625rem;
+	--outline-width: 0.125rem;
 
-	// Transitions
-	#{$css-var-prefix}transition-duration: 200ms;
-	#{$css-var-prefix}transition: var(#{$css-var-prefix}transition-duration)
-		ease-in-out;
+	// Transições
+	--transition-duration: 200ms;
+	--transition: var(--transition-duration) ease-in-out;
 
-	// Spacings
-	#{$css-var-prefix}spacing: 1rem;
+	// Espaçamento
+	--spacing: 1rem;
 
-	// Spacings for typography elements
-	#{$css-var-prefix}typography-spacing-vertical: 1rem;
+	// Espaçamento para elementos tipográficos (ex.: títulos)
+	--typography-spacing-vertical: 1rem;
 
-	// Spacings for body > header, body > main, body > footer, section, article
-	#{$css-var-prefix}block-spacing-vertical: 0;
-	#{$css-var-prefix}block-spacing-horizontal: var(#{$css-var-prefix}spacing);
+	// Espaçamentos para o body > header, body > main, body > footer, section, article
+	--block-spacing-vertical: 0;
+	--block-spacing-horizontal: var(--spacing);
+	--section-spacing-vertical: calc(var(--spacing) * 2.5);
 
-	--section-spacing-vertical: calc(var(#{$css-var-prefix}spacing) * 2.5);
+	// Espaçamentos para elementos de formulário e botões
+	--form-element-spacing-vertical: 0.25rem;
+	--form-element-spacing-horizontal: 0.5rem;
 
-	// Spacings for form elements and button
-	#{$css-var-prefix}form-element-spacing-vertical: 0.25rem;
-	#{$css-var-prefix}form-element-spacing-horizontal: 0.5rem;
+	// Títulos
+	--headings-corner-size: #{$headings-corner-size};
+	--headings-corner-distance: #{$headings-corner-distance};
+	--headings-line-size: #{$headings-line-size};
 
-	// Mask size for .top-art-deco-frame
-	@if $enable-top-art-deco-frame {
+	@if $headings-color {
+		@for $i from 1 through 6 {
+			--h#{$i}-color: #{$headings-color};
+		}
+	}
+
+	// Decoração de arte
+	@if $enable-art-deco-top-frame {
 		--top-art-deco-frame-size: 2.5rem;
 	}
 
+	@include art-deco.resources;
+
+	// Visualização de árvore
 	@if $enable-tree-view {
 		--indentation-guide-width: 0.125rem;
 		--indentation-guide-radius: 0.5rem;
@@ -50,195 +69,29 @@
 	}
 }
 
-@if $enable-top-art-deco-frame {
-	$include-art-deco: true !global;
-	$top-deco-frame: ":is(body, body > noscript) > header > div:first-child";
-
-	body {
-		/* "overflow-x" só é necessário porque "scrollbar-gutter" ainda não é amplamente suportado */
-		overflow-x: hidden;
-	}
-	#{$top-deco-frame} {
-		position: absolute;
-		top: 0;
-		left: 0;
-
-		/* "100vw" só é necessário porque "scrollbar-gutter" ainda não é amplamente suportado, caso contrário "100%" seria o ideal */
-		width: 100vw;
-
-		border-bottom: 1px solid var(#{$css-var-prefix}primary-background);
-	}
-
-	#{$top-deco-frame}::after {
-		$mask-repeat: no-repeat;
-		$mask-position: center;
-		$mask-size: auto var(--top-art-deco-frame-size);
-
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		left: 0;
-		z-index: 10;
-
-		display: block;
-		height: var(--top-art-deco-frame-size);
-
-		background-image: var(#{$art-deco-prefix}gradient);
-
-		/* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit" */
-		/* stylelint-disable-next-line property-no-vendor-prefix */
-		-webkit-mask-image: var(#{$art-deco-prefix}bottom-frame);
-		/* stylelint-disable-next-line plugin/use-baseline */
-		mask-image: var(#{$art-deco-prefix}bottom-frame);
-		/* stylelint-disable-next-line property-no-vendor-prefix */
-		-webkit-mask-position: $mask-position;
-		/* stylelint-disable-next-line plugin/use-baseline */
-		mask-position: $mask-position;
-		/* stylelint-disable-next-line property-no-vendor-prefix */
-		-webkit-mask-repeat: $mask-repeat;
-		/* stylelint-disable-next-line plugin/use-baseline */
-		mask-repeat: $mask-repeat;
-		/* stylelint-disable-next-line property-no-vendor-prefix */
-		-webkit-mask-size: $mask-size;
-		/* stylelint-disable-next-line plugin/use-baseline */
-		mask-size: $mask-size;
-
-		transform: scaleY(-1) translateY(calc(-100% + 6px));
-
-		pointer-events: none;
-
-		content: "";
-	}
-
-	#{$top-deco-frame} + * {
-		margin-top: var(--top-art-deco-frame-size);
-	}
-}
-
 section {
 	margin-bottom: var(--section-spacing-vertical);
 }
 
 h1 {
-	#{$css-var-prefix}font-weight: 500;
-	#{$css-var-prefix}font-size: 3em;
-	#{$css-var-prefix}line-height: 1.2;
-	#{$css-var-prefix}font-family:
+	--font-weight: 500;
+	--font-size: 3em;
+	--line-height: 1.2;
+	--font-family:
 		"ParkLaneNF", "Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
+
 	text-align: center;
 	letter-spacing: -0.015em;
 }
 
 h2 {
-	#{$css-var-prefix}font-weight: 200;
-	#{$css-var-prefix}font-size: 1.8rem;
-	#{$css-var-prefix}line-height: 1.2;
-	#{$css-var-prefix}font-family:
-		"Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
+	--font-weight: 200;
+	--font-size: 1.8rem;
+	--line-height: 1.2;
+	--font-family: "Limelight", "Notable", "Noto Sans", "Inter", sans-serif;
+
 	margin-bottom: 0;
 	letter-spacing: -0.015em;
-}
-
-@for $i from 1 through 6 {
-	$appearance: map.get($headings-appearance, h#{$i});
-
-	@if $appearance == "display" {
-		$include-art-deco: true !global;
-
-		h#{$i} {
-			--corner-size: 0.5em;
-
-			position: relative;
-			z-index: 2;
-			padding-block: var(#{$css-var-prefix}spacing);
-			clip-path: none;
-		}
-
-		h#{$i}::before {
-			/* "mask" ainda não é amplamente suportado, temos que usar o prefixo "-webkit-" */
-			$mask:
-				var(#{$art-deco-prefix}h-top-left)
-					left
-					top/var(#{$css-var-prefix}corner-size)
-					var(#{$css-var-prefix}corner-size)
-					no-repeat,
-				var(#{$art-deco-prefix}h-top-right)
-					right
-					top/var(#{$css-var-prefix}corner-size)
-					var(#{$css-var-prefix}corner-size)
-					no-repeat,
-				var(#{$art-deco-prefix}h-bottom-right)
-					right
-					bottom/var(#{$css-var-prefix}corner-size)
-					var(#{$css-var-prefix}corner-size)
-					no-repeat,
-				var(#{$art-deco-prefix}h-bottom-left)
-					left
-					bottom/var(#{$css-var-prefix}corner-size)
-					var(#{$css-var-prefix}corner-size)
-					no-repeat,
-				var(#{$art-deco-prefix}h-hline)
-					var(#{$css-var-prefix}corner-size)
-					top/calc(100% - 2 * var(#{$css-var-prefix}corner-size))
-					calc(0.2514 * var(#{$css-var-prefix}corner-size))
-					no-repeat,
-				var(#{$art-deco-prefix}h-hline)
-					var(#{$css-var-prefix}corner-size)
-					bottom/calc(100% - 2 * var(#{$css-var-prefix}corner-size))
-					calc(0.2514 * var(#{$css-var-prefix}corner-size))
-					no-repeat,
-				var(#{$art-deco-prefix}h-vline)
-					left
-					var(#{$css-var-prefix}corner-size) /
-					calc(0.2507 * var(#{$css-var-prefix}corner-size))
-					calc(100% - 2 * var(#{$css-var-prefix}corner-size))
-					no-repeat,
-				var(#{$art-deco-prefix}h-vline)
-					right
-					var(#{$css-var-prefix}corner-size) /
-					calc(0.2514 * var(#{$css-var-prefix}corner-size) - 0.5px)
-					calc(100% - 2 * var(#{$css-var-prefix}corner-size))
-					no-repeat;
-
-			position: absolute;
-			inset: 0;
-
-			background-image: var(#{$art-deco-prefix}gradient);
-			/* stylelint-disable-next-line property-no-vendor-prefix */
-			-webkit-mask: $mask;
-			/* stylelint-disable-next-line plugin/use-baseline */
-			mask: $mask;
-			clip-path: unset;
-
-			pointer-events: none;
-
-			content: "";
-		}
-	} @else if $appearance == "stroke" {
-		h#{$i} {
-			--line-size: 1px;
-			--corner-distance: 20px;
-
-			display: flex;
-			flex-wrap: nowrap;
-			align-items: center;
-			gap: var(--corner-distance);
-		}
-
-		h#{$i}::before,
-		h#{$i}::after {
-			display: block;
-			height: var(--line-size);
-
-			flex-grow: 1;
-
-			background-color: currentcolor;
-
-			pointer-events: none;
-
-			content: "";
-		}
-	}
 }
 
 input:not(
@@ -259,93 +112,8 @@ input:not(
 	bottom: 100%;
 	left: 50%;
 	z-index: 10;
-
 	transform: translateX(-50%);
-	transition: opacity var(#{$css-var-prefix}transition);
-}
-
-@if $enable-tree-view {
-	ul,
-	ol {
-		position: relative;
-		display: flow-root !important;
-		padding-inline-start: 0;
-	}
-
-	li > ul::before,
-	li > ol::before {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		inset-inline-start: calc(var(--indentation-guide-secondary-indent) + 8px);
-		z-index: 1;
-
-		display: block;
-
-		border-inline-end: var(--indentation-guide-width)
-			solid
-			var(--indentation-guide-color);
-
-		content: "";
-	}
-
-	li {
-		position: relative;
-		margin-inline-start: 3ch;
-	}
-
-	li::after {
-		position: absolute;
-		top: calc(
-			-0.4em *
-				var(#{$css-var-prefix}line-height) - var(--indentation-guide-width) *
-				0.4
-		);
-		left: calc(
-			-1 *
-				var(--indentation-guide-indent) +
-				var(--indentation-guide-secondary-indent)
-		);
-
-		display: block;
-		width: calc(var(--indentation-guide-indent) + 2px);
-		height: calc(1em * var(#{$css-var-prefix}line-height));
-
-		border: solid var(--indentation-guide-color);
-		border-width: 0
-			0
-			var(--indentation-guide-width)
-			var(--indentation-guide-width);
-		border-bottom-left-radius: var(--indentation-guide-radius);
-
-		pointer-events: none;
-
-		content: "";
-	}
-
-	:not(li) > * > li::after {
-		top: calc(
-			-0.65em *
-				var(#{$css-var-prefix}line-height) - var(--indentation-guide-width) *
-				0.65
-		);
-		left: calc(
-			-1 *
-				var(--indentation-guide-indent) +
-				var(--indentation-guide-secondary-indent) +
-				20px
-		);
-		width: calc(var(--indentation-guide-indent) - 18px);
-		height: calc(1.3em * var(#{$css-var-prefix}line-height));
-	}
-
-	@media (hover: hover) {
-		li:hover::after,
-		li:hover > :is(ul, ol)::before {
-			z-index: 2;
-			border-color: var(#{$css-var-prefix}primary-background);
-		}
-	}
+	transition: opacity var(--transition);
 }
 
 :not(li) > :is(ol, ul) {
