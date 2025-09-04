@@ -123,12 +123,22 @@ tr {
 	transform: translate(0);
 }
 
+table {
+	/* 
+	Quando uma linha (<tr>) tem `position: relative` (ou algo com mesmo efeito),
+	o Firefox não renderiza bordas com `border-collapse: collapse` definido, 
+	então precisamos usar `border-collapse: separate`.
+	*/
+	border-collapse: separate;
+	border-spacing: 0;
+}
+
 tr a {
 	color: unset;
 	text-decoration: none;
 }
 
-tr a::before {
+tr a::after {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -155,7 +165,7 @@ ul li {
 }
 
 @media (hover: hover) {
-	tr:hover td::before {
+	tr:not(:first-child):hover::after {
 		@include tree-view.hover-effect;
 	}
 }
