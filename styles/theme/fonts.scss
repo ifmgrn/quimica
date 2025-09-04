@@ -9,24 +9,26 @@
 /* https://fonts.google.com/noto/specimen/Noto+Serif */
 @font-face {
 	font-family: "Noto Serif";
-	font-weight: 200 900;
+	font-weight: 400;
 	font-style: normal;
 	font-display: fallback;
-	src:
-		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2")
-			format("woff2-variations"),
-		url("/fonts/NotoSerif-VariableFont_wdth,wght.woff2") format("woff2");
+	src: url("/fonts/NotoSerif-Regular.woff2") format("woff2");
 }
 
 @font-face {
 	font-family: "Noto Serif";
-	font-weight: 200 900;
+	font-weight: 600;
+	font-style: normal;
+	font-display: fallback;
+	src: url("/fonts/NotoSerif-SemiBold.woff2") format("woff2");
+}
+
+@font-face {
+	font-family: "Noto Serif";
+	font-weight: 400;
 	font-style: italic;
 	font-display: fallback;
-	src:
-		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2")
-			format("woff2-variations"),
-		url("/fonts/NotoSerif-Italic-VariableFont_wdth,wght.woff2") format("woff2");
+	src: url("/fonts/NotoSerif-Italic.woff2") format("woff2");
 }
 
 /* https://www.1001fonts.com/parklane-font.html
