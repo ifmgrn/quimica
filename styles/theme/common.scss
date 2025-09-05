@@ -113,6 +113,11 @@ th {
 	border-bottom-width: calc(var(--border-width) + 0.125rem);
 }
 
+td {
+	font-size: 87.5%;
+	line-height: calc(var(--line-height) / 1.2);
+}
+
 tr {
 	/*
 	Safari não suporta `position: relative` em elementos `<tr>`,
