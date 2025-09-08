@@ -8,7 +8,7 @@
 
 import { convertTextToHTMLList, formatMolecules, interpolate } from "./common";
 import { closeDB, getDB } from "./indexed-db";
-import template from "../templates/reaction-page.html?raw";
+import template from "../templates/reaction.html?raw";
 
 export default async function openReaction(
 	container: HTMLElement,
@@ -32,8 +32,8 @@ export default async function openReaction(
 	const tx = db.transaction("molecules");
 	const template_data = {
 		...reaction,
-		reagentes: await formatMolecules(tx.store, reaction.reagentes),
-		produtos: await formatMolecules(tx.store, reaction.produtos),
+		reagentes: await formatMolecules(reaction.reagentes, tx.store),
+		produtos: await formatMolecules(reaction.produtos, tx.store),
 		instrucoes: convertTextToHTMLList(reaction.instrucoes),
 	};
 

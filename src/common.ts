@@ -7,6 +7,7 @@
 // Contém variáveis e funções utilitárias (usadas em mais de um arquivo), exceto coisas relacionadas ao banco de dados
 
 import type { IDBPObjectStore } from "idb";
+import { getDB } from "./indexed-db";
 
 // Parâmetro usado para especificar uma reação na URL (ex.: ?r=combustao)
 export const REACTION_URL_PARAMETER = "r";
@@ -159,11 +160,14 @@ export function insertTextAtCursor(input: HTMLInputElement, text: string) {
 
 // Formata uma lista de moléculas no formato de símbolos ([M, M2]) para o formato "M (nome), M2 (nome 2)"
 export async function formatMolecules(
-	store: IDBPObjectStore<ChemistryDB, ["molecules"], "molecules">,
 	molecules: string[],
+	store?: IDBPObjectStore<ChemistryDB, ["molecules"], "molecules">,
 ) {
-	const output = await Promise.all(
-		molecules.map(async (text) => `${text} (${await store.get(text)})`),
-	);
-	return output.join(", ");
+	if (!store) store = (await getDB()).transaction("molecules").store;
+
+	return (
+		await Promise.all(
+			molecules.map(async (text) => `${text} (${await store.get(text)})`),
+		)
+	).join(", ");
 }

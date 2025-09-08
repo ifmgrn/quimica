@@ -13,7 +13,7 @@ import {
 	REACTION_URL_PARAMETER,
 } from "./common";
 import { getDB, searchReactionByPrefix, getAllReactions } from "./indexed-db";
-import template from "../templates/home-page.html?raw";
+import template from "../templates/home.html?raw";
 
 // Parâmetro usado para especificar uma pesquisa na URL (ex.: ?p=combustão)
 const SEARCH_URL_PARAMETER = "p";
@@ -99,7 +99,7 @@ function addEventListeners() {
 			input.setSelectionRange(input.value.length, input.value.length);
 			// Muda o foco para o input (o navegador já direciona o evento de input para ele)
 			input.focus();
-			// Caso o usuário tenha pressionado Ctrl, manualmente redireciona o evento de input (para evitar ativar atalhos globais do navegador)
+			// Caso o usuário tenha pressionado Ctrl, manualmente redireciona o evento de input (pois o navegador não redireciona a tecla para o input neste caso)
 			if (event.ctrlKey) {
 				input.dispatchEvent(
 					new KeyboardEvent("keydown", {
@@ -142,7 +142,7 @@ async function generateReactionsTable(data: Reaction[]) {
 						? `<a href="?${REACTION_URL_PARAMETER}=${encodeURIComponent(row.id!)}">`
 						: "") +
 					(Array.isArray(value)
-						? await formatMolecules(tx.store, value)
+						? await formatMolecules(value, tx.store)
 						: value) +
 					(index === 0 ? "</a>" : "") +
 					"</td>"
