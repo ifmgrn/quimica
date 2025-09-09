@@ -22,7 +22,7 @@ Set-Location (New-Object -ComObject Shell.Application).Namespace('shell:Download
 # Baixa o script com o nome "reacoes_quimicas.ps1"
 Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/ifmg-rn/reacoes-quimicas/refs/heads/main/setup_helper.ps1' -OutFile reacoes_quimicas.ps1
 # Roda o script ignorando a política de execução
-powershell -ep Bypass reacoes_quimicas.ps1
+powershell -ep Bypass .\reacoes_quimicas.ps1
 ```
 
 O script fará o seguinte:
