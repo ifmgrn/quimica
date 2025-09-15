@@ -75,7 +75,7 @@ function addEventListeners() {
 		 * Certifique-se que ela esteja aberta antes de começarmos a pesquisar (evita o lag)
 		 */
 		getDB();
-		typingTimer = setTimeout(search, 1000);
+		typingTimer = setTimeout(search, 500);
 	});
 
 	// Permite escrever no input sem precisar estar focado nele
