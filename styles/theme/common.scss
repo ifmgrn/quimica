@@ -103,19 +103,22 @@ button:is(:active, :focus-visible) {
 th,
 td {
 	padding: calc(var(--spacing) / 2) calc(var(--spacing) * 0.75);
-	text-align: center;
 	white-space: break-spaces;
 	transition: background-color var(--transition);
 }
 
 th {
 	font-weight: calc(var(--font-weight) * 1.5);
-	border-bottom-width: calc(var(--border-width) + 0.125rem);
 }
 
 td {
 	font-size: 87.5%;
 	line-height: calc(var(--line-height) / 1.2);
+	border-bottom: 0;
+}
+
+tr:not(:first-child) td {
+	border-top: var(--border-width) solid var(--table-border-color);
 }
 
 tr {
@@ -151,14 +154,6 @@ tr a::after {
 	display: block;
 	width: 100%;
 	content: "";
-}
-
-:is(th, td):not(:first-child) {
-	border-left: var(--border-width) solid var(--table-border-color);
-}
-
-tr:last-child td {
-	border-bottom: 0;
 }
 
 li {
