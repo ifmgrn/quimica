@@ -8,11 +8,8 @@
 
 @use "tree-view";
 
-nav {
-	display: table;
-	width: auto;
-	margin-right: auto;
-	margin-left: auto;
+header {
+	text-align: center;
 }
 
 .overflow-auto {
@@ -59,10 +56,16 @@ button:is(:active, :focus-visible) {
 	}
 }
 
+button.active {
+	--color: var(--color);
+	--background-color: var(--primary-background);
+}
+
 [role="group"] {
 	display: inline-flex;
 	width: auto;
 	flex-wrap: nowrap;
+	justify-content: center;
 	vertical-align: middle;
 	border-radius: var(--border-radius);
 	box-shadow: 0 3px 0 rgb(0 0 0 / 40%);
