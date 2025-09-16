@@ -60,7 +60,7 @@ Veja a [documentação](docs/README.md) para conhecer a estrutura do repositóri
 Também veja a aba ["Projetos"](https://github.com/users/ifmg-rn/projects/1) do GitHub para acompanhar o progresso das tarefas e o "roadmap".
 
 ## Guia de Contribuição
-John Aldo, Arthur Gabriel, Davi Almeida, Nicolas Caua, Nicolas Samuel, Isadora Alves, Luiz Fernando, Luiz Henrique
+[John Aldo](https://github.com/ifmg-rn), [Arthur Gabriel](https://github.com/calmecalabreso), [Davi Almeida](), [Nicolas Caua](https://github.com/Nilas09), [Nicolas Samuel](), [Isadora Alves](), [Luiz Fernando](), [Luiz Henrique](https://github.com/FravioMatuto)
 
 ## Licença
 
