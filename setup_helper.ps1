@@ -232,7 +232,7 @@ function Start-ProjectServer() {
     if ((Test-Path $repoFolder) -and (Test-ExecutableInPATH 'pnpm')) {
         Write-Host 'Iniciando servidor local de desenvolvimento do projeto...'
         Write-Host "Para acessar o website do projeto, abra a URL: http://localhost:5173/$repoName/" -ForegroundColor Yellow
-        Write-Host 'Para parar o servidor, pressione Ctrl+C, y, y.'
+        Write-Host 'Para parar o servidor, pressione Ctrl+C.'
         pnpm --dir "$repoFolder" -s run dev --clearScreen false -l warn
     }
 }

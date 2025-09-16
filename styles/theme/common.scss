@@ -121,11 +121,8 @@ th {
 td {
 	font-size: 87.5%;
 	line-height: calc(var(--line-height) / 1.2);
-	border-bottom: 0;
-}
-
-tr:not(:first-child) td {
 	border-top: var(--border-width) solid var(--table-border-color);
+	border-bottom: 0;
 }
 
 tr {
