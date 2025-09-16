@@ -2,7 +2,7 @@
 
 ![GitHub Tamanho do Repo](https://img.shields.io/github/repo-size/ifmg-rn/reacoes-quimicas?label=Tamanho%20do%20Repo&style=flat)
 
-Este repositório é um projeto escolar e contém o código-fonte por trás do [Link do site](https://ifmg-rn.github.io/reacoes-quimicas).
+Este repositório é um projeto escolar e contém o código-fonte por trás do [Banco de Dados de Reações Quimicas](https://ifmg-rn.github.io/reacoes-quimicas).
 
 O principal foco do projeto é disponibilizar um banco de dados de moléculas em português (brasileiro), baseado no [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
@@ -60,9 +60,7 @@ Veja a [documentação](docs/README.md) para conhecer a estrutura do repositóri
 Também veja a aba ["Projetos"](https://github.com/users/ifmg-rn/projects/1) do GitHub para acompanhar o progresso das tarefas e o "roadmap".
 
 ## Guia de Contribuição
-
-Este é um projeto escolar fechado. Não aceitamos contribuições externas.
-Porém todos são livres para fazer sugestões ou relatar problemas na aba "Issues" do GitHub. Todos também são livres para "fazer fork" do repositório e trabalhar na própria versão, contanto que sigam a licença.
+John Aldo, Arthur Gabriel, Davi Almeida, Nicolas Caua, Nicolas Samuel, Isadora Alves, Luiz Fernando, Luiz Henrique
 
 ## Licença
 
