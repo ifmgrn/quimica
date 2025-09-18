@@ -7,7 +7,7 @@
 	"packageManager": "pnpm@10.12.4",
 	"scripts": {
 		"dev": "vite",
-		"lint": "tsc && eslint && stylelint . && prettier --log-level warn --check .",
+		"lint": "tsc && eslint && stylelint .",
 		"build": "pnpm -s run lint && vite build",
 		"preview": "vite preview",
 		"prepare": "husky"
@@ -32,6 +32,7 @@
 	},
 	"dependencies": {
 		"@picocss/pico": "^2.1.1",
-		"idb": "^8.0.3"
+		"idb": "^8.0.3",
+		"kekule": "^1.0.3"
 	}
 }

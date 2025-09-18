@@ -10,12 +10,32 @@ const banner = `/*!
 
 export default defineConfig({
 	base: "/reacoes-quimicas/",
+	resolve: {
+		alias: {
+			"kekule/chemWidget":
+				"/node_modules/kekule/dist/jsmods/chemWidget.esm.mjs",
+		},
+	},
+	optimizeDeps: {
+		exclude: ["kekule/chemWidget"],
+	},
+	build: {
+		rollupOptions: {
+			output: {
+				manualChunks: (id) => (id.includes("kekule") ? "kekule" : null),
+			},
+		},
+	},
 	plugins: [
 		{
 			name: "inject-banner",
 			generateBundle(_options, bundle) {
 				for (const file of Object.values(bundle)) {
-					if (file.type === "chunk" && file.code) {
+					if (
+						file.type === "chunk" &&
+						file.code &&
+						!file.name.includes("kekule")
+					) {
 						file.code = banner + file.code;
 					}
 				}
