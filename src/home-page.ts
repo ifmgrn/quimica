@@ -3,8 +3,11 @@ import reactionPage from "./reaction-home";
 
 import template_home from "../templates/home.html?raw";
 import template_molecules from "../templates/molecules-home.html?raw";
-import template_periodictable from "../templates/periodic_table-home.html?raw";
 import type { Page } from "./page";
+
+import { load } from "./periodic-table";
+
+import "kekule/chemWidget";
 
 declare const periodictable_button: HTMLButtonElement;
 declare const molecule_button: HTMLButtonElement;
@@ -44,7 +47,7 @@ export default async function openHomepage(container: HTMLElement) {
 		if (activeButton) activeButton.classList.remove("active");
 
 		const main = document.querySelector("main");
-		if (main) main.innerHTML = template_periodictable;
+		if (main) load(main);
 		currentPage = undefined;
 
 		activeButton = periodictable_button;
