@@ -9,7 +9,7 @@ const banner = `/*!
  */`;
 
 export default defineConfig({
-	base: "/reacoes-quimicas/",
+	base: "/quimica/",
 	resolve: {
 		alias: {
 			"kekule/chemWidget":
