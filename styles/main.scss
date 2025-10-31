@@ -14,6 +14,7 @@ $accent-color: #8a5cf5;
 $accent-h: math.round(color.channel($accent-color, "hue", hsl));
 $accent-s: math.round(color.channel($accent-color, "saturation", hsl));
 $accent-l: math.round(color.channel($accent-color, "lightness", hsl));
+$debug: false !default;
 
 // Importa e configura o Pico (desativa coisas desncessárias para diminuir o tamanho do arquivo final)
 @use "@picocss/pico/scss/pico" with (
@@ -139,14 +140,17 @@ $accent-l: math.round(color.channel($accent-color, "lightness", hsl));
 	$accent-color-text-selected: hsla($accent-h, $accent-s, $accent-l, 33%),
 	// Títulos
 	// Cor do título (por enquanto, só suporta "accent", que é a cor de destaque sem ser de texto)
-	$headings-color: $accent-color,
+	$headings-color: "accent",
 
 	// Mapeia cada nível de título para um estilo (por enquanto, só suporta "display" e "stroke")
 	$headings-appearance: (h1: "display", h2: "stroke"),
 	// Decoração de arte
-	$art-deco-color: $accent-color,
+	$art-deco-color: "accent",
 	$enable-art-deco-top-frame: true,
 
 	// Habilita o estilo de árvore (raízes) para listas
-	$enable-tree-view: true
+	$enable-tree-view: true,
+
+	$debug: $debug
 );
+@use "styles";

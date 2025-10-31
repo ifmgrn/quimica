@@ -13,13 +13,18 @@
 $text-color: #d9d9d9;
 
 // Cor do fundo
-$primary-background: #070918;
+$background-color: #070918;
 
 // Cor sútil (de desfoque, usado em textos que não são muito importantes como "placeholders")
-$muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
+$muted-color: css-color-mix(
+	lab,
+	get($background-color, var(--background-color)),
+	get($text-color, var(--color)),
+	70%
+);
 
 @mixin theme {
-	--background-color: #{$primary-background};
+	--background-color: #{$background-color};
 	--color: #{$text-color};
 	--text-selection-color: #{$accent-color-text-selected};
 
@@ -27,15 +32,20 @@ $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 	--muted-color: #{$muted-color};
 	--muted-border-color: #{css-color-mix(
 			lab,
-			$primary-background,
-			$text-color,
+			get($background-color, var(--background-color)),
+			get($text-color, var(--color)),
 			10%
 		)};
 
 	// Cores primárias ("accent")
 	--primary: #{$accent-color-text};
 	--primary-background: #{$accent-color};
-	--primary-border: #{css-color-mix(lab, $primary-background, $text-color, 20%)};
+	--primary-border: #{css-color-mix(
+			lab,
+			get($background-color, var(--background-color)),
+			get($text-color, var(--color)),
+			20%
+		)};
 	--primary-underline: var(--primary);
 	--primary-hover: #{$accent-color-text-hover};
 	--primary-hover-background: var(--form-element-focus-color);
@@ -43,8 +53,8 @@ $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 	--primary-hover-underline: var(--primary-hover);
 	--primary-focus-border: #{css-color-mix(
 			lab,
-			$primary-background,
-			$text-color,
+			get($background-color, var(--background-color)),
+			get($text-color, var(--color)),
 			40%
 		)};
 	--primary-inverse: inherit;
@@ -59,8 +69,8 @@ $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 	// Elementos de formulário (ex.: input)
 	--form-element-background-color: #{css-color-mix(
 			lab,
-			$primary-background,
-			$text-color,
+			get($background-color, var(--background-color)),
+			get($text-color, var(--color)),
 			25%
 		)};
 	--form-element-border-color: var(--primary-border);
@@ -68,15 +78,15 @@ $muted-color: css-color-mix(lab, $primary-background, $text-color, 70%);
 	--form-element-active-background-color: var(--form-element-background-color);
 	--form-element-active-border-color: var(--primary-focus-border);
 	--form-element-focus-color: var(--primary-focus-border);
-	--icon-search: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#{$muted-color}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'></circle><line x1='21' y1='21' x2='16.65' y2='16.65'></line></svg>");
+	--icon-search: url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='#{css-color-mix(lab, $background-color, $text-color, 70%, true)}' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><circle cx='11' cy='11' r='8'></circle><line x1='21' y1='21' x2='16.65' y2='16.65'></line></svg>");
 
 	color-scheme: dark;
 
 	@if $enable-tree-view {
 		--indentation-guide-color: #{css-color-mix(
 				lab,
-				$primary-background,
-				$text-color,
+				get($background-color, var(--background-color)),
+				get($text-color, var(--color)),
 				15%
 			)};
 	}

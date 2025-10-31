@@ -8,6 +8,7 @@
 
 @use "settings" as *;
 @use "art-deco";
+@use "headings";
 
 @use "sass:map";
 
@@ -48,11 +49,7 @@
 	--headings-corner-distance: #{$headings-corner-distance};
 	--headings-line-size: #{$headings-line-size};
 
-	@if $headings-color {
-		@for $i from 1 through 6 {
-			--h#{$i}-color: #{$headings-color};
-		}
-	}
+	@include headings.color;
 
 	// Decoração de arte
 	@if $enable-art-deco-top-frame {

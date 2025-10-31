@@ -8,16 +8,17 @@ const banner = `/*!
  * See LICENSE.txt for details.
  */`;
 
-export default defineConfig({
+export default defineConfig(({ command }) => ({
 	base: "/quimica/",
-	resolve: {
-		alias: {
-			"kekule/chemWidget":
-				"/node_modules/kekule/dist/jsmods/chemWidget.esm.mjs",
-		},
+	define: {
+		__DEBUG__: command === "serve",
 	},
-	optimizeDeps: {
-		exclude: ["kekule/chemWidget"],
+	css: {
+		preprocessorOptions: {
+			scss: {
+				additionalData: `$debug: ${command === "serve"};`,
+			},
+		},
 	},
 	build: {
 		rollupOptions: {
@@ -50,4 +51,4 @@ export default defineConfig({
 			},
 		},
 	],
-});
+}));

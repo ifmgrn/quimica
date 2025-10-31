@@ -1,0 +1,292 @@
+/* stylelint-disable selector-class-pattern */
+
+.K-ComboBox .K-TextBox,
+.K-Container.K-Panel,
+.K-Normal-Background {
+	background-color: var(--background-color);
+}
+
+.K-State-Normal,
+.K-Widget,
+a.K-Widget,
+a.K-Widget:active,
+a.K-Widget:visited {
+	color: #555;
+}
+
+.K-Widget,
+button.K-Widget,
+input.K-Widget {
+	display: inline-block;
+}
+
+.K-Widget {
+	position: relative;
+	z-index: 1;
+	box-sizing: border-box;
+	margin: 0.1em;
+	font-family: Verdana, Arial, sans-serif;
+	font-size: 0.8em;
+	font-size: 0.8rem;
+	text-decoration: none;
+}
+
+.K-Chem-Periodic-Table {
+	color: #000;
+	font-size: 0.69rem;
+	cursor: default;
+}
+
+.K-Chem-Periodic-Table table {
+	margin: 0.5em auto;
+	border-collapse: collapse;
+}
+
+.K-Chem-Periodic-Table .K-Chem-Periodic-Table-Legend {
+	position: relative;
+	float: right;
+	padding: 0.3em 0.5em;
+	color: #000;
+	text-decoration: none;
+	border: 1px solid;
+}
+
+.K-Corner-All,
+.K-Corner-Bottom,
+.K-Layout-H > .K-Corner-Leading,
+.K-Layout-V > .K-Corner-Tailing,
+.K-Layout-H > .K-Child-Holder > .K-Corner-Leading,
+.K-Layout-V > .K-Child-Holder > .K-Corner-Tailing {
+	border-bottom-right-radius: 4px;
+	border-bottom-left-radius: 4px;
+}
+
+.K-Corner-Br,
+.K-Corner-Right {
+	border-bottom-right-radius: 4px;
+}
+
+.K-Corner-BL,
+.K-Corner-Left {
+	border-bottom-left-radius: 4px;
+}
+
+.K-Corner-All,
+.K-Corner-Right,
+.K-Corner-TR,
+.K-Corner-Top,
+.K-Layout-H > .K-Corner-Tailing,
+.K-Layout-V > .K-Corner-Leading,
+.K-Layout-H > .K-Child-Holder > .K-Corner-Tailing,
+.K-Layout-V > .K-Child-Holder > .K-Corner-Leading {
+	border-top-right-radius: 4px;
+}
+
+.K-Corner-All,
+.K-Corner-Left,
+.K-Corner-TL,
+.K-Corner-Top,
+.K-Layout-H > .K-Corner-Leading,
+.K-Layout-V > .K-Corner-Leading,
+.K-Layout-H > .K-Child-Holder > .K-Corner-Leading,
+.K-Layout-V > .K-Child-Holder > .K-Corner-Leading {
+	border-top-left-radius: 4px;
+}
+
+.K-Chem-Periodic-Table .K-Chem-Periodic-Table-Legend-Content {
+	position: absolute;
+	right: 0;
+	bottom: 1.6em;
+	z-index: 10;
+	display: none;
+	padding: 0.5em;
+	background-color: #eee;
+	border: 1px solid;
+	box-shadow: 1px 1px 2px #aaa;
+	cursor: default;
+}
+
+.K-Chem-Periodic-Table-Elem-Cell-Content {
+	display: inline-block;
+
+	width: 6em;
+	padding: 0.3em;
+	font-size: 0.8em;
+	text-align: center;
+	line-height: 1.1;
+	letter-spacing: -0.1em;
+}
+
+.K-Chem-Periodic-Table-Legend .K-Chem-Periodic-Table-Elem-Cell-Content {
+	float: left;
+	width: 8em;
+	padding: 0.5em;
+	color: #fff;
+	font-size: 1.1em;
+	background-color: #3098d5;
+}
+
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Elem-Symbol-Stubs span {
+	font-size: 50%;
+	vertical-align: middle;
+}
+
+.K-Chem-Periodic-Table
+	.K-Chem-Periodic-Table-Legend
+	.K-Chem-Periodic-Table-Legend-Colors {
+	width: 20em;
+}
+
+.K-Chem-Periodic-Table
+	.K-Chem-Periodic-Table-Legend
+	.K-Chem-Periodic-Table-Legend-Color,
+.K-Chem-Periodic-Table
+	.K-Chem-Periodic-Table-Legend
+	.K-Chem-Periodic-Table-Legend-Colors {
+	float: left;
+}
+
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Atomic-Num,
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Atomic-Weight,
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Elem-Name {
+	opacity: 0.6;
+}
+
+.K-Chem-Periodic-Table-Legend .K-Chem-Atomic-Num,
+.K-Chem-Periodic-Table-Legend .K-Chem-Atomic-Weight {
+	max-width: 40%;
+}
+
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Atomic-Num {
+	float: left;
+	font-weight: 700;
+}
+
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Elem-Symbol,
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Elem-Symbol-Stubs {
+	clear: both;
+	display: block;
+	font-size: 3em;
+	font-weight: 700;
+}
+
+.K-Chem-Periodic-Table-Legend
+	.K-Chem-Periodic-Table-Elem-Cell-Content
+	.K-Chem-Elem-Symbol {
+	font-size: 2em;
+}
+
+.K-Chem-Periodic-Table-Elem-Cell-Content .K-Chem-Elem-Name {
+	clear: both;
+	display: block;
+}
+
+.K-Chem-Periodic-Table
+	.K-Chem-Periodic-Table-Legend
+	.K-Chem-Periodic-Table-Legend-Color {
+	width: 47%;
+	margin: 1px;
+	padding: 1px;
+	font-size: 1em;
+	text-align: center;
+	white-space: nowrap;
+	border: 1px solid;
+}
+
+.K-Chem-Periodic-Table .Nonmetals {
+	background-color: #d8d5c4;
+}
+
+.K-Chem-Periodic-Table .NobleGasses {
+	background-color: #3098d5;
+}
+
+.K-Chem-Periodic-Table .AlkaliMetals {
+	background-color: #fff798;
+}
+
+.K-Chem-Periodic-Table .AlkaliEarthMetals {
+	background-color: #a986be;
+}
+
+.K-Chem-Periodic-Table .Metalloids {
+	background-color: #faab4e;
+}
+
+.K-Chem-Periodic-Table .Halogens {
+	background-color: #bbc0d6;
+}
+
+.K-Chem-Periodic-Table .Metals {
+	background-color: #2bbda8;
+}
+
+.K-Chem-Periodic-Table .Transitionmetals {
+	background-color: #f2635d;
+}
+
+.K-Chem-Periodic-Table .Actinides,
+.K-Chem-Periodic-Table .Lanthanides {
+	background-color: #e4e5e7;
+}
+
+.K-Chem-Periodic-Table td,
+.K-Chem-Periodic-Table tr {
+	text-align: center;
+	vertical-align: middle;
+}
+
+.K-Chem-Periodic-Table td {
+	margin: 0;
+	padding: 0;
+}
+
+.K-Chem-Periodic-Table td.K-Chem-Periodic-Table-Head-Cell-Group {
+	vertical-align: bottom;
+}
+
+.K-Chem-Periodic-Table-Head-Cell-Content {
+	position: relative;
+	display: inline-block;
+	padding: 0.3em;
+	color: #aaa;
+	font-size: 1.1em;
+	font-weight: 700;
+}
+
+.K-Chem-Periodic-Table td.K-Chem-Periodic-Table-Elem-Cell,
+.K-Chem-Periodic-Table td.K-Chem-Periodic-Table-Elem-StubsCell {
+	border: 1px solid;
+	border-color: transparent;
+}
+
+@media (hover: hover) {
+	.K-Chem-Periodic-Table
+		td.K-Chem-Periodic-Table-Elem-Cell
+		.K-Chem-Periodic-Table-Elem-Cell-Content:hover {
+		z-index: 5;
+		outline-width: 1px;
+		outline-style: solid;
+		/* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
+		outline-color: #fff;
+		box-shadow: 1px 1px 2px;
+		transform: scale(1.2);
+	}
+}
+
+.K-Chem-Periodic-Table td.K-State-Selected {
+	border-color: #000;
+}
+
+.K-State-Selected {
+	background-color: #f39814;
+}
+
+.K-Chem-Periodic-Table
+	.K-State-Selected
+	.K-Chem-Periodic-Table-Elem-Cell-Content {
+	background-color: #fff;
+	/* stylelint-disable-next-line plugin/use-baseline */
+	outline: 1px solid #000;
+	transform: scale(1.1);
+}

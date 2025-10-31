@@ -1,26 +1,26 @@
 # Website de Reações Químicas
 
-![GitHub Tamanho do Repo](https://img.shields.io/github/repo-size/ifmg-rn/reacoes-quimicas?label=Tamanho%20do%20Repo&style=flat)
+![GitHub Tamanho do Repo](https://img.shields.io/github/repo-size/ifmgrn/quimica?label=Tamanho%20do%20Repo&style=flat)
 
-Este repositório é um projeto escolar e contém o código-fonte por trás do [Banco de Dados de Reações Quimicas](https://ifmg-rn.github.io/reacoes-quimicas).
+Este repositório é um projeto escolar e contém o código-fonte por trás do [Banco de Dados de Reações Quimicas](https://ifmgrn.github.io/quimica).
 
 O principal foco do projeto é disponibilizar um banco de dados de moléculas em português (brasileiro), baseado no [PubChem](https://pubchem.ncbi.nlm.nih.gov/).
 
 Além disso, ele se propõe a oferecer uma tabela periódica interativa e uma forma para o usuário catalogar reações químicas usando o formato que desejar.
 
-Esta versão do website funciona totalmente no lado do cliente, permitindo interações off-line.
+Esta versão do website funciona totalmente no lado do cliente.
 
 ## Guia de Instalação
 
 ### Forma automatizada (recomendada caso você esteja num computador escolar)
 
-Você pode baixar e executar este [script](setup_helper.ps1) através deste comando no Powershell:
+Você pode baixar e executar este [script](scripts/setup_helper.ps1) através deste comando no Powershell:
 
 ```powershell
 # Defina a localização para a pasta de Downloads
 Set-Location (New-Object -ComObject Shell.Application).Namespace('shell:Downloads').Self.Path
 # Baixa o script com o nome "reacoes_quimicas.ps1"
-Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/ifmg-rn/reacoes-quimicas/refs/heads/main/setup_helper.ps1' -OutFile reacoes_quimicas.ps1
+Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/ifmgrn/quimica/refs/heads/main/scripts/setup_helper.ps1' -OutFile reacoes_quimicas.ps1
 # Roda o script ignorando a política de execução
 powershell -ep Bypass .\reacoes_quimicas.ps1
 ```
@@ -46,21 +46,22 @@ Faça isso no Powershell (assumindo que você tenha Git, Node.js e pnpm instalad
 
 ```powershell
 # Clona o repositório
-git clone 'https://github.com/ifmg-rn/reacoes-quimicas'
+git clone 'https://github.com/ifmgrn/quimica'
 # Baixa as dependências do projeto
-pnpm --dir 'reacoes-quimicas' install
+pnpm --dir 'quimica' install
 # Roda um servidor local de desenvolvimento
-pnpm --dir 'reacoes-quimicas' run dev
+pnpm --dir 'quimica' run dev
 ```
 
 ## Documentação
 
 Veja a [documentação](docs/README.md) para conhecer a estrutura do repositório e seu funcionamento.
 
-Também veja a aba ["Projetos"](https://github.com/users/ifmg-rn/projects/1) do GitHub para acompanhar o progresso das tarefas e o "roadmap".
+Também veja a aba ["Projetos"](https://github.com/users/ifmgrn/projects/1) do GitHub para acompanhar o progresso das tarefas e o "roadmap".
 
 ## Guia de Contribuição
-[John Aldo](https://github.com/ifmg-rn), [Arthur Gabriel](https://github.com/calmecalabreso), [Davi Almeida](https://github.com/davialmeida02), [Nicolas Caua](https://github.com/Nilas09), [Nicolas Samuel](https://github.com/0focomaisansiedade), [Isadora Alves](HTTPS://github.com/doraaventura), [Luiz Fernando](https://github.com/soqueroentrar), [Luiz Henrique](https://github.com/FravioMatuto)
+
+[John Aldo](https://github.com/ifmgrn), [Arthur Gabriel](https://github.com/calmecalabreso), [Davi Almeida](), [Nicolas Caua](https://github.com/Nilas09), [Nicolas Samuel](), [Isadora Alves](), [Luiz Fernando](https://github.com/soqueroentrar), [Luiz Henrique](https://github.com/FravioMatuto)
 
 ## Licença
 

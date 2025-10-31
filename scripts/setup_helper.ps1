@@ -1,7 +1,7 @@
-$repoUrl = 'https://github.com/ifmg-rn/reacoes-quimicas'
+$repoUrl = 'https://github.com/ifmgrn/quimica'
 
 
-$currentDir = (Get-Location).Path
+$currentDir = $PSScriptRoot
 $repoName = Split-Path $repoUrl -Leaf
 $repoFolder = Join-Path $currentDir $repoName
 $debug = $args -match "debug"

@@ -9,9 +9,6 @@
 import type { IDBPObjectStore } from "idb";
 import { getDB } from "./indexed-db";
 
-// Parâmetro usado para especificar uma reação na URL (ex.: ?r=combustao)
-export const REACTION_URL_PARAMETER = "r";
-
 // Verifica se o caractere dado é um algarismo (número de uma casa).
 export function isDigit(str: string) {
 	return str.length === 1 && str >= "0" && str <= "9";

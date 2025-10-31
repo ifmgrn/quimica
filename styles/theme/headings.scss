@@ -9,6 +9,18 @@
 @use "settings" as *;
 @use "art-deco";
 
+@if $headings-color == "accent" {
+	$headings-color: var(--primary-background) !global;
+}
+
+@mixin color {
+	@if $headings-color {
+		@for $i from 1 through 6 {
+			--h#{$i}-color: #{$headings-color};
+		}
+	}
+}
+
 @each $heading, $style in $headings-appearance {
 	@if $style == "display" {
 		$include-art-deco: true !global;

@@ -15,8 +15,8 @@ importers:
         specifier: ^8.0.3
         version: 8.0.3
       kekule:
-        specifier: ^1.0.3
-        version: 1.0.3
+        specifier: github:ifmg-rn/Kekule.js#v1.0.4.5
+        version: https://codeload.github.com/ifmg-rn/Kekule.js/tar.gz/f15d3ea6d0d9c7ae25f3b7abfc7339739e4911e2
     devDependencies:
       '@eslint/js':
         specifier: ^9.33.0
@@ -65,7 +65,7 @@ importers:
         version: 8.40.0(eslint@9.33.0)(typescript@5.8.3)
       vite:
         specifier: ^7.1.2
-        version: 7.1.3(sass-embedded@1.90.0)(sass@1.90.0)(yaml@2.8.1)
+        version: 7.1.3(@types/node@24.9.2)(sass-embedded@1.90.0)(sass@1.90.0)(yaml@2.8.1)
 
 packages:
 
@@ -525,6 +525,9 @@ packages:
 
   '@types/json-schema@7.0.15':
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
+
+  '@types/node@24.9.2':
+    resolution: {integrity: sha512-uWN8YqxXxqFMX2RqGOrumsKeti4LlmIMIyV0lgut4jx7KQBcBiW6vkDtIBvHnHIquwNfJhk8v2OtmO8zXWHfPA==}
 
   '@typescript-eslint/eslint-plugin@8.40.0':
     resolution: {integrity: sha512-w/EboPlBwnmOBtRbiOvzjD+wdiZdgFeo17lkltrtn7X37vagKKWJABvyfsJXTlHe6XBzugmYgd4A4nW+k8Mixw==}
@@ -1016,8 +1019,9 @@ packages:
   json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
 
-  kekule@1.0.3:
-    resolution: {integrity: sha512-lMV/j8PX9ydJWDY3/n1m6YQLHWwHIIAjJxd98GukHJrB5q8vW10w6+5nYE5SAbGb3xAa4WHre52+ED2PE1bU4g==}
+  kekule@https://codeload.github.com/ifmg-rn/Kekule.js/tar.gz/f15d3ea6d0d9c7ae25f3b7abfc7339739e4911e2:
+    resolution: {tarball: https://codeload.github.com/ifmg-rn/Kekule.js/tar.gz/f15d3ea6d0d9c7ae25f3b7abfc7339739e4911e2}
+    version: 1.0.3
     engines: {node: '>=0.10'}
 
   keyv@4.5.4:
@@ -1566,6 +1570,9 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  undici-types@7.16.0:
+    resolution: {integrity: sha512-Zz+aZWSj8LE6zoxD+xrjh4VfkIG8Ya6LvYkZqtUQGJPZjYl53ypCaUwWqo7eI0x66KBGeRo+mlBEkMSeSZ38Nw==}
+
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
@@ -1949,6 +1956,11 @@ snapshots:
   '@types/estree@1.0.8': {}
 
   '@types/json-schema@7.0.15': {}
+
+  '@types/node@24.9.2':
+    dependencies:
+      undici-types: 7.16.0
+    optional: true
 
   '@typescript-eslint/eslint-plugin@8.40.0(@typescript-eslint/parser@8.40.0(eslint@9.33.0)(typescript@5.8.3))(eslint@9.33.0)(typescript@5.8.3)':
     dependencies:
@@ -2454,7 +2466,7 @@ snapshots:
 
   json-stable-stringify-without-jsonify@1.0.1: {}
 
-  kekule@1.0.3: {}
+  kekule@https://codeload.github.com/ifmg-rn/Kekule.js/tar.gz/f15d3ea6d0d9c7ae25f3b7abfc7339739e4911e2: {}
 
   keyv@4.5.4:
     dependencies:
@@ -3007,6 +3019,9 @@ snapshots:
 
   typescript@5.8.3: {}
 
+  undici-types@7.16.0:
+    optional: true
+
   uri-js@4.4.1:
     dependencies:
       punycode: 2.3.1
@@ -3015,7 +3030,7 @@ snapshots:
 
   varint@6.0.0: {}
 
-  vite@7.1.3(sass-embedded@1.90.0)(sass@1.90.0)(yaml@2.8.1):
+  vite@7.1.3(@types/node@24.9.2)(sass-embedded@1.90.0)(sass@1.90.0)(yaml@2.8.1):
     dependencies:
       esbuild: 0.25.6
       fdir: 6.5.0(picomatch@4.0.3)
@@ -3024,6 +3039,7 @@ snapshots:
       rollup: 4.46.4
       tinyglobby: 0.2.14
     optionalDependencies:
+      '@types/node': 24.9.2
       fsevents: 2.3.3
       sass: 1.90.0
       sass-embedded: 1.90.0

@@ -134,7 +134,7 @@ export async function getDB(): Promise<IDBPDatabase<ChemistryDB>> {
 				// Coloca a lógica de população numa "promessa" para esperar depois
 				upgradePromise = new Promise((resolve, reject) => {
 					// Espera a transação de inicialização acabar e os dados serem baixados e importados
-					Promise.all([transaction.done, import("./data.js")])
+					Promise.all([transaction.done, import("./data")])
 						.then((results) => {
 							const molecules = results[1].molecules,
 								reactions = results[1].reactions;

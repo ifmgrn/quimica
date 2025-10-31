@@ -8,8 +8,10 @@
 
 @use "tree-view";
 
-header {
-	text-align: center;
+html {
+	/* "scrollbar-gutter: stable overlay" ainda não é amplamente suportado, então é melhor deixar a barra vertical sempre visível */
+	overflow-y: scroll;
+	overscroll-behavior-y: auto;
 }
 
 .overflow-auto {
@@ -128,7 +130,7 @@ td {
 	border-bottom: 0;
 }
 
-tr {
+table:is(.full-link-rows, .hover-effect) tr {
 	/*
 	Safari não suporta `position: relative` em elementos `<tr>`,
 	mas essas duas propriedades podem ser usadas como uma alternativa.
@@ -172,7 +174,7 @@ ul li {
 }
 
 @media (hover: hover) {
-	tr:not(:first-child):hover::after {
+	table.hover-effect tr:not(:first-child):hover::after {
 		@include tree-view.hover-effect;
 	}
 }

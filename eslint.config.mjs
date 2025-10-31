@@ -10,7 +10,25 @@ export default defineConfig([
 		languageOptions: {
 			globals: globals.browser,
 		},
+		rules: {
+			"no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
+		},
 	},
 	tseslint.configs.recommended,
-	globalIgnores(["*", "!src/"]),
+	{
+		rules: {
+			"@typescript-eslint/no-unused-vars": [
+				"error",
+				{ argsIgnorePattern: "^_" },
+			],
+		},
+	},
+	{
+		files: ["**/*.d.ts"],
+		rules: {
+			"@typescript-eslint/no-unused-vars": "off",
+		},
+	},
+
+	globalIgnores(["*", "!src/", "*.js"]),
 ]);
