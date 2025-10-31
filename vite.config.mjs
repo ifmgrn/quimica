@@ -45,6 +45,7 @@ export default defineConfig(({ command }) => ({
 		{
 			name: "copy-license",
 			closeBundle() {
+				return;
 				const src = resolve(__dirname, "LICENSE.txt");
 				const dest = resolve(__dirname, "dist", "LICENSE.txt");
 				copyFileSync(src, dest);

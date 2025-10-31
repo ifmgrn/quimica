@@ -25,7 +25,7 @@ import "/node_modules/kekule/src/xbrowsers/kekule.x.js";
 import "/node_modules/kekule/src/widgets/kekule.widget.root.js";
 import "/node_modules/kekule/src/widgets/kekule.widget.events.js";
 import "/node_modules/kekule/src/widgets/kekule.widget.keys.js";
-import "/node_modules/kekule/src/widgets/kekule.Widget.base.js";
+import "/node_modules/kekule/src/widgets/kekule.widget.base.js";
 
 import "/node_modules/kekule/src/widgets/chem/kekule.chemWidget.base.js";
 import "/node_modules/kekule/src/data/kekule.chemicalElementsData.js";
