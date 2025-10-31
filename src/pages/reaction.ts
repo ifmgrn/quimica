@@ -41,7 +41,7 @@ export default class extends Page {
 			...reaction,
 			reagentes: await formatMolecules(reaction.reagentes, tx.store),
 			produtos: await formatMolecules(reaction.produtos, tx.store),
-			instrucoes: convertTextToHTMLList(reaction.instrucoes),
+			instrucoes: convertTextToHTMLList(reaction.instrucoes, "tree"),
 		};
 
 		// Insere o template atualizado na página

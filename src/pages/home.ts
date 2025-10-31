@@ -20,7 +20,11 @@ export default class extends Page {
 	static params = { p: "p" };
 
 	async loadPage(page: typeof Page, button: HTMLButtonElement) {
-		if (this.currentPage) await this.currentPage.unload();
+		if (this.currentPage) {
+			await this.currentPage.unload();
+			const url = window.location.origin + window.location.pathname;
+			window.history.replaceState({}, document.title, url);
+		}
 		if (this.activeButton) this.activeButton.classList.remove("active");
 
 		this.activeButton = button;

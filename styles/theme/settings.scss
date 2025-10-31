@@ -17,7 +17,7 @@ $headings-line-size: 1px !default;
 
 // Decoração de arte
 $enable-art-deco-top-frame: false !default;
-$art-deco-top-frame: ":is(body, body > noscript) > header > div:first-child" !default;
+$art-deco-top-frame: ".top-art-deco-frame" !default;
 $art-deco-color: red !default;
 $include-art-deco: false !default;
 
@@ -29,3 +29,4 @@ $accent-color-text-selected: red !default;
 
 // Visualização de árvore
 $enable-tree-view: false !default;
+$tree-view: ".tree" !default;

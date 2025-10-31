@@ -41,7 +41,7 @@ export function interpolate(
 }
 
 /* Converte o texto dado para listas em HTML, usando "\t" para indentação. */
-export function convertTextToHTMLList(input: string) {
+export function convertTextToHTMLList(input: string, classes = "") {
 	const lines = input.split("\n");
 
 	const htmlParts: string[] = [];
@@ -113,7 +113,7 @@ export function convertTextToHTMLList(input: string) {
 			listStack[listStack.length - 1].indent < indentLevel ||
 			listStack[listStack.length - 1].type !== type
 		) {
-			htmlParts.push(`<${type}>`);
+			htmlParts.push(`<${type} class="${classes}">`);
 
 			listStack.push({
 				type: type,

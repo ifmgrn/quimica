@@ -268,7 +268,9 @@ input.K-Widget {
 		outline-width: 1px;
 		outline-style: solid;
 		/* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
-		outline-color: #fff;
+		outline-color: #8a5cf5;
+
+		// outline-color: #fff;
 		box-shadow: 1px 1px 2px;
 		transform: scale(1.2);
 	}
@@ -285,7 +287,8 @@ input.K-Widget {
 .K-Chem-Periodic-Table
 	.K-State-Selected
 	.K-Chem-Periodic-Table-Elem-Cell-Content {
-	background-color: #fff;
+	// background-color: #fff;
+	background-color: #8a5cf5;
 	/* stylelint-disable-next-line plugin/use-baseline */
 	outline: 1px solid #000;
 	transform: scale(1.1);

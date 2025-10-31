@@ -29,78 +29,77 @@
 }
 
 @if $enable-tree-view {
-	ul,
-	ol {
+	#{$tree-view} {
 		position: relative;
 		display: flow-root !important;
 		padding-inline-start: 0;
-	}
 
-	li > ul::before,
-	li > ol::before {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		inset-inline-start: calc(var(--indentation-guide-secondary-indent) + 8px);
-		z-index: 1;
-		display: block;
-		border-inline-end: var(--indentation-guide-width)
-			solid
-			var(--indentation-guide-color);
-		content: "";
-	}
-
-	li {
-		position: relative;
-		margin-inline-start: 3ch;
-	}
-
-	li::after {
-		position: absolute;
-		top: calc(
-			-0.4em * var(--line-height) - var(--indentation-guide-width) * 0.4
-		);
-		left: calc(
-			-1 *
-				var(--indentation-guide-indent) +
-				var(--indentation-guide-secondary-indent)
-		);
-		display: block;
-		width: calc(var(--indentation-guide-indent) + 2px);
-		height: calc(1em * var(--line-height));
-		border: solid var(--indentation-guide-color);
-		border-width: 0
-			0
-			var(--indentation-guide-width)
-			var(--indentation-guide-width);
-		border-bottom-left-radius: var(--indentation-guide-radius);
-		pointer-events: none;
-		content: "";
-	}
-
-	:not(li) > * > li::after {
-		top: calc(
-			-0.65em * var(--line-height) - var(--indentation-guide-width) * 0.65
-		);
-		left: calc(
-			-1 *
-				var(--indentation-guide-indent) +
-				var(--indentation-guide-secondary-indent) +
-				20px
-		);
-		width: calc(var(--indentation-guide-indent) - 18px);
-		height: calc(1.3em * var(--line-height));
-	}
-
-	@media (hover: hover) {
-		li:hover::after,
-		li:hover > :is(ul, ol)::before {
-			z-index: 2;
-			border-color: var(--primary-background);
+		li > ul::before,
+		li > ol::before {
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			inset-inline-start: calc(var(--indentation-guide-secondary-indent) + 8px);
+			z-index: 1;
+			display: block;
+			border-inline-end: var(--indentation-guide-width)
+				solid
+				var(--indentation-guide-color);
+			content: "";
 		}
 
-		li:hover::before {
-			@include hover-effect;
+		li {
+			position: relative;
+			margin-inline-start: 3ch;
+		}
+
+		li::after {
+			position: absolute;
+			top: calc(
+				-0.4em * var(--line-height) - var(--indentation-guide-width) * 0.4
+			);
+			left: calc(
+				-1 *
+					var(--indentation-guide-indent) +
+					var(--indentation-guide-secondary-indent)
+			);
+			display: block;
+			width: calc(var(--indentation-guide-indent) + 2px);
+			height: calc(1em * var(--line-height));
+			border: solid var(--indentation-guide-color);
+			border-width: 0
+				0
+				var(--indentation-guide-width)
+				var(--indentation-guide-width);
+			border-bottom-left-radius: var(--indentation-guide-radius);
+			pointer-events: none;
+			content: "";
+		}
+
+		:not(li) > * > li::after {
+			top: calc(
+				-0.65em * var(--line-height) - var(--indentation-guide-width) * 0.65
+			);
+			left: calc(
+				-1 *
+					var(--indentation-guide-indent) +
+					var(--indentation-guide-secondary-indent) +
+					20px
+			);
+			width: calc(var(--indentation-guide-indent) - 18px);
+			height: calc(1.3em * var(--line-height));
+		}
+
+		@media (hover: hover) {
+			li:hover::after,
+			li:hover > :is(ul, ol)::before {
+				z-index: 2;
+				border-color: var(--primary-background);
+			}
+
+			li:hover::before {
+				@include hover-effect;
+			}
 		}
 	}
 }

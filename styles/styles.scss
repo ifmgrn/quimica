@@ -6,3 +6,38 @@ body.home header,
 main.periodic-table {
 	text-align: center;
 }
+
+nav {
+	display: flex;
+	margin: 0;
+	padding: 0;
+	flex-wrap: wrap;
+	justify-content: center;
+	list-style: none;
+
+	* {
+		padding: 0.5rem 1.25rem;
+		background-color: transparent;
+		border-top: 0;
+		border-left: 0;
+		border-radius: 0;
+	}
+
+	:last-child {
+		border-right: 0;
+	}
+}
+
+main {
+	margin-top: var(--block-spacing-vertical);
+}
+
+header > .top-art-deco-frame:first-child {
+	top: 0;
+}
+
+#input {
+	--line-height: 1.75rem;
+
+	font-size: 1.125rem;
+}
