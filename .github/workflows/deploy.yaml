@@ -8,22 +8,16 @@ on:
   # Permite que a ação seja executada manualmente na guia "Ações"
   workflow_dispatch:
 
-# Define as permissões do GITHUB_TOKEN para permitir "deploy" para o GitHub Pages
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 # Permite apenas um "deploy" simultâneo
 concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  PROJECT_NAME: quimica
+
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Extrai o repositório
@@ -38,12 +32,22 @@ jobs:
         run: pnpm install
       - name: Build
         run: pnpm run build
-      - name: Configura GitHub Pages
-        uses: actions/configure-pages@v5
-      - name: Envia o build para GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: "./dist"
-      - name: Deploy para GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+
+      - name: Clona repo github.io principal
+        run: |
+          git clone --depth=1 https://github.com/ifmgrn/ifmgrn.github.io.git hub
+          rm -rf hub/${{ env.PROJECT_NAME }}
+          mkdir -p hub/${{ env.PROJECT_NAME }}
+
+      - name: Copia output para o repo principal
+        run: |
+          cp -r dist/* hub/${{ env.PROJECT_NAME }}/ || echo "No dist/build folder found"
+
+      - name: Faz commit e envia as mudanças
+        run: |
+          cd hub
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Auto-update ${{ env.PROJECT_NAME }} build on $(date)" || echo "No changes to commit"
+          git push https://x-access-token:${{ secrets.USERNAME_GITHUBIO_PAT }}@github.com/ifmgrn/ifmgrn.github.io.git main
