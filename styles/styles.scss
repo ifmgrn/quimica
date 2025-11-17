@@ -45,3 +45,33 @@ header > .top-art-deco-frame:first-child {
 kekule-periodic-table {
 	width: 100%;
 }
+
+/* stylelint-disable-next-line selector-id-pattern */
+#reactionsGrid {
+	display: grid;
+	padding: 16px;
+	grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+	justify-content: center;
+	gap: 16px;
+
+	> * {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.info {
+		display: grid;
+		margin-top: 4px;
+		grid-template-columns: auto 1fr;
+		gap: 0 8px;
+	}
+
+	.field {
+		font-weight: bold;
+		text-align: right;
+	}
+
+	.value {
+		text-align: left;
+	}
+}

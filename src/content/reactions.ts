@@ -8,13 +8,12 @@
 
 import { formatMolecules, insertTextAtCursor, isDigit } from "../common";
 import { getDB, searchReactionByPrefix, getAllReactions } from "../indexed-db";
-import ReactionPage from "../pages/reaction";
 import template from "/templates/content/reactions.html?raw";
 import { Page } from "../page";
 
 // Elementos com id definido no HTML (template)
 declare const input: HTMLInputElement;
-declare const table: HTMLTableElement;
+declare const reactionsGrid: HTMLDivElement;
 
 export default class extends Page {
 	class = "reactions";
@@ -157,51 +156,32 @@ export default class extends Page {
 		}
 	}
 
-	// Gera o innerHTML de uma tabela com base nas reações químicas dadas
-	async generateReactionsTable(data: Reaction[]) {
-		// Gera uma linha para os headers (<th>) de cada coluna
-		const headers =
-			"<tr>" +
-			Object.keys(this.reactionsTableColumns)
-				.map((name) => `<th>${name}</th>`)
-				.join("") +
-			"</tr>";
-
-		// Gera uma linha (<tr>) para a reação dada
-		const columnsOrder = Object.values(this.reactionsTableColumns);
+	async generateReactionsGrid(data: Reaction[]) {
 		const tx = (await getDB()).transaction("molecules");
-		async function generateRow(row: Reaction) {
-			// Gera todas as células para esta linha
-			const cells = await Promise.all(
-				// Gera uma célula para cada coluna
-				columnsOrder.map(async (key, index) => {
-					/* Gera uma célula (<td>).
-					 * Caso seja a primeira da linha, adiciona um link para a página da reação.
-					 * Caso seja uma lista de moléculas, trata de formatá-la.
-					 */
-					const value = row[key]!;
-					return (
-						"<td>" +
-						(index === 0
-							? `<a href="?${ReactionPage.params.name}=${encodeURIComponent(row.id!)}">`
-							: "") +
-						(Array.isArray(value)
-							? await formatMolecules(value, tx.store)
-							: value) +
-						(index === 0 ? "</a>" : "") +
-						"</td>"
-					);
-				}),
-			);
-			// Combina as células em uma linha
-			return `<tr>${cells.join("")}</tr>`;
+		async function generateItem(item: Reaction) {
+			return `<div>
+				<iframe
+					src="${item.embedded_link}"
+					loading="lazy"
+					title="YouTube video player"
+					frameborder="0"
+					allow="encrypted-media; picture-in-picture"
+					referrerpolicy="strict-origin-when-cross-origin"
+					allowfullscreen
+				></iframe>
+				<div class="info">
+					<span class="field">Reação:</span><span class="value">${item.nome}</span>
+					<span class="field">Tipo:</span><span class="value">${item.tipo}</span>
+					<span class="field">Reagente(s):</span><span class="value">${await formatMolecules(item.reagentes, tx.store)}</span>
+					<span class="field">Produto(s):</span><span class="value">${await formatMolecules(item.produtos, tx.store)}</span>
+					<span class="field">Equação:</span><span class="value">${item.equacao}</span>
+				</div>
+			</div>`;
 		}
 
-		// Gera uma linha para cada reação
-		const rows = await Promise.all(data.map(generateRow));
+		const items = await Promise.all(data.map(generateItem));
 
-		// Combina a linha de headers com as linhas das reações
-		return headers + rows.join("");
+		return items.join("");
 	}
 
 	/* Pesquisa por reações químicas com base no query (termo de pesquisa).
@@ -231,8 +211,8 @@ export default class extends Page {
 
 		this.lastInputValue = query;
 
-		// Pesquisa pelo query (ou todas as reações) e atualiza a tabela
-		table.innerHTML = await this.generateReactionsTable(
+		// Pesquisa pelo query (ou todas as reações) e atualiza a visualização
+		reactionsGrid.innerHTML = await this.generateReactionsGrid(
 			await (query ? searchReactionByPrefix(query) : getAllReactions()),
 		);
 	}
