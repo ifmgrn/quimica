@@ -33,6 +33,7 @@
 	"dependencies": {
 		"@picocss/pico": "^2.1.1",
 		"idb": "^8.0.3",
-		"kekule": "github:ifmg-rn/Kekule.js#v1.0.4.5"
+		"kekule": "github:ifmg-rn/Kekule.js#v1.0.4.5",
+		"lite-youtube-embed": "^0.3.4"
 	}
 }

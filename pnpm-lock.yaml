@@ -17,6 +17,9 @@ importers:
       kekule:
         specifier: github:ifmg-rn/Kekule.js#v1.0.4.5
         version: https://codeload.github.com/ifmg-rn/Kekule.js/tar.gz/f15d3ea6d0d9c7ae25f3b7abfc7339739e4911e2
+      lite-youtube-embed:
+        specifier: ^0.3.4
+        version: 0.3.4
     devDependencies:
       '@eslint/js':
         specifier: ^9.33.0
@@ -1059,6 +1062,9 @@ packages:
   listr2@9.0.2:
     resolution: {integrity: sha512-VVd7cS6W+vLJu2wmq4QmfVj14Iep7cz4r/OWNk36Aq5ZOY7G8/BfCrQFexcwB1OIxB3yERiePfE/REBjEFulag==}
     engines: {node: '>=20.0.0'}
+
+  lite-youtube-embed@0.3.4:
+    resolution: {integrity: sha512-aXgxpwK7AIW58GEbRzA8EYaY4LWvF3FKak6B9OtSJmuNyLhX2ouD4cMTxz/yR5HFInhknaYd2jLWOTRTvT8oAw==}
 
   locate-path@6.0.0:
     resolution: {integrity: sha512-iPZK6eYjbxRu3uB4/WZ3EsEIMJFMqAoopl3R+zuq0UjcAm/MO6KCweDgPfP3elTztoKP3KtnVHxTn2NHBSDVUw==}
@@ -2514,6 +2520,8 @@ snapshots:
       log-update: 6.1.0
       rfdc: 1.4.1
       wrap-ansi: 9.0.0
+
+  lite-youtube-embed@0.3.4: {}
 
   locate-path@6.0.0:
     dependencies:

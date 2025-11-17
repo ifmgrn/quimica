@@ -160,15 +160,7 @@ export default class extends Page {
 		const tx = (await getDB()).transaction("molecules");
 		async function generateItem(item: Reaction) {
 			return `<div>
-				<iframe
-					src="${item.embedded_link}"
-					loading="lazy"
-					title="YouTube video player"
-					frameborder="0"
-					allow="encrypted-media; picture-in-picture"
-					referrerpolicy="strict-origin-when-cross-origin"
-					allowfullscreen
-				></iframe>
+			    <lite-youtube videoid="${item.embedded_link.slice(item.embedded_link.lastIndexOf("/") + 1)}" title="${item.nome}"></lite-youtube>
 				<div class="info">
 					<span class="field">Reação:</span><span class="value">${item.nome}</span>
 					<span class="field">Tipo:</span><span class="value">${item.tipo}</span>
